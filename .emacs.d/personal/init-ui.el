@@ -1,6 +1,9 @@
 ;; Configurations that relates to Emacs UI elements in general.
 ;; Like menubar, toolbar, fringes, fonts, theme, etc.
 
+;; Don't show startup screen
+(setq inhibit-startup-message t)
+
 ;; Fonts should already be installed before you can use it.
 (set-default-font "Inconsolata-16")
 

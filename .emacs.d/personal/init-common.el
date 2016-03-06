@@ -1,9 +1,6 @@
 ;; Configurations that are common to more than one Emacs mode.
 ;; Or configurations that doesn't fit anywhere else.
 
-;; Don't show startup screen
-(setq inhibit-startup-message t)
-
 ;; Let's type y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
