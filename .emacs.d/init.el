@@ -10,6 +10,10 @@
 (load-library "init-common")
 (require 'init-common)
 
+;; Configure repositories and install required packages
+(load-library "init-package")
+(require 'init-package)
+
 ;; Configures Common keyboard shortcuts
 (load-library "init-keys")
 (require 'init-keys)
