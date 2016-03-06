@@ -4,7 +4,7 @@
 ;; Let's type y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Auto close bracket (", [, (, {, etc.).
+;; Auto close quotes and brackets: ", [, (, {, etc.
 (electric-pair-mode 1)
 
 ;; Highlight matching parenthesis
