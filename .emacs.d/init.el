@@ -22,6 +22,10 @@
 (load-library "init-ui")
 (require 'init-ui)
 
+;; Configure yasnippet snippets.
+(load-library "init-yas")
+(require 'init-yas)
+
 ;; Configures Shell script mode
 (load-library "init-sh")
 (require 'init-sh)
