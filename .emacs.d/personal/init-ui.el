@@ -7,11 +7,11 @@
 ;; Fonts should already be installed before you can use it.
 (set-default-font "Inconsolata-16")
 
-;; Disable bold face for function names
-(set-face-attribute 'font-lock-function-name-face nil :weight 'normal)
-
 ;; Set Dark theme
 (load-theme 'manoj-dark 1)
+
+;; Disable bold face for function names
+(set-face-attribute 'font-lock-function-name-face nil :weight 'normal)
 
 ;; Hide space consuming things from screen
 (tool-bar-mode -1)
