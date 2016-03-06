@@ -1,0 +1,14 @@
+# -*- mode: gitignore; -*-
+
+# Emacs temp. files
+*~
+\#*\#
+.#*
+
+# Emacs lisp compiled files
+*.elc
+
+# Avoid accidental inclusion of my secrete GnuPG, ssh keys.
+# This may not happen, but if in case ...
+*secring.gpg
+*_rsa
