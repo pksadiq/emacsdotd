@@ -4,6 +4,9 @@
 ;; Fonts should already be installed before you can use it.
 (set-default-font "Inconsolata-16")
 
+;; Set Dark theme
+(load-theme 'manoj-dark 1)
+
 ;; Hide space consuming things from screen
 (tool-bar-mode -1)
 (menu-bar-mode -1)
