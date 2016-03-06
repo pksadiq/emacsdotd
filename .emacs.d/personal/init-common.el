@@ -2,7 +2,7 @@
 ;; Or configurations that doesn't fit anywhere else.
 
 ;; Don't show startup screen
-(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
 
 ;; Let this file provide a feature named 'init-common'.
 ;; Use `require' function to load to current Emacs session.
