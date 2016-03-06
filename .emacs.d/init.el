@@ -13,3 +13,7 @@
 ;; Configures Emacs UI related elements.
 (load-library "init-ui")
 (require 'init-ui)
+
+;; Configures Shell script mode
+(load-library "init-sh")
+(require 'init-sh)
