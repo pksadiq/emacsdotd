@@ -10,6 +10,10 @@
 (load-library "init-common")
 (require 'init-common)
 
+;; Configures Common keyboard shortcuts
+(load-library "init-keys")
+(require 'init-keys)
+
 ;; Configures Emacs UI related elements.
 (load-library "init-ui")
 (require 'init-ui)
