@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name : Add Copyright
 # key: copy.
+# condition: 'force-in-comment
 # --
 Copyright (C) ${1:`(format-time-string
-   "%Y")`} ${2:`user-full-name`} <${3:`user-mail-address`}>
+   "%Y")`} ${2:`user-full-name`} <${3:`user-mail-address`}>$0
