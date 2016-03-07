@@ -17,6 +17,7 @@
 	(setq mode-comment (concat mode-comment
 				   "; c-basic-offset: "
 				   (number-to-string c-basic-offset))))
+    (setq mode-comment (concat mode-comment " -*-"))
     (insert mode-comment)
     (comment-region (line-beginning-position) (line-end-position))))
 
