@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name : Add Copyright
+# key: copy.
+# --
+Copyright (C) ${1:`(format-time-string
+   "%Y")`} ${2:`user-full-name`} <${3:`user-mail-address`}>
