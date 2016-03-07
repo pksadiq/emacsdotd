@@ -15,7 +15,7 @@
 (column-number-mode 1)
 
 ;; No TABs, please. Let everything be space of 2
-(setq tab-width 2
+(setq-default tab-width 2
       indent-tabs-mode nil)
 
 ;; Let this file provide a feature named 'init-common'.
