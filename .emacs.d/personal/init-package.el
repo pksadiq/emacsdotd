@@ -4,7 +4,8 @@
 
 ;; The package list to be installed
 (setq package-list
-      '(yasnippet))
+      '(yasnippet
+	gnome-c-style))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives
