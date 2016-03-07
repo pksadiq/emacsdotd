@@ -13,6 +13,9 @@
 ;; Disable bold face for function names
 (set-face-attribute 'font-lock-function-name-face nil :weight 'normal)
 
+;; Open Emacs maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; Hide space consuming things from screen
 (tool-bar-mode -1)
 (menu-bar-mode -1)
