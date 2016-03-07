@@ -14,6 +14,10 @@
 (load-library "init-package")
 (require 'init-package)
 
+;; Load user defined functions
+(load-library "init-defun")
+(require 'init-defun)
+
 ;; Configures Common keyboard shortcuts
 (load-library "init-keys")
 (require 'init-keys)
