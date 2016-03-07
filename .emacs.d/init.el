@@ -30,6 +30,10 @@
 (load-library "init-yas")
 (require 'init-yas)
 
+;; Configures c-mode
+(load-library "init-c")
+(require 'init-c)
+
 ;; Configures Shell script mode
 (load-library "init-sh")
 (require 'init-sh)
