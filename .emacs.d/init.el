@@ -37,3 +37,7 @@
 ;; Configures Shell script mode
 (load-library "init-sh")
 (require 'init-sh)
+
+;; Configures `erc' IRC client
+(load-library "init-erc")
+(require 'init-erc)
