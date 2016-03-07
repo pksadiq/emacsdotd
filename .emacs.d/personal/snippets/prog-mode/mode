@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: mode comment
+# key: mode.
+# --
+`(set-mode-comment)`
+$0
