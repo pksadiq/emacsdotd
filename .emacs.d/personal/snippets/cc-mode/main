@@ -3,9 +3,11 @@
 # key: main.
 # --
 int
-main(${1:int  argc,
-char *argv[]})
+main(int  argc,
+char *argv[])
 {
+    int status = 0;
     $0
-    return 0;
+
+    return status;
 }
