@@ -2,8 +2,9 @@
 #name : #ifndef XXX; #define XXX; #endif
 # key: once.
 # --
-#ifndef ${1:`(upcase (file-name-nondirectory (file-name-sans-extension (buffer-file-name))))`_H}
-#define $1
+#ifndef ${1:`(file-name-nondirectory (file-name-sans-extension
+        (buffer-file-name)))`$(upcase yas-text)}_H
+#define $1_H
 
 $0
 
@@ -11,4 +12,4 @@ ${2: G_BEGIN_DECLS
 
 G_END_DECLS
 
-}#endif /* $1 */
+}#endif /* $1_H */
