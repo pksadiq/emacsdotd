@@ -1,7 +1,7 @@
 ;; Some personal functions
 
-;; Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */
 (defun set-mode-comment ()
+  "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
   (let ((mode-comment "")
 	(mode-now ""))
     (setq mode-now (replace-regexp-in-string
