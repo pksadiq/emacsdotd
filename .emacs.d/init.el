@@ -30,6 +30,10 @@
 (load-library "init-yas")
 (require 'init-yas)
 
+;; Configure interactive do
+(load-library "init-ido")
+(require 'init-ido)
+
 ;; Configures c-mode
 (load-library "init-c")
 (require 'init-c)
