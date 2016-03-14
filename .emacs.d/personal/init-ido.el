@@ -9,7 +9,7 @@
 ;; Guess file at point on `ido-find-file'
 (setq ido-use-filename-at-point 'guess)
 
-;; Don't prompt if buffer/file don't exist
+;; Don't prompt if buffer doesn't exist
 (setq ido-create-new-buffer 'always)
 
 (provide 'init-ido)
