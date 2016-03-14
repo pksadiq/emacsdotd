@@ -11,5 +11,7 @@
 
 ;; Don't prompt if buffer doesn't exist
 (setq ido-create-new-buffer 'always)
+;; The above one seems not working, This was introduced in 23.1
+(setq confirm-nonexistent-file-or-buffer nil)
 
 (provide 'init-ido)
