@@ -23,10 +23,15 @@
 			   (point)))))
 
 (defun str-to-snake-style (str)
-  (let ((out str))
+  (let ((out str)
+        (case-fold-search nil))
     (cond ((string-match "[- ]" str)
            (setq out
-                 (replace-regexp-in-string "[- ]" "_" str))))
+                 (replace-regexp-in-string "[- ]" "_" str)))
+          ((string-match "[A-Z]" str)
+           (setq out
+                 (replace-regexp-in-string "\\(.\\)\\([A-Z]\\)" "\\1_\\2" str))
+           (setq out (downcase out))))
     out))
 
 (provide 'init-defun)
