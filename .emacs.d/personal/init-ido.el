@@ -30,6 +30,7 @@
  ido-ignore-files (append ido-ignore-files
                           '("\.m4" "\.in" "\.am" "^Makefile" "^config"
                             "COPYING" "AUTHORS" "INSTALL" "README"
-                            "NEWS" "autogen\.sh")))
+                            "NEWS" "autogen\.sh" "ChangeLog" "libtool"
+                            "build-aux/" "^m4/$" "^po/$")))
 
 (provide 'init-ido)
