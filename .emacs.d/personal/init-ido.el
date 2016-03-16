@@ -19,4 +19,10 @@
  ido-ignore-buffers '( "\\` " "^\*Mess" "^\*scratch" ".*Completion"
                        "\*Buffer"))
 
+;; Ignore uninteresting dirs
+(setq
+ ido-ignore-directories (append ido-ignore-directories
+                                '("m4" "build-aux" "autom4te\.cache"
+                                  "\.git")))
+
 (provide 'init-ido)
