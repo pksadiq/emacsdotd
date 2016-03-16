@@ -2,10 +2,10 @@
 # name: Initialize the function, function class, etc
 # key: f.
 # --
+#include "`(replace-regexp-in-string "\.c" "\.h" (file-name-nondirectory buffer-file-name))`"
 
 G_DEFINE_TYPE (${1:$(str-to-style "upcamel" yas-text)}, ${1:gtk_application$(str-to-style "snake" yas-text)}, ${2:${1:$(get-first yas-text)}_TYPE_${1:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
 $0
-
 static void
 $1_finalize (GObject *object)
 {
