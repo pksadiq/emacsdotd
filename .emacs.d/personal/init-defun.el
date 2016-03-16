@@ -56,4 +56,11 @@
     (setq out (upcase out))
     out))
 
+(defun get-dot-h (str)
+  (let ((file str))
+    (setq file (replace-regexp-in-string "\.c" "\.h" str))
+    (if (file-exists-p file)
+        t
+      nil)))
+
 (provide 'init-defun)
