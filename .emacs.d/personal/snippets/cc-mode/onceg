@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+#name : #ifndef for Gtk
+# key: onceg.
+# --
+#ifndef ${1:`(file-name-nondirectory (file-name-sans-extension
+        (buffer-file-name)))`$(upcase yas-text)}_H
+#define $1_H
+
+${4:#include <gtk/gtk.h>
+}
+G_BEGIN_DECLS
+
+#define ${2:$(get-first yas-text)}_TYPE_${2:$(get-next yas-text)} (${2:gtk_application$(str-to-style "snake" yas-text)}_get_type())
+
+G_DECLARE_FINAL_TYPE (${2:$(str-to-style "upcamel" yas-text)}, $2, ${2:$(get-first yas-text)}, ${2:$(get-next yas-text)}, GtkApplication)
+
+${2:$(str-to-style "upcamel" yas-text)} *$2_new (${3:void});
+$0
+
+G_END_DECLS
+
+#endif /* $1_H */
