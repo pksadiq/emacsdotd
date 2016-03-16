@@ -3,6 +3,11 @@
 # key: maing.
 # --
 #include <gtk/gtk.h>
+${1:$(let ((temp (downcase (get-first (str-to-style "snake" yas-text)))))
+         (setq temp (concat temp "-application.h"))
+         (if (file-exists-p temp)
+           (concat "#include \042"  temp "\042")))
+}
 
 int
 main(int  argc,
