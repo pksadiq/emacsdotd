@@ -34,4 +34,14 @@
            (setq out (downcase out))))
     out))
 
+(defun str-to-style (style str)
+  (let* ((str (str-to-snake-style str))
+         (out str))
+    (cond ((string= style "upcamel")
+           (setq str (upcase-initials str))
+           (setq out (replace-regexp-in-string "_" "" str)))
+          ((string= style "lisp")
+           (setq out (replace-regexp-in-string "_" "-" str))))
+    out))
+
 (provide 'init-defun)
