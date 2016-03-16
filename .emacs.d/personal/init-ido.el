@@ -25,5 +25,11 @@
  ido-ignore-directories (append ido-ignore-directories
                                 '("m4" "build-aux" "autom4te\.cache"
                                   "\.git")))
+;; Ignore some files
+(setq
+ ido-ignore-files (append ido-ignore-files
+                          '("\.m4" "\.in" "\.am" "^Makefile" "^config"
+                            "COPYING" "AUTHORS" "INSTALL" "README"
+                            "NEWS" "autogen\.sh")))
 
 (provide 'init-ido)
