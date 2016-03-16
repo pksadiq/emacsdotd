@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: Initialize the function, function class, etc
+# key: f.
+# --
+
+G_DEFINE_TYPE (${1:$(str-to-style "upcamel" yas-text)}, ${1:gtk_application$(str-to-style "snake" yas-text)}, ${2:${1:$(get-first yas-text)}_TYPE_${1:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
+$0
+
+static void
+$1_finalize (GObject *object)
+{
+  G_OBJECT_CLASS ($1_parent_class)->finalize (object);
+}
+
+static void
+$1_class_init (${1:$(str-to-style "upcamel" yas-text)}Class *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  ${3:GApplication$(str-to-style "upcamel" yas-text)}Class *${3:$(downcase (get-next (str-to-style "snake" yas-text)))}_class = ${3:$(get-first (str-to-style "snake" yas-text))}_${3:$(get-next (str-to-style "snake" yas-text))}_CLASS (klass);
+
+  object_class->finalize = $1_finalize;
+  
+}
+
+static void
+$1_init (${1:$(str-to-style "upcamel" yas-text)} *self)
+{
+
+}
+
+${1:$(str-to-style "upcamel" yas-text)} *
+$1_new (void)
+{
+  return g_object_new (${1:$(get-first yas-text)}_TYPE_${1:$(get-next yas-text)},
+                       NULL);
+}
