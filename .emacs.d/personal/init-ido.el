@@ -31,6 +31,7 @@
                           '("\.m4" "\.in" "\.am" "^Makefile" "^config"
                             "COPYING" "AUTHORS" "INSTALL" "README"
                             "NEWS" "autogen\.sh" "ChangeLog" "libtool"
+                            "THANKS" "TODO" "BUGS" "\.git"
                             "build-aux/" "^m4/$" "^po/$")))
 
 (provide 'init-ido)
