@@ -16,6 +16,7 @@
 
 ;; Ignore some buffers
 (setq
- ido-ignore-buffers '( "\\` " "^\*Mess" "^\*scratch" ".*Completion"))
+ ido-ignore-buffers '( "\\` " "^\*Mess" "^\*scratch" ".*Completion"
+                       "\*Buffer"))
 
 (provide 'init-ido)
