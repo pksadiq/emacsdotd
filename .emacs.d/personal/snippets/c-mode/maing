@@ -7,7 +7,7 @@ ${1:$(let ((temp (downcase (get-first (str-to-style "snake" yas-text)))))
          (setq temp (concat temp "-application.h"))
            (concat "#include \042"  temp "\042"))
 }
-
+${0:$$(progn (backward-word) (set-mark (point)))}
 int
 main(int  argc,
 char *argv[])
