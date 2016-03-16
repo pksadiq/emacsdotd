@@ -44,4 +44,16 @@
            (setq out (replace-regexp-in-string "_" "-" str))))
     out))
 
+(defun get-first (str)
+  (let ((out str))
+    (setq out (replace-regexp-in-string "_.*" "" str))
+    (setq out (upcase out))
+    out))
+
+(defun get-next (str)
+  (let ((out str))
+    (setq out (replace-regexp-in-string "^[a-zA-Z0-9]*_" "" str))
+    (setq out (upcase out))
+    out))
+
 (provide 'init-defun)
