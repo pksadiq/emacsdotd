@@ -14,4 +14,8 @@
 ;; The above one seems not working, This was introduced in 23.1
 (setq confirm-nonexistent-file-or-buffer nil)
 
+;; Ignore some buffers
+(setq
+ ido-ignore-buffers '( "\\` " "^\*Mess" "^\*scratch" ".*Completion"))
+
 (provide 'init-ido)
