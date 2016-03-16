@@ -39,7 +39,7 @@
          (out str))
     (cond ((string= style "upcamel")
            (setq str (upcase-initials str))
-           (setq out (replace-regexp-in-string "_" "" str)))
+           (setq out (replace-regexp-in-string "_\\(.\\)" "\\1" str)))
           ((string= style "lisp")
            (setq out (replace-regexp-in-string "_" "-" str))))
     out))
