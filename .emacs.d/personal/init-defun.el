@@ -24,9 +24,9 @@
 
 (defun str-to-snake-style (str)
   (let ((out str))
-    (cond ((string-match " " str)
+    (cond ((string-match "[- ]" str)
            (setq out
-                 (replace-regexp-in-string " " "_" str))))
+                 (replace-regexp-in-string "[- ]" "_" str))))
     out))
 
 (provide 'init-defun)
