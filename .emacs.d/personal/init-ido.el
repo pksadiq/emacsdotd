@@ -16,8 +16,9 @@
 
 ;; Ignore some buffers
 (setq
- ido-ignore-buffers '( "\\` " "^\*Mess" "^\*scratch" ".*Completion"
-                       "\*Buffer"))
+ ido-ignore-buffers (append ido-ignore-buffers
+                            '( "^\*Mess" "^\*scratch" ".*Completion"
+                               "\*Buffer"))
 
 ;; Ignore uninteresting dirs
 (setq
