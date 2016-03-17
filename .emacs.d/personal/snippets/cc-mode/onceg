@@ -6,7 +6,7 @@
         (buffer-file-name)))`$(replace-regexp-in-string "[- ]" "_" (upcase yas-text))}_H
 #define $1_H
 
-${5:#include <gtk/gtk.h>
+${6:#include <gtk/gtk.h>
 }
 G_BEGIN_DECLS
 
@@ -14,7 +14,7 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (${2:$(str-to-style "upcamel" yas-text)}, $2, ${2:$(get-first yas-text)}, ${2:$(get-next yas-text)}, ${3:GtkApplication$(str-to-style "upcamel" yas-text)})
 
-${2:$(str-to-style "upcamel" yas-text)} *$2_new (${4:void});
+${4:${2:$(str-to-style "upcamel" yas-text)}$(str-to-style "upcamel" yas-text)} *$2_new (${5:void});
 $0
 
 G_END_DECLS
