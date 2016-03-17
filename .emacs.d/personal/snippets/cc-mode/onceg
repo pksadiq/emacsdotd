@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 #name : #ifndef for Gtk
 # key: onceg.
+# condition: (progn (gnome-c-style-mode 1) t)
 # --
 #ifndef ${1:`(file-name-nondirectory (file-name-sans-extension
         (buffer-file-name)))`$(replace-regexp-in-string "[- ]" "_" (upcase yas-text))}_H

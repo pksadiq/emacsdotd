@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: Initialize the function, function class, etc
 # key: f.
+# condition: (progn (gnome-c-style-mode 1) t)
 # --
 #include "`(replace-regexp-in-string "\\.c" "\.h" (file-name-nondirectory buffer-file-name))`"
 
