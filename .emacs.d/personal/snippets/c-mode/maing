@@ -4,11 +4,8 @@
 # condition: (progn (gnome-c-style-mode 1) t)
 # --
 #include <gtk/gtk.h>
-${1:$(let ((temp (downcase (get-first (str-to-style "snake" yas-text)))))
-         (setq temp (concat temp "-application.h"))
-           (concat "#include \042"  temp "\042"))
-}
-${0:$$(progn (backward-word) (set-mark (point)))}
+#include "${1:$(downcase (get-first (str-to-style "snake" yas-text)))}-application.h$0"
+
 int
 main(int  argc,
 char *argv[])
