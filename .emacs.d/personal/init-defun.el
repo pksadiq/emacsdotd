@@ -23,6 +23,8 @@
 			   (point)))))
 
 (defun str-to-snake-style (str)
+  "Convert STR like 'snake style' SnakeStyle' and 'snake-style'
+to snake_style"
   (let ((out str)
         (case-fold-search nil))
     (cond ((string-match "[- ]" str)
@@ -35,6 +37,11 @@
     out))
 
 (defun str-to-style (style str)
+  "Convert STR to corresponding STYLE.
+
+STR can be of the form CamelCase, snake_case, space text, or lisp-case
+
+STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
   (let* ((str (str-to-snake-style str))
          (out str))
     (cond ((string= style "upcamel")
@@ -45,12 +52,14 @@
     out))
 
 (defun get-first (str)
+  "Return the substring up to first '_' char from STR"
   (let ((out str))
     (setq out (replace-regexp-in-string "_.*" "" str))
     (setq out (upcase out))
     out))
 
 (defun get-next (str)
+  "Return the substring after the first '_' char from STR"
   (let ((out str))
     (setq out (replace-regexp-in-string "^[a-zA-Z0-9]*_" "" str))
     (setq out (upcase out))
