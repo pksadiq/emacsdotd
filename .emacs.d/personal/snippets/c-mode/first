@@ -16,7 +16,7 @@ ${3:$(str-to-style "upcamel" (replace-regexp-in-string "TYPE_" "" yas-text))}Cla
 };
 
 
-G_DEFINE_${1:TYPE$(yas-choose-value '("TYPE" "INTERFACE" "TYPE_WITH_PRIVATE"))} (${2:$(str-to-style "upcamel" yas-text)}, ${2:gtk_application$(str-to-style "snake" yas-text)}, ${3:GTK_TYPE_${2:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
+G_DEFINE_${1:TYPE$(yas-choose-value '("TYPE" "INTERFACE" "TYPE_WITH_PRIVATE"))} (${2:$(str-to-style "upcamel" yas-text)}, ${2:gtk_application$(setq gnome-package (str-to-style "snake" yas-text))}, ${3:GTK_TYPE_${2:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
 $0
 static void
 $2_finalize (GObject *object)
