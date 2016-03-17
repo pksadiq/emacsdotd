@@ -12,7 +12,7 @@ int
 main(int  argc,
 char *argv[])
 {
-  ${1:gtk application$(str-to-style "upcamel" yas-text)} *app;
+  ${1:GtkApplication$(str-to-style "upcamel" yas-text)} *app;
   int status;
 
   app = ${1:$(str-to-style "snake" yas-text)}_new ($2);
