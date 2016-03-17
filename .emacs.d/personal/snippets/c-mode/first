@@ -4,6 +4,17 @@
 # --
 #include "`(replace-regexp-in-string "\\.c" "\.h" (file-name-nondirectory buffer-file-name))`"
 
+typedef struct _${1:$(str-to-style "upcamel" yas-text)}
+{
+${2:$(str-to-style "upcamel" (replace-regexp-in-string "TYPE_" "" yas-text))} parent_instance;
+} ${1:$(str-to-style "upcamel" yas-text)};
+
+struct _${1:$(str-to-style "upcamel" yas-text)}Class
+{
+${2:$(str-to-style "upcamel" (replace-regexp-in-string "TYPE_" "" yas-text))}Class parent_class;
+};
+
+
 G_DEFINE_TYPE (${1:$(str-to-style "upcamel" yas-text)}, ${1:gtk_application$(str-to-style "snake" yas-text)}, ${2:GTK_TYPE_${1:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
 $0
 static void
