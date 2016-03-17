@@ -27,12 +27,15 @@
 to snake_style"
   (let ((out str)
         (case-fold-search nil))
-    (cond ((string-match "[-_ ]" str)
+    (if (string-match "[-_ ]" str)
+        (setq out
+              (replace-regexp-in-string "[-_ ]" "_" str)))
+    (if (string-match "_[A-Z]" out)
+        (setq out
+              (replace-regexp-in-string "_\\([A-Z]\\)" "\\1" out)))
+    (if (string-match "[A-Z]" out)
            (setq out
-                 (replace-regexp-in-string "[-_ ]" "_" str)))
-          ((string-match "[A-Z]" str)
-           (setq out
-                 (replace-regexp-in-string "\\(.\\)\\([A-Z]\\)" "\\1_\\2" str))))
+                 (replace-regexp-in-string "\\(.\\)\\([A-Z]\\)" "\\1_\\2" out)))
     (setq out (downcase out))
     out))
 
