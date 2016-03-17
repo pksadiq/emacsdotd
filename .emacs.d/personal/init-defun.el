@@ -22,24 +22,29 @@
 		    (progn (insert mode-comment)
 			   (point)))))
 
-(defun str-to-snake-style (str)
+(defun str-to-snake-case (str)
   "Convert STR like 'snake style', SnakeStyle', 'snake-style'
 'SNAKE_STYLE', etc. to snake_style"
-    (let ((out str)
+  (let ((out str)
         (case-fold-search nil))
     (if (string-match "\\([a-z]\\)\\([A-Z]\\)" str)
         (setq str
               (replace-regexp-in-string "\\([a-z]\\)\\([A-Z]\\)" "\\1_\\2" str)))
-    (cond ((string-match "^[A-Z]*$" str)
-           (setq out (downcase str)))
-          ((string-match "[-_ ]" str)
-           (setq out
-                 (replace-regexp-in-string "[-_ ]" "_" str)))
-          ((string-match "[ ^][A-Z]" str)
-           (setq out
-                 (replace-regexp-in-string "\\(.\\)\\([A-Z]\\)" "\\1_\\2" out))))
+    (if (string-match "\\b[A-Z _-]\\{4,\\}\\b" str)
+        (setq out (downcase str)))
+    (if (string-match "[-_ ]" out)
+        (setq out
+              (replace-regexp-in-string "[-_ ]" "_" out)))
+    (if (string-match "[A-Z]" out)
+        (setq out
+              (replace-regexp-in-string "\\([^_]\\)\\([A-Z]\\)" "\\1_\\2" out)))
     (setq out (downcase out))
     out))
+
+(defun str-to-snake-style (str)
+  (if (< (length str) 4)
+      str
+    (str-to-snake-case str)))
 
 (defun str-to-style (style str)
   "Convert STR to corresponding STYLE.
