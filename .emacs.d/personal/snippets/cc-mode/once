@@ -3,7 +3,7 @@
 # key: once.
 # --
 #ifndef ${1:`(file-name-nondirectory (file-name-sans-extension
-        (buffer-file-name)))`$(upcase yas-text)}_H
+        (buffer-file-name)))`$(replace-regexp-in-string "[- ]" "_" (upcase yas-text))}_H
 #define $1_H
 
 $0
