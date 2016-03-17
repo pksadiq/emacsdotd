@@ -8,6 +8,8 @@
 (add-hook 'term-mode-hook (lambda()
 			    (yas-minor-mode -1)))
 
+(setq yas-prompt-functions '(yas-ido-prompt yas-dropdown-prompt))
+
 ;; Enable yasnippet everywhere it supports
 (yas-global-mode 1)
 
