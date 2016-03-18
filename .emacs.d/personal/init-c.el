@@ -14,5 +14,6 @@
 (make-variable-buffer-local 'gnome-parent)
 
 (defvar last-defun-name nil)
+(defvar last-defun-name-1 nil)
 
 (provide 'init-c)
