@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
 # name: map signals/functions function->myfun = function_myfun;
-# key: sig.o
+# key: sig.
 # condition: (progn (gnome-c-style-mode 1) t)
 # --
-object_class->${1:activate$(setq last-defun-name-1 yas-text)} = ${2:`(or gnome-package "")`$(progn
+${1:`(downcase (get-next (str-to-style "snake" (or gnome-parent ""))))`_class$(str-to-style "snake" yas-text)}->${2:activate$(setq last-defun-name-1 yas-text)} = ${3:`(or gnome-package "")`$(progn
    (setq last-defun-name (concat "_" (str-to-style "snake" yas-text) last-defun-name-1))
-   (str-to-style "snake" yas-text))}_$1;
+   (str-to-style "snake" yas-text))}_$2;
