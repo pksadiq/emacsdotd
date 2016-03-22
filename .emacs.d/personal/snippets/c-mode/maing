@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: main function for Gtk
-# key: maing.
+# key: m..
 # condition: (progn (gnome-c-style-mode 1) t)
 # --
 #include <gtk/gtk.h>
