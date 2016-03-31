@@ -8,4 +8,7 @@
 ;; Begin completion after 1 char
 (setq company-minimum-prefix-length 1)
 
+;; Show completion faster
+(setq company-idle-delay 0)
+
 (provide 'init-company)
