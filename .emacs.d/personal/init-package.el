@@ -5,7 +5,8 @@
 ;; The package list to be installed
 (setq package-list
       '(yasnippet
-	gnome-c-style))
+        gnome-c-style
+        web-mode))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives
