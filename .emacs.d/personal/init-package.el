@@ -6,7 +6,8 @@
 (setq package-list
       '(yasnippet
         gnome-c-style
-        web-mode))
+        web-mode
+        company))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives

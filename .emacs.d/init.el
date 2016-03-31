@@ -34,6 +34,10 @@
 (load-library "init-ido")
 (require 'init-ido)
 
+;; Configures `company-mode' 
+(load-library "init-company")
+(require 'init-company)
+
 ;; Configures c-mode
 (load-library "init-c")
 (require 'init-c)
