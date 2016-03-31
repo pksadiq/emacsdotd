@@ -11,4 +11,7 @@
 ;; Show completion faster
 (setq company-idle-delay 0)
 
+;; Show enumerated completion
+(setq company-show-numbers t)
+
 (provide 'init-company)
