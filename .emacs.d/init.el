@@ -45,3 +45,7 @@
 ;; Configures `erc' IRC client
 (load-library "init-erc")
 (require 'init-erc)
+
+;; Configures `web-mode' 
+(load-library "init-web")
+(require 'init-web)
