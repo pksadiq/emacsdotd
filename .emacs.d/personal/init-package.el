@@ -7,7 +7,8 @@
       '(yasnippet
         gnome-c-style
         web-mode
-        company))
+        company
+        avy))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives

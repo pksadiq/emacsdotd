@@ -34,6 +34,10 @@
 (load-library "init-ido")
 (require 'init-ido)
 
+;; Configure avy-mode
+(load-library "init-avy")
+(require 'init-avy)
+
 ;; Configures `company-mode' 
 (load-library "init-company")
 (require 'init-company)
