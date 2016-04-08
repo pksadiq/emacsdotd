@@ -90,4 +90,8 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
   (unless (eq (char-before) ?\;)
     (insert ";")))
 
+(defun insert-semi-colon ()
+  (interactive)
+  (insert ";"))
+
 (provide 'init-defun)
