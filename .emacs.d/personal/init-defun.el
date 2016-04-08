@@ -85,7 +85,8 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
 (defun end-statement ()
   (interactive)
   (end-of-line)
-  (delete-trailing-whitespace)
+  (delete-trailing-whitespace
+   (line-beginning-position) (line-end-position))
   (unless (eq (char-before) ?\;)
     (insert ";")))
 
