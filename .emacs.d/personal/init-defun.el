@@ -82,4 +82,11 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
         t
       nil)))
 
+(defun end-statement ()
+  (interactive)
+  (end-of-line)
+  (delete-trailing-whitespace)
+  (unless (eq (char-before) ?\;)
+    (insert ";")))
+
 (provide 'init-defun)

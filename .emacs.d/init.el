@@ -42,6 +42,10 @@
 (load-library "init-company")
 (require 'init-company)
 
+;; Configures cc-mode
+(load-library "init-cc")
+(require 'init-cc)
+
 ;; Configures c-mode
 (load-library "init-c")
 (require 'init-c)
