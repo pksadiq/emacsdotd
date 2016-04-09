@@ -103,4 +103,8 @@ Otherwise, call `backward-kill-word'."
        'kill-region
      'backward-kill-word)))
 
+(defun my-term ()
+  (interactive)
+  (ansi-term (getenv "SHELL")))
+
 (provide 'init-defun)

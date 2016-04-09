@@ -8,4 +8,6 @@
 
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
 
+(global-set-key (kbd "<f5>") 'my-term)
+
 (provide 'init-keys)
