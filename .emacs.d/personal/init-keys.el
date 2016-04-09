@@ -6,4 +6,6 @@
 ;; Create a newline after current line, and jump to that
 (global-set-key (kbd "<S-return>") (kbd "C-e C-m"))
 
+(global-set-key (kbd "C-w") 'kill-region-or-backward-word)
+
 (provide 'init-keys)
