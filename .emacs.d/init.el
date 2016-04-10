@@ -61,3 +61,7 @@
 ;; Configures `web-mode' 
 (load-library "init-web")
 (require 'init-web)
+
+;; Configures `ansi-term' IRC client
+(load-library "init-term")
+(require 'init-term)

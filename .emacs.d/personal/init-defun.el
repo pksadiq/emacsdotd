@@ -107,4 +107,12 @@ Otherwise, call `backward-kill-word'."
   (interactive)
   (ansi-term (getenv "SHELL")))
 
+(defun kill-buffer-on-exit (process event)
+  (when (memq (process-status process) '(exit signal))
+    (kill-buffer)))
+
+(defun kill-process-buffer-on-exit ()
+  (set-process-sentinel (get-buffer-process (current-buffer))
+                        #'kill-buffer-on-exit))
+
 (provide 'init-defun)
