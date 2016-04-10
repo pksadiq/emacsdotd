@@ -88,6 +88,7 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
   (delete-trailing-whitespace
    (line-beginning-position) (line-end-position))
   (unless (eq (char-before) ?\;)
+    (c-indent-line)
     (insert ";")))
 
 (defun insert-semi-colon ()
