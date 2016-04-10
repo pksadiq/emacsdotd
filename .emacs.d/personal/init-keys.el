@@ -10,4 +10,6 @@
 
 (global-set-key (kbd "<f5>") 'my-term)
 
+(global-set-key (kbd "M-g M-g") 'avy-goto-line)
+
 (provide 'init-keys)
