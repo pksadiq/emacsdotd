@@ -1,5 +1,14 @@
 ;; erc IRC client configuration
 
+(eval-after-load "erc"
+  '(add-to-list 'erc-modules 'replace))
+
+(eval-after-load "erc-replace"
+  '(add-hook 'erc-insert-modify-hook 'erc-replace-insert))
+
+(setq erc-replace-alist
+      '(("fuck" . " f..k")))
+
 ;; Hide distracting info from `erc' IRC client
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 
