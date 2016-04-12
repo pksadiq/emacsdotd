@@ -154,12 +154,12 @@ Otherwise, call `backward-kill-word'."
   (insert " "))
 
 
-(defun dwim-more ()
-  (interactive)
-  (let ((char-at-point (char-before (point))))
-    (cond ((eq char-at-point ? )
-           (delete-char -1)
-           (check-or-insert)))))
+(defun dwim-more ())
+  ;; (interactive)
+  ;; (let ((char-at-point (char-before (point))))
+  ;;   (cond ((eq char-at-point ? )
+  ;;          (delete-char -1)
+  ;;          (check-or-insert)))))
 
 
 (provide 'init-defun)
