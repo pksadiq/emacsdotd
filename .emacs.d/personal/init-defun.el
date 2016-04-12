@@ -118,14 +118,14 @@ Otherwise, call `backward-kill-word'."
 
 (defun erc-get-last-nick ()
   (interactive)
-  (let ((last-nick ""))
+  (let ((last-nick "")
+        (users (erc-sort-channel-users-by-activity
+                (erc-get-channel-user-list))))
     (if (and (eq (point) (point-max))
              (get-text-property (1- (point)) 'read-only))
         (progn
-          (save-excursion
-            (re-search-backward "^<[^>]*>")
-            (goto-char (1+ (point)))
-            (setq last-nick (erc-server-user-nickname (erc-nick-at-point))))
+          (setq last-nick (erc-server-user-nickname
+                           (car (nth 0 users))))
           (insert last-nick ": ")))))
 
 (provide 'init-defun)
