@@ -139,8 +139,7 @@ Otherwise, call `backward-kill-word'."
           (t
            (setq nick-n -1)))
     (when (>= nick-n 0)
-      (delete-region (point) (save-excursion
-                               (re-search-backward "^") (+ (point) 5)))
+      (erc-kill-input)
       (setq last-nick (erc-server-user-nickname
                        (car (nth nick-n users))))
       (insert last-nick ": "))))
