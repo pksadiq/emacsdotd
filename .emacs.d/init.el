@@ -65,3 +65,7 @@
 ;; Configures `ansi-term' IRC client
 (load-library "init-term")
 (require 'init-term)
+
+;; Configure specific files to be opened with specific modes.
+(load-library "init-files")
+(require 'init-files)
