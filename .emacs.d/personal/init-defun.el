@@ -116,4 +116,16 @@ Otherwise, call `backward-kill-word'."
   (set-process-sentinel (get-buffer-process (current-buffer))
                         #'kill-buffer-on-exit))
 
+(defun erc-get-last-nick ()
+  (interactive)
+  (let ((last-nick ""))
+    (if (and (eq (point) (point-max))
+             (get-text-property (1- (point)) 'read-only))
+        (progn
+          (save-excursion
+            (re-search-backward "^<[^>]*>")
+            (goto-char (1+ (point)))
+            (setq last-nick (erc-server-user-nickname (erc-nick-at-point))))
+          (insert last-nick ": ")))))
+
 (provide 'init-defun)
