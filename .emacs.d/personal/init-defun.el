@@ -121,11 +121,26 @@ Otherwise, call `backward-kill-word'."
   (let ((last-nick "")
         (users (erc-sort-channel-users-by-activity
                 (erc-get-channel-user-list))))
-    (if (and (eq (point) (point-max))
-             (get-text-property (1- (point)) 'read-only))
-        (progn
-          (setq last-nick (erc-server-user-nickname
-                           (car (nth 0 users))))
-          (insert last-nick ": ")))))
+    (cond ((and (eq (point) (point-max))
+                (get-text-property (1- (point)) 'read-only))
+           (setq nick-n 0))
+          ((>= (1+ nick-n) (length users))
+           (setq nick-n 0))
+          ((and (not (get-text-property (point) 'read-only))
+                (or (eq (char-before) ?:)
+                    (eq (char-before (1- (point))) ?:))
+                (save-excursion
+                  (goto-char (1- (point)))
+                  (search-backward " ")
+                  (get-text-property (point) 'read-only)))
+           (setq nick-n (1+ nick-n)))
+          (t
+           (setq nick-n -1)))
+    (when (>= nick-n 0)
+      (delete-region (point) (save-excursion
+                               (re-search-backward "^") (+ (point) 5)))
+      (setq last-nick (erc-server-user-nickname
+                       (car (nth nick-n users))))
+      (insert last-nick ": "))))
 
 (provide 'init-defun)
