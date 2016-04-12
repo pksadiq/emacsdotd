@@ -121,7 +121,9 @@ Otherwise, call `backward-kill-word'."
   (let ((last-nick "")
         (users (erc-sort-channel-users-by-activity
                 (erc-get-channel-user-list))))
-    (cond ((and (eq (point) (point-max))
+    (cond ((= (length users) 0)
+           (setq nick-n -1))
+          ((and (eq (point) (point-max))
                 (get-text-property (1- (point)) 'read-only))
            (setq nick-n 0))
           ((>= (1+ nick-n) (length users))
