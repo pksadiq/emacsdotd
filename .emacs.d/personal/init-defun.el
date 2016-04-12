@@ -144,4 +144,22 @@ Otherwise, call `backward-kill-word'."
                        (car (nth nick-n users))))
       (insert last-nick ": "))))
 
+(defun check-or-insert ()
+  (interactive)
+  (when (and (= (save-excursion
+                  (goto-char (1- (point)))
+                  (c-beginning-of-current-token) (point))
+                (save-excursion
+                  (c-beginning-of-statement-1) (point)))))
+  (insert " "))
+
+
+(defun dwim-more ()
+  (interactive)
+  (let ((char-at-point (char-before (point))))
+    (cond ((eq char-at-point ? )
+           (delete-char -1)
+           (check-or-insert)))))
+
+
 (provide 'init-defun)
