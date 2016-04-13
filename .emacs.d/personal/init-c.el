@@ -16,4 +16,8 @@
 (defvar last-defun-name nil)
 (defvar last-defun-name-1 nil)
 
+(add-hook 'c-initialization-hook
+          (lambda ()
+            (add-hook 'post-self-insert-hook 'dwim-more nil t)))
+
 (provide 'init-c)
