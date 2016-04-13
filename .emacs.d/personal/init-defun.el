@@ -12,6 +12,10 @@
     (setq token (buffer-substring-no-properties
                  (save-excursion (c-beginning-of-current-token) (point))
                  (save-excursion (c-end-of-current-token) (point))))
+    (if (string= token "")
+      (setq token (buffer-substring-no-properties
+                  (save-excursion (c-backward-token-2) (point))
+                  (point))))
     (message "%s" token)))
 
 (defun set-mode-comment ()
