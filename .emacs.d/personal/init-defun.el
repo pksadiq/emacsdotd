@@ -146,9 +146,10 @@ Otherwise, call `backward-kill-word'."
 
 (defun check-or-insert ()
   (interactive)
-  (cond ((and (save-excursion
-                (re-search-backward "^\\| ")
-                (message "%d" (point))
+  (cond ((memq (char-before (point)) '(?\, ?\;))
+         (insert " "))
+        ((and (save-excursion
+                (re-search-backward "[ ,;()]\\|^")
                 (looking-at-p c-keywords-regexp)))
          (insert " "))
         (t
@@ -167,6 +168,5 @@ Otherwise, call `backward-kill-word'."
     (cond ((eq char-at-point ? )
            (delete-char -1)
            (check-or-insert)))))
-
 
 (provide 'init-defun)
