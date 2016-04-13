@@ -146,20 +146,27 @@ Otherwise, call `backward-kill-word'."
 
 (defun check-or-insert ()
   (interactive)
-  (when (and (= (save-excursion
-                  (goto-char (1- (point)))
-                  (c-beginning-of-current-token) (point))
-                (save-excursion
-                  (c-beginning-of-statement-1) (point)))))
-  (insert " "))
+  (cond ((and (save-excursion
+                (re-search-backward "^\\| ")
+                (message "%d" (point))
+                (looking-at-p c-keywords-regexp)))
+         (insert " "))
+        (t
+         (insert "_"))
+        ))
 
+;; (= (save-excursion
+;;      (goto-char (1- (point)))
+;;      (c-beginning-of-current-token) (point))
+;;    (save-excursion
+;;      (c-beginning-of-statement-1) (point)))
 
-(defun dwim-more ())
-  ;; (interactive)
-  ;; (let ((char-at-point (char-before (point))))
-  ;;   (cond ((eq char-at-point ? )
-  ;;          (delete-char -1)
-  ;;          (check-or-insert)))))
+(defun dwim-more ()
+  (interactive)
+  (let ((char-at-point (char-before (point))))
+    (cond ((eq char-at-point ? )
+           (delete-char -1)
+           (check-or-insert)))))
 
 
 (provide 'init-defun)
