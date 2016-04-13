@@ -1,5 +1,11 @@
 ;; Some personal functions
 
+(defun point-in-comment-p ()
+  (nth 4 (syntax-ppss)))
+
+(defun point-in-string-p ()
+  (nth 3 (syntax-ppss)))
+
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
   (let ((mode-comment "")
@@ -82,14 +88,19 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
         t
       nil)))
 
-(defun end-statement ()
-  (interactive)
+(defun my-end-statement ()
   (end-of-line)
   (delete-trailing-whitespace
    (line-beginning-position) (line-end-position))
   (unless (eq (char-before) ?\;)
     (c-indent-line)
     (insert ";")))
+
+(defun end-statement ()
+  (interactive)
+  (if (point-in-comment-p)
+      (insert ";")
+    (my-end-of-statement)))
 
 (defun insert-semi-colon ()
   (interactive)
@@ -147,6 +158,9 @@ Otherwise, call `backward-kill-word'."
 (defun check-or-insert ()
   (interactive)
   (cond ((memq (char-before (point)) '(?\, ?\;))
+         (insert " "))
+        ((or (point-in-comment-p)
+             (point-in-string-p))
          (insert " "))
         ((and (save-excursion
                 (re-search-backward "[ ,;()]\\|^")
