@@ -181,7 +181,7 @@ Otherwise, call `backward-kill-word'."
 
 (defun check-or-insert ()
   (interactive)
-  (cond ((memq (char-before (point)) '(?\, ?\;))
+  (cond ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (char-before (point))))
          (insert " "))
         ((or (point-in-comment-p)
              (point-in-string-p))
@@ -205,7 +205,9 @@ Otherwise, call `backward-kill-word'."
     (goto-char (- (point) value))
     (when (eq (char-before (point)) ?\_)
       (delete-char -1)
-      (insert " "))))
+      (unless (string-match-p
+               "[,;)]" (char-to-string (char-before (1+ (point)))))
+        (insert " ")))))
 
 (defun dwim-more ()
   (interactive)
@@ -213,7 +215,7 @@ Otherwise, call `backward-kill-word'."
     (cond ((eq char-at-point ? )
            (delete-char -1)
            (check-or-insert))
-          ((eq char-at-point ?\()
+          ((string-match-p "[^a-zA-Z0-9_]"(char-to-string (char-before (point))))
            (under-score-to-space 1)
     ))))
 
