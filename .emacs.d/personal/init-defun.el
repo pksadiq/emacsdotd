@@ -1,22 +1,34 @@
 ;; Some personal functions
 
+;; Packages required for the functions below
+(require 'subr-x)
+
 (defun point-in-comment-p ()
   (nth 4 (syntax-ppss)))
 
 (defun point-in-string-p ()
   (nth 3 (syntax-ppss)))
 
-(defun c-token-at-point ()
+(defun c-token-at-point (&optional which-point check-more)
   (interactive)
-  (let ((token nil))
+  (let ((token nil)
+        (point-begin nil))
     (setq token (buffer-substring-no-properties
-                 (save-excursion (c-beginning-of-current-token) (point))
+                 (setq point-begin
+                       (save-excursion (c-beginning-of-current-token) (point)))
                  (save-excursion (c-end-of-current-token) (point))))
-    (if (string= token "")
-      (setq token (buffer-substring-no-properties
-                  (save-excursion (c-backward-token-2) (point))
-                  (point))))
-    (message "%s" token)))
+    (if (and (string= token "")
+             check-more)
+        (setq token (buffer-substring-no-properties
+                     (save-excursion (c-backward-token-2) (point))
+                     (point))))
+    (setq token (string-trim token))
+    (cond ((string= which-point "begin")
+           point-begin)
+          ((string= which-point "end")
+           (+ (length token) point-begin))
+          (t
+           point-begin))))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
@@ -188,11 +200,21 @@ Otherwise, call `backward-kill-word'."
 ;;    (save-excursion
 ;;      (c-beginning-of-statement-1) (point)))
 
+(defun under-score-to-space (value)
+  (save-excursion
+    (goto-char (- (point) value))
+    (when (eq (char-before (point)) ?\_)
+      (delete-char -1)
+      (insert " "))))
+
 (defun dwim-more ()
   (interactive)
   (let ((char-at-point (char-before (point))))
     (cond ((eq char-at-point ? )
            (delete-char -1)
-           (check-or-insert)))))
+           (check-or-insert))
+          ((eq char-at-point ?\()
+           (under-score-to-space 1)
+    ))))
 
 (provide 'init-defun)
