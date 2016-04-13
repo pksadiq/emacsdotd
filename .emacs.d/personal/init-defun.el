@@ -108,7 +108,7 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
   (interactive)
   (if (point-in-comment-p)
       (insert ";")
-    (my-end-of-statement)))
+    (my-end-statement)))
 
 (defun insert-semi-colon ()
   (interactive)
