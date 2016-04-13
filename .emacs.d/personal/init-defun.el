@@ -6,6 +6,14 @@
 (defun point-in-string-p ()
   (nth 3 (syntax-ppss)))
 
+(defun c-token-at-point ()
+  (interactive)
+  (let ((token nil))
+    (setq token (buffer-substring-no-properties
+                 (save-excursion (c-beginning-of-current-token) (point))
+                 (save-excursion (c-end-of-current-token) (point))))
+    (message "%s" token)))
+
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
   (let ((mode-comment "")
