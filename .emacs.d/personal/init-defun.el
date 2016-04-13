@@ -130,6 +130,10 @@ STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
   (interactive)
   (insert ";"))
 
+(defun insert-space ()
+  (interactive)
+  (insert " "))
+
 (defun kill-region-or-backward-word ()
   "If the region is active and non-empty, call `kill-region'.
 Otherwise, call `backward-kill-word'."

@@ -18,6 +18,7 @@
 
 (add-hook 'c-initialization-hook
           (lambda ()
-            (add-hook 'post-self-insert-hook 'dwim-more nil t)))
+            (add-hook 'post-self-insert-hook 'dwim-more nil t)
+            (local-set-key (kbd "S-SPC") 'insert-space)))
 
 (provide 'init-c)
