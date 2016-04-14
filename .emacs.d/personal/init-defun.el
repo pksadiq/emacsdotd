@@ -9,6 +9,37 @@
 (defun point-in-string-p ()
   (nth 3 (syntax-ppss)))
 
+(defun c-point-in-token-p (&optional point-after use-space)
+  "Check if the (point) is inside a C token
+return t if true, else nil.
+
+if POINT-AFTER is non nil, check if the (1- point) is inside token.
+
+if USE-SPACE is t replace '_' with ' '"
+  (interactive)
+  (let ((deleted nil)
+        (status nil))
+    (when (and use-space
+               (eq (preceding-char) ?\_))
+      (setq deleted t)
+      (delete-char -1)
+      (insert " "))
+    (setq status (save-excursion
+                   (and point-after (backward-char))
+                   (c-beginning-of-current-token)))
+    (when deleted
+      (delete-char -1)
+      (insert "_"))
+    status))
+
+
+(defun c-token-before-point (&optional begin check-more)
+  (interactive)
+  (let ((token nil)
+        (point-begin nil))
+    (cond (()))
+    (message "%s" token)))
+
 (defun c-token-at-point (&optional which-point check-more)
   (interactive)
   (let ((token nil)
