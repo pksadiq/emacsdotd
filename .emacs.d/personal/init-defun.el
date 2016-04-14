@@ -52,47 +52,23 @@ was SPC)"
         token
       nil)))
 
-(defun c-token-at-point ()
-  (interactive)
-  (let ((token nil))
-    (cond ((c-point-in-token-p nil t)
-           (setq token (buffer-substring-no-properties
-                          (save-excursion (c-beginning-of-current-token) (point))
-                          (save-excursion (c-end-of-current-token) (point)))))
-          ((not (or (last-char-space-p)
-                    (c-point-in-token-p t)))
-           (setq token (buffer-substring-no-properties
-                        (save-excursion (c-backward-token-2) (point))
-                        (point)))))
-    token))
-
-(defun c-token-before-point (&optional begin check-more)
+(defun c-token-at-point (&optional return-points?)
   (interactive)
   (let ((token nil)
-        (point-begin nil))
-    (cond (()))
-    (message "%s" token)))
-
-;; (defun c-token-at-point (&optional which-point check-more)
-;;   (interactive)
-;;   (let ((token nil)
-;;         (point-begin nil))
-;;     (setq token (buffer-substring-no-properties
-;;                  (setq point-begin
-;;                        (save-excursion (c-beginning-of-current-token) (point)))
-;;                  (save-excursion (c-end-of-current-token) (point))))
-;;     (if (and (string= token "")
-;;              check-more)
-;;         (setq token (buffer-substring-no-properties
-;;                      (save-excursion (c-backward-token-2) (point))
-;;                      (point))))
-;;     (setq token (string-trim token))
-;;     (cond ((string= which-point "begin")
-;;            point-begin)
-;;           ((string= which-point "end")
-;;            (+ (length token) point-begin))
-;;           (t
-;;            point-begin))))
+        (points (cons (point) (point))))
+    (cond ((c-point-in-token-p nil t)
+           (setq token (buffer-substring-no-properties
+                        (setcar points
+                                (save-excursion (c-beginning-of-current-token) (point)))
+                        (setcdr points
+                                (save-excursion (c-end-of-current-token) (point))))))
+          (t
+           (setq token (c-single-char-token-at-point))))
+    (if (= (length token) 1)
+        (setcar points (1- (point))))
+    (if return-points?
+        points
+      token)))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
@@ -261,12 +237,6 @@ Otherwise, call `backward-kill-word'."
         (t
          (insert "_"))
         ))
-
-;; (= (save-excursion
-;;      (goto-char (1- (point)))
-;;      (c-beginning-of-current-token) (point))
-;;    (save-excursion
-;;      (c-beginning-of-statement-1) (point)))
 
 (defun under-score-to-space (value)
   (save-excursion
