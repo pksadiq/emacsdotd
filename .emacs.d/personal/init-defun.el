@@ -22,9 +22,8 @@ if USE-SPACE is t replace '_' with ' ' (only if last keyboard key
 was SPC)"
   (interactive)
   (let ((deleted nil)
-        (status nil))
-    ;; TODO: don't add change to undo history
-    ;; TOOD: delete '_' only if it was transformed from ' '
+        (status nil)
+        (buffer-undo-list t))
     (when (and use-space
                (eq (preceding-char) ?\_)
                (eq last-command-event ?\ ))
@@ -48,8 +47,7 @@ was SPC)"
                     (c-point-in-token-p)))
            (setq token (buffer-substring-no-properties
                         (save-excursion (c-backward-token-2) (point))
-                        (point))))
-          )
+                        (point)))))
     (if (= (length token) 1)
         token
       nil)))
