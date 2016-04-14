@@ -9,29 +9,64 @@
 (defun point-in-string-p ()
   (nth 3 (syntax-ppss)))
 
-(defun c-point-in-token-p (&optional point-after use-space)
+(defun last-char-space-p ()
+  (member (preceding-char) '(?\  ?\t ?\n)))
+
+(defun c-point-in-token-p (&optional point-before use-space)
   "Check if the (point) is inside a C token
 return t if true, else nil.
 
 if POINT-AFTER is non nil, check if the (1- point) is inside token.
 
-if USE-SPACE is t replace '_' with ' '"
+if USE-SPACE is t replace '_' with ' ' (only if last keyboard key 
+was SPC)"
   (interactive)
   (let ((deleted nil)
         (status nil))
+    ;; TODO: don't add change to undo history
+    ;; TOOD: delete '_' only if it was transformed from ' '
     (when (and use-space
-               (eq (preceding-char) ?\_))
+               (eq (preceding-char) ?\_)
+               (eq last-command-event ?\ ))
       (setq deleted t)
       (delete-char -1)
       (insert " "))
     (setq status (save-excursion
-                   (and point-after (backward-char))
+                   (if point-before (backward-char))
                    (c-beginning-of-current-token)))
     (when deleted
       (delete-char -1)
       (insert "_"))
     status))
 
+(defun c-single-char-token-at-point ()
+  (interactive)
+  (let ((token nil))
+    (cond ((eq (preceding-char) ?\0)
+           nil)
+          ((not (or (last-char-space-p)
+                    (c-point-in-token-p)))
+           (setq token (buffer-substring-no-properties
+                        (save-excursion (c-backward-token-2) (point))
+                        (point))))
+          )
+    (if (= (length token) 1)
+        token
+      nil)))
+
+(defun c-token-at-point ()
+  (interactive)
+  (let ((token nil))
+    (cond ((c-point-in-token-p nil t)
+           (setq token (buffer-substring-no-properties
+                          (save-excursion (c-beginning-of-current-token) (point))
+                          (save-excursion (c-end-of-current-token) (point)))))
+          ((not (or (last-char-space-p)
+                    (c-point-in-token-p t)))
+           (setq token (buffer-substring-no-properties
+                        (save-excursion (c-backward-token-2) (point))
+                        (point)))))
+    token))
 
 (defun c-token-before-point (&optional begin check-more)
   (interactive)
@@ -40,26 +75,26 @@ if USE-SPACE is t replace '_' with ' '"
     (cond (()))
     (message "%s" token)))
 
-(defun c-token-at-point (&optional which-point check-more)
-  (interactive)
-  (let ((token nil)
-        (point-begin nil))
-    (setq token (buffer-substring-no-properties
-                 (setq point-begin
-                       (save-excursion (c-beginning-of-current-token) (point)))
-                 (save-excursion (c-end-of-current-token) (point))))
-    (if (and (string= token "")
-             check-more)
-        (setq token (buffer-substring-no-properties
-                     (save-excursion (c-backward-token-2) (point))
-                     (point))))
-    (setq token (string-trim token))
-    (cond ((string= which-point "begin")
-           point-begin)
-          ((string= which-point "end")
-           (+ (length token) point-begin))
-          (t
-           point-begin))))
+;; (defun c-token-at-point (&optional which-point check-more)
+;;   (interactive)
+;;   (let ((token nil)
+;;         (point-begin nil))
+;;     (setq token (buffer-substring-no-properties
+;;                  (setq point-begin
+;;                        (save-excursion (c-beginning-of-current-token) (point)))
+;;                  (save-excursion (c-end-of-current-token) (point))))
+;;     (if (and (string= token "")
+;;              check-more)
+;;         (setq token (buffer-substring-no-properties
+;;                      (save-excursion (c-backward-token-2) (point))
+;;                      (point))))
+;;     (setq token (string-trim token))
+;;     (cond ((string= which-point "begin")
+;;            point-begin)
+;;           ((string= which-point "end")
+;;            (+ (length token) point-begin))
+;;           (t
+;;            point-begin))))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
@@ -251,7 +286,7 @@ Otherwise, call `backward-kill-word'."
            (delete-char -1)
            (check-or-insert))
           ((string-match-p "[^a-zA-Z0-9_]"(char-to-string (char-before (point))))
-           (under-score-to-space 1)
-    ))))
+           (under-score-to-space 1))
+          )))
 
 (provide 'init-defun)
