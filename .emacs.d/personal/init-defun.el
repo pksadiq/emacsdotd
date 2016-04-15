@@ -225,13 +225,16 @@ Otherwise, call `backward-kill-word'."
 
 (defun check-or-insert ()
   (interactive)
-  (cond ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (char-before (point))))
+  (cond ((eq (preceding-char) ?\0)
+         (insert " "))
+        ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
          (insert " "))
         ((or (point-in-comment-p)
              (point-in-string-p))
          (insert " "))
         ((and (save-excursion
                 (re-search-backward "[ ,;()]\\|^")
+                (forward-char)
                 (looking-at-p c-keywords-regexp)))
          (insert " "))
         (t
@@ -249,12 +252,13 @@ Otherwise, call `backward-kill-word'."
 
 (defun dwim-more ()
   (interactive)
-  (let ((char-at-point (char-before (point))))
-    (cond ((eq char-at-point ? )
+  (let ((char-at-point (preceding-char)))
+    (cond ((eq char-at-point ?\ )
            (delete-char -1)
-           (check-or-insert))
-          ((string-match-p "[^a-zA-Z0-9_]"(char-to-string (char-before (point))))
-           (under-score-to-space 1))
+           (check-or-insert)
+           (message "bad"))
+  ;;         ((string-match-p "[^a-zA-Z0-9_]"(char-to-string (preceding-char)))
+  ;;          (under-score-to-space 1))
           )))
 
 (provide 'init-defun)
