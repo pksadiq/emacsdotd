@@ -54,7 +54,7 @@ was SPC)"
 
 (defun c-token-at-point (&optional return-points?)
   (interactive)
-  (let ((token nil)
+  (let ((token "")
         (points (cons (point) (point))))
     (cond ((c-point-in-token-p nil t)
            (setq token (buffer-substring-no-properties
@@ -70,14 +70,18 @@ was SPC)"
         points
       token)))
 
-(defun replace-token-at-point (replace-token)
-  (let ((token (c-token-at-point)))
+(defun replace-token-at-point (style)
+  (let ((token ""))
+    (setq token (save-excursion
+                  (forward-char)
+                  (c-token-at-point)))
+    (setq token (str-to-style token "upcamel"))
     (c-beginning-of-current-token)
     (delete-region (point) (save-excursion
                              (forward-char)
                              (c-end-of-current-token)
                              (point)))
-    (insert replace-token)))
+    (insert token)))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
@@ -125,19 +129,21 @@ was SPC)"
       str
     (str-to-snake-case str)))
 
-(defun str-to-style (style str)
+(defun str-to-style (str style)
   "Convert STR to corresponding STYLE.
 
 STR can be of the form CamelCase, snake_case, space text, or lisp-case
 
-STYLE can be 'upcamel', 'lisp'. any other STYLE defaults to 'snake'"
+STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (let* ((str (str-to-snake-style str))
          (out str))
     (cond ((string= style "upcamel")
            (setq str (upcase-initials str))
            (setq out (replace-regexp-in-string "_\\(.\\)" "\\1" str)))
           ((string= style "lisp")
-           (setq out (replace-regexp-in-string "_" "-" str))))
+           (setq out (replace-regexp-in-string "_" "-" str)))
+          ((string= style "upsnake")
+           (setq out (upcase str))))
     out))
 
 (defun get-first (str)
@@ -241,10 +247,10 @@ Otherwise, call `backward-kill-word'."
         ((or (point-in-comment-p)
              (point-in-string-p))
          (insert " "))
-        ((and (save-excursion
-                (re-search-backward "[ ,;()]\\|^")
-                (forward-char)
-                (looking-at-p c-keywords-regexp)))
+        ((save-excursion
+           (backward-char)
+           (c-beginning-of-current-token)
+           (looking-at-p c-keywords-regexp))
          (insert " "))
         (t
          (insert "_"))
@@ -259,6 +265,14 @@ Otherwise, call `backward-kill-word'."
                "[,;)]" (char-to-string (char-before (1+ (point)))))
         (insert " ")))))
 
+(defun dwim-with-context ()
+  (cond ((and (eq (preceding-char) ?\*)
+              (eq (save-excursion (c-beginning-of-statement-1) (point))
+                  (save-excursion (backward-char)(c-backward-token-2) (point))))
+         (backward-char)
+         (c-backward-token-2)
+         (replace-token-at-point "upcamel"))))
+
 (defun dwim-more ()
   (interactive)
   (setq second-last-point (- (point) 2))
@@ -269,7 +283,8 @@ Otherwise, call `backward-kill-word'."
            (delete-char -1)
            (check-or-insert))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
-           (under-score-to-space 1))
+           (under-score-to-space 1)
+           (dwim-with-context))
           )))
 
 (defun no-more-yawn ()
