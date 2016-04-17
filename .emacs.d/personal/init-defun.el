@@ -81,7 +81,8 @@ was SPC)"
                              (forward-char)
                              (c-end-of-current-token)
                              (point)))
-    (insert token)))
+    (insert token)
+    (forward-char 2)))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
@@ -292,5 +293,5 @@ Otherwise, call `backward-kill-word'."
            (map (char-before (1- (point))) '(?\; ?\:))
            (eq (following-char) ?\)))
       (delete-char 1)))
-  
+
 (provide 'init-defun)
