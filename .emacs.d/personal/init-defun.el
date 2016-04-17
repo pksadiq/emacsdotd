@@ -70,6 +70,15 @@ was SPC)"
         points
       token)))
 
+(defun replace-token-at-point (replace-token)
+  (let ((token (c-token-at-point)))
+    (c-beginning-of-current-token)
+    (delete-region (point) (save-excursion
+                             (forward-char)
+                             (c-end-of-current-token)
+                             (point)))
+    (insert replace-token)))
+
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
   (let ((mode-comment "")
@@ -252,13 +261,21 @@ Otherwise, call `backward-kill-word'."
 
 (defun dwim-more ()
   (interactive)
+  (setq second-last-point (- (point) 2))
+  (if (< second-last-point 0)
+      (setq last-last-point nil))
   (let ((char-at-point (preceding-char)))
     (cond ((eq char-at-point ?\ )
            (delete-char -1)
-           (check-or-insert)
-           (message "bad"))
-  ;;         ((string-match-p "[^a-zA-Z0-9_]"(char-to-string (preceding-char)))
-  ;;          (under-score-to-space 1))
+           (check-or-insert))
+          ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
+           (under-score-to-space 1))
           )))
 
+(defun no-more-yawn ()
+  (if (and (eq (preceding-char) ?\()
+           (map (char-before (1- (point))) '(?\; ?\:))
+           (eq (following-char) ?\)))
+      (delete-char 1)))
+  
 (provide 'init-defun)

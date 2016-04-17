@@ -13,8 +13,8 @@
 (defvar gnome-parent nil)
 (make-variable-buffer-local 'gnome-parent)
 
-(defvar last-defun-name nil)
-(defvar last-defun-name-1 nil)
+(defvar second-last-point nil)
+(make-variable-buffer-local 'second-last-point)
 
 (add-hook 'c-initialization-hook
           (lambda ()
