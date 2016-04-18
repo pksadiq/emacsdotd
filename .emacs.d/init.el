@@ -14,6 +14,10 @@
 (load-library "init-package")
 (require 'init-package)
 
+;; Load C prgramming related user defined functions
+(load-library "init-c-defun")
+(require 'init-c-defun)
+
 ;; Load user defined functions
 (load-library "init-defun")
 (require 'init-defun)
