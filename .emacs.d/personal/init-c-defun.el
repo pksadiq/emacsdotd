@@ -1,6 +1,14 @@
 ;; Packages required for the functions below
 (require 'subr-x)
 
+(defun c-next-line-empty-p ()
+  (let ((my-point (point)))
+    (save-excursion
+      (end-of-line)
+      (c-skip-ws-forward)
+      (> (- (point) my-point) 1)
+      )))
+
 (defun point-in-comment-p ()
   (nth 4 (syntax-ppss)))
 
@@ -14,13 +22,21 @@
   (save-excursion
     (re-search-backward regexp nil t)))
 
-(defun c-is-function-before-p ()
+(defun c-in-function-name-p ()
   (save-excursion
-    (c-backward-token-2)
-    (forward-char 1)
     (if (eq (face-at-point) 'font-lock-function-name-face)
         t
       nil)))
+
+(defun c-in-header-fname-p ()
+  (save-excursion
+    (backward-char 1)
+    (when (and (eq (face-at-point) 'font-lock-string-face)
+               (c-beginning-of-macro))
+      (forward-char 2)
+      (if (string= (c-token-at-point) "include")
+          t
+        nil))))
 
 (defun c-in-function-arg-p ()
   (let ((my-point nil)
@@ -111,8 +127,7 @@ was SPC)"
                              (forward-char)
                              (c-end-of-current-token)
                              (point)))
-    (insert token)
-    (forward-char 2)))
+    (insert token)))
 
 
 (defun str-to-snake-case (str)
@@ -199,12 +214,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (interactive)
   (insert " "))
 
-(defun check-or-insert ()
+(defun dwim-with-space ()
   (interactive)
   (cond ((eq (preceding-char) ?\0)
          (insert " "))
         ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
          (insert " "))
+        ((c-in-header-fname-p)
+         (insert "-"))
         ((or (point-in-comment-p)
              (point-in-string-p))
          (insert " "))
@@ -241,6 +258,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (t
          (insert "{"))))
 
+(defun dwim-with-return ()
+  (cond ((c-in-header-fname-p)
+         (end-of-line)
+         (if (not (c-next-line-empty-p))
+             (insert "\n")
+           (forward-line)))
+        (t
+         (insert "\n"))))
+
 (defun dwim-with-context ()
   (cond ((and (eq (preceding-char) ?\*)
               (eq (save-excursion (c-beginning-of-statement-1) (point))
@@ -254,20 +280,48 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          (c-backward-token-2)
          (replace-token-at-point "upcamel"))))
 
+(defun dwim-with-> ()
+  (cond ((and (c-in-header-fname-p)
+              (eq (following-char) ?\>))
+         (forward-char 1)
+         (backward-delete-char 1)
+          )))
+
+(defun dwim-with-< ()
+  (under-score-to-space 1)
+  (let ((in-include nil))
+    (save-excursion
+      (when (c-beginning-of-macro)
+        (forward-char 2)
+        (if (string= (c-token-at-point) "include")
+            (setq in-include t))))
+    (cond (in-include
+           (insert ">")
+           (backward-char 1))
+          )))
+
 (defun dwim-more ()
-  ;; (interactive)
-  ;; (if (< second-last-point 0)
-  ;;     (setq last-last-point nil))
-  ;; (let ((char-at-point (preceding-char)))
-  ;;   (cond ((eq char-at-point ?\ )
-  ;;          (delete-char -1)
-  ;;          (check-or-insert))
-  ;;         ((eq char-at-point ?\{)
-  ;;          (under-score-to-space 1)
-  ;;          (dwim-with-brace))
-  ;;         ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
-  ;;          (under-score-to-space 1)
-  ;;          (dwim-with-context)))
-          )
+  (interactive)
+  (if (or (not second-last-point)
+          (< second-last-point 0))
+      (setq second-last-point nil))
+  (let ((char-at-point (preceding-char)))
+    (cond ((eq last-command-event ?\n)
+           (delete-backward-char 1)
+           (dwim-with-return))
+          ((eq char-at-point ?\ )
+           (delete-char -1)
+           (dwim-with-space))
+          ((eq char-at-point ?\<)
+           (dwim-with-<))
+          ((eq char-at-point ?\>)
+           (dwim-with->))
+          ((eq char-at-point ?\{)
+           (under-score-to-space 1)
+           (dwim-with-brace))
+          ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
+           (under-score-to-space 1)
+           (dwim-with-context))
+          )))
 
 (provide 'init-c-defun)
