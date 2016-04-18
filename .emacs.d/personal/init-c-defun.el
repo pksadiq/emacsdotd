@@ -226,6 +226,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (interactive)
   (insert ";"))
 
+(defun insert-brace ()
+  (interactive)
+  (insert "{"))
+
 (defun insert-space ()
   (interactive)
   (insert " "))
@@ -274,7 +278,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (insert "{")
            ))
         (t
-         (insert "{"))))
+         (insert "{")
+         (under-score-to-space 1))))
 
 (defun dwim-with-return ()
   (cond ((c-in-header-fname-p)
@@ -299,11 +304,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          (replace-token-at-point "upcamel"))))
 
 (defun dwim-with-> ()
-  (cond ((and (c-in-header-fname-p)
-              (eq (following-char) ?\>))
-         (forward-char 1)
-         (backward-delete-char 1)
-          )))
+  (let ((buffer-undo-list t))
+    (cond ((and (c-in-header-fname-p)
+                (eq (following-char) ?\>))
+           (backward-delete-char -1)
+           ))))
 
 (defun dwim-with-< ()
   (under-score-to-space 1)
@@ -316,13 +321,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (cond (in-include
            (insert ">")
            (backward-char 1))
+          (t
+           (c-electric-lt-gt 1))
           )))
 
 (defun dwim-more ()
   (interactive)
-  (if (or (not second-last-point)
-          (< second-last-point 0))
-      (setq second-last-point nil))
   (let ((char-at-point (preceding-char)))
     (cond ((eq last-command-event ?\n)
            (delete-backward-char 1)
@@ -335,12 +339,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           ((eq char-at-point ?\>)
            (dwim-with->))
           ((eq char-at-point ?\{)
-           (under-score-to-space 1)
-           (dwim-with-brace)
-           )
+           (dwim-with-brace))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
            (under-score-to-space 1)
            (dwim-with-context))
-          )))
+          )
+    (setq second-last-point last-command-event)))
 
 (provide 'init-c-defun)
