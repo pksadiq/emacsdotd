@@ -1,6 +1,22 @@
 ;; Packages required for the functions below
 (require 'subr-x)
 
+(defun electric-pair-inhibit-me (char)
+  (or
+   (eq char (char-after))
+   (and (eq char (char-before))
+        (eq char (char-before (1- (point)))))
+   (eq (char-syntax (following-char)) ?w)
+   (and (eq (nth 0 (syntax-ppss)) 1)
+        (if (equal major-mode 'c-mode)
+            (save-excursion
+              (forward-line -2)
+              (eq (c-where-wrt-brace-construct) 'in-header))
+          nil))
+   ))
+
+(setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
+
 (defun c-next-line-empty-p ()
   (let ((my-point (point)))
     (save-excursion
@@ -50,7 +66,7 @@
       (save-excursion (while (and (not (bobp))
                                   (> (nth 0 (syntax-ppss (point))) 0))
                         (backward-char))
-                      (c-is-function-before-p)))))
+                      (c-in-function-name-p)))))
 
 ;; (defun c-end-of-defun-arg ()
 ;;   (let ((brace-count (nth 0 (syntax-ppss)))
@@ -248,7 +264,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (cond ((eq (save-excursion
                (if (> (point-max) (point)) (forward-char))
                (c-where-wrt-brace-construct)) 'in-header)
-         (search-forward "{"))
+         (search-forward "{")
+         (forward-line)
+         )
         ((c-in-function-arg-p)
          (search-forward ")")
          (unless (eq (following-char) ?\;)
@@ -318,7 +336,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (dwim-with->))
           ((eq char-at-point ?\{)
            (under-score-to-space 1)
-           (dwim-with-brace))
+           (dwim-with-brace)
+           )
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
            (under-score-to-space 1)
            (dwim-with-context))
