@@ -135,11 +135,15 @@ was SPC)"
       token)))
 
 (defun replace-token-at-point (style)
-  (let ((token ""))
+  (let ((token "")
+        (token-stripped ""))
     (setq token (save-excursion
                   (forward-char)
                   (c-token-at-point)))
-    (when (or (string-match-p "._." token)
+    (setq token-stripped token)
+    (if (string-match-p "_t$" token-stripped)
+        (setq token-stripped (substring token-stripped 0 -2)))
+    (when (or (string-match-p "._." token-stripped)
               (string-match-p "snake\\|lisp" style))
       (setq token (str-to-style token style))
       (c-beginning-of-current-token)
