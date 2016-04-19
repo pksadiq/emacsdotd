@@ -11,6 +11,7 @@
         (if (equal major-mode 'c-mode)
             (save-excursion
               (forward-line -2)
+              (forward-char 1)
               (eq (c-where-wrt-brace-construct) 'in-header))
           nil))
    ))
@@ -44,7 +45,7 @@
         t
       nil)))
 
-(defun c-in-function-header-p ()
+(defun c-in-function-header-p (&optional is-not)
   "(c-where-wrt-brace-construct) is not reporting the 'in-header to be right.
 So, a hack to fix it."
   (if (and (not (save-excursion (c-beginning-of-macro)))
@@ -60,8 +61,21 @@ So, a hack to fix it."
                          (> (nth 0 (syntax-ppss)) 0))
                (forward-char 1))
              (c-forward-sws)
-             (eq (following-char) ?\{)))
-      t))
+             (if is-not
+                 (not (eq (following-char) ?\{))
+               (eq (following-char) ?\{))))
+      t
+    nil))
+
+;; experimental
+(defun c-in-incomplete-function ()
+  (c-in-function-header-p t))
+
+;; experimental
+(defun c-jump-to-function-arg-end ()
+  (while (and (not (bobp))
+              (c-in-function-arg-p))
+    (forward-char 1)))
 
 (defun c-in-header-fname-p ()
   (save-excursion
