@@ -64,7 +64,20 @@
 (defun c-inside-enum-p ()
   (cond ((not (eq (nth 0 (syntax-ppss)) 1))
          nil)
-        ))
+        ((save-excursion
+           (when (search-backward "{" nil t)
+             (c-backward-sws)
+             (backward-char 1)
+             (if (and (c-token-at-point)
+                      (string= (c-token-at-point) "enum"))
+                 t
+               (progn
+                 (c-beginning-of-current-token)
+                 (c-backward-token-2)
+                 (forward-char 1)
+                 (and (c-token-at-point)
+                      (string= (c-token-at-point) "enum"))))))
+             )))
 
 (defun c-in-struct-or-enum-p ()
   (save-excursion
@@ -310,6 +323,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         ((c-in-function-arg-p)
          (align-current)
          (my-end-statement))
+        ((c-inside-enum-p)
+         (while (and (not (eobp))
+                     (c-inside-enum-p))
+           (forward-char 1))
+         (my-end-statement))
         (t
          (my-end-statement))))
 
@@ -470,6 +488,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-comma ()
   (under-score-to-space 1)
   (do-common-defun)
+  (cond ((c-inside-enum-p)
+         (save-excursion
+           (backward-char 1)
+           (c-backward-token-2)
+           (forward-char 1)
+           (replace-token-at-point "upsnake")))))
   ;; (cond ((and (eq (save-excursion
   ;;                   (c-beginning-of-statement-1)
   ;;                   (point))
@@ -480,7 +504,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   ;;             (not (c-in-function-arg-p)))
   ;;        (backward-delete-char 1)
   ;;        (insert " = ")))
-  )
+
 
 (defun dwim-with-paren-close ()
   (under-score-to-space 1)
