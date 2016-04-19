@@ -263,23 +263,35 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                "[,;)]" (char-to-string (char-before (1+ (point)))))
         (insert " ")))))
 
+(defun c-do-brace ()
+  (insert "{\n\n}")
+  (forward-line -1)
+  (c-indent-line))
+
 (defun dwim-with-brace ()
-  (delete-backward-char 1)
-  (cond ((eq (save-excursion
-               (if (> (point-max) (point)) (forward-char))
-               (c-where-wrt-brace-construct)) 'in-header)
-         (search-forward "{")
-         (forward-line)
-         )
-        ((c-in-function-arg-p)
-         (search-forward ")")
-         (unless (eq (following-char) ?\;)
-           (insert "\n")
+  (let ((put-brace nil))
+    (delete-backward-char 1)
+    (setq put-brace (save-excursion
+                      (c-just-after-func-arglist-p)))
+    (cond ((eq (save-excursion
+                 (if (> (point-max) (point)) (forward-char))
+                 (c-where-wrt-brace-construct)) 'in-header)
+           (search-forward "{")
+           (c-forward-sws)
+           (if (eq (following-char) ?\})
+               (backward-char 1))
+           )
+          (put-brace
+           (c-do-brace))
+          ((c-in-function-arg-p)
+           (search-forward ")")
+           (unless (eq (following-char) ?\;)
+             (insert "\n")
+             (insert "{")
+             ))
+          (t
            (insert "{")
-           ))
-        (t
-         (insert "{")
-         (under-score-to-space 1))))
+           (under-score-to-space 1)))))
 
 (defun dwim-with-return ()
   (cond ((c-in-header-fname-p)
