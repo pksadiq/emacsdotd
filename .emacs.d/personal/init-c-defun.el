@@ -336,7 +336,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun do-common-defun ()
   (if change-not-last
       nil
-    do-common-defun-defuns))
+    (do-common-defun-defuns)))
 
 (defun do-common-defun-defuns ()
   (save-excursion
