@@ -369,7 +369,18 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun dwim-with-comma ()
   (under-score-to-space 1)
-  (do-common-defun))
+  (do-common-defun)
+  ;; (cond ((and (eq (save-excursion
+  ;;                   (c-beginning-of-statement-1)
+  ;;                   (point))
+  ;;                 (save-excursion
+  ;;                   (backward-char)
+  ;;                   (c-backward-token-2)
+  ;;                   (point)))
+  ;;             (not (c-in-function-arg-p)))
+  ;;        (backward-delete-char 1)
+  ;;        (insert " = ")))
+  )
 
 (defun dwim-with-paren-close ()
   (under-score-to-space 1)
@@ -389,6 +400,20 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-backward-token-2)
            (forward-char 1)
            (replace-token-at-point "upcamel")))))
+
+(defun dwim-with-dot ()
+  (let ((changed nil))
+    (save-excursion
+      (backward-char 1)
+      (when (and (eq (preceding-char) ?\.)
+                 (not (point-in-comment-p))
+                 (not (point-in-string-p)))
+        (delete-backward-char 1)
+        (delete-forward-char 1)
+        (insert "->")
+        (setq changed t)))
+    (if changed
+        (forward-char 2))))
 
 (defun dwim-with-> ()
   (let ((buffer-undo-list t))
@@ -437,6 +462,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (dwim-with-paren-close))
           ((eq char-at-point ?\()
            (dwim-with-paren-open))
+          ((eq char-at-point ?\.)
+           (dwim-with-dot))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
            (under-score-to-space 1)
            (dwim-with-context))
