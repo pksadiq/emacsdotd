@@ -409,7 +409,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (insert ">")
            (backward-char 1))
           (t
-           (c-electric-lt-gt 1))
+           nil)
           )))
 
 (defun dwim-with-context ())
