@@ -18,8 +18,7 @@
         (eq
          (save-excursion
            (c-backward-sws)
-           (preceding-char)) ?\{)
-        )
+           (preceding-char)) ?\{))
    (and (equal major-mode 'c-mode)
         (eq
          (save-excursion
@@ -37,9 +36,17 @@
 (defun c-next-line-empty-p ()
   (let ((my-point (point)))
     (save-excursion
-      (end-of-line)
-      (c-skip-ws-forward)
-      (> (- (point) my-point) 1)
+      (forward-line 1)
+      (if (eq my-point (point))
+          nil
+        (string-match-p "^[ \t]*$"
+                        (buffer-substring-no-properties
+                         (save-excursion
+                           (beginning-of-line)
+                           (point))
+                         (save-excursion
+                           (end-of-line)
+                           (point)))))
       )))
 
 (defun point-in-comment-p ()
