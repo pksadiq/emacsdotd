@@ -125,8 +125,15 @@ So, a hack to fix it."
     nil))
 
 ;; experimental
-(defun c-in-incomplete-function ()
-  (c-in-function-header-p t))
+(defun c-in-incomplete-function-arg-p ()
+  (if (c-in-function-arg-p)
+      (save-excursion
+        (search-forward-regexp "[;)]" nil t)
+        (if (eq (preceding-char) ?\;)
+            nil
+          (progn
+            (c-forward-sws)
+            (not (eq (following-char) ?\{)))))))
 
 ;; experimental
 (defun c-jump-to-function-arg-end ()
@@ -379,18 +386,21 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun c-do-brace ()
   (insert "{\n\n}")
+  (unless (eq (following-char) ?\n)
+    (insert "\n")
+    (unless (eq (following-char) ?\n)
+      (insert "\n")
+      (forward-line -1))
+    (forward-line -1))
   (forward-line -1)
   (c-indent-line))
 
 (defun dwim-with-brace ()
   (let ((put-brace nil))
     (delete-backward-char 1)
-    (setq put-brace (save-excursion
-                      (c-just-after-func-arglist-p)))
     (cond ((save-excursion
               (if (> (point-max) (point)) (forward-char))
               (c-in-function-header-p))
-
            (if (c-in-function-arg-p)
                (align-current))
            (search-forward "{")
@@ -398,7 +408,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (if (eq (following-char) ?\})
                (backward-char 1))
            )
-          (put-brace
+          ((c-in-incomplete-function-arg-p)
+           (align-current)
+           (search-forward ")" nil t)
+           (if (eq (following-char) ?\n)
+               (forward-char 1))
            (c-do-brace))
           ((c-in-function-arg-p)
            (align-current)
