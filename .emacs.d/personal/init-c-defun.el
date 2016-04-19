@@ -44,6 +44,25 @@
         t
       nil)))
 
+(defun c-in-function-header-p ()
+  "(c-where-wrt-brace-construct) is not reporting the 'in-header to be right.
+So, a hack to fix it."
+  (if (and (not (save-excursion (c-beginning-of-macro)))
+           (eq (c-where-wrt-brace-construct) 'in-header)
+           (save-excursion
+             (forward-char 1)
+             (when (last-char-space-p)
+               (c-backward-sws)
+               (backward-char 1))
+             (if (not (> (nth 0 (syntax-ppss)) 0))
+                 (search-forward "("))
+             (while (and (not (bobp))
+                         (> (nth 0 (syntax-ppss)) 0))
+               (forward-char 1))
+             (c-forward-sws)
+             (eq (following-char) ?\{)))
+      t))
+
 (defun c-in-header-fname-p ()
   (save-excursion
     (backward-char 1)
@@ -230,6 +249,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          (insert ";"))
         ((do-common-defun)
          nil)
+        ((c-in-function-arg-p)
+         (align-current)
+         (my-end-statement))
         (t
          (my-end-statement))))
 
@@ -289,9 +311,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (delete-backward-char 1)
     (setq put-brace (save-excursion
                       (c-just-after-func-arglist-p)))
-    (cond ((eq (save-excursion
-                 (if (> (point-max) (point)) (forward-char))
-                 (c-where-wrt-brace-construct)) 'in-header)
+    (cond ((save-excursion
+              (if (> (point-max) (point)) (forward-char))
+              (c-in-function-header-p))
+           (if (c-in-function-arg-p)
+               (align-current))
            (search-forward "{")
            (c-forward-sws)
            (if (eq (following-char) ?\})
@@ -317,6 +341,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          (if (not (c-next-line-empty-p))
              (insert "\n")
            (forward-line)))
+        ((save-excursion
+           (c-backward-sws)
+           (c-backward-token-2)
+           (forward-char 1)
+           (eq (face-at-point) 'font-lock-type-face))
+         (insert "\n")
+         (save-excursion
+           (backward-char 3)
+           (replace-token-at-point "upcamel")))
         (t
          (insert "\n"))))
 
@@ -401,6 +434,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          (save-excursion
            (backward-char 1)
            (c-backward-token-2)
+           (c-backward-sws)
+           (while (string= (c-token-at-point) "*")
+             (backward-char 1))
            (c-backward-token-2)
            (forward-char 1)
            (replace-token-at-point "upcamel")))))
