@@ -10,9 +10,10 @@
    (and (eq (nth 0 (syntax-ppss)) 1)
         (if (equal major-mode 'c-mode)
             (save-excursion
-              (forward-line -2)
-              (forward-char 1)
-              (eq (c-where-wrt-brace-construct) 'in-header))
+              (c-backward-sws)
+              (c-backward-token-2)
+              (c-backward-sws)
+              (c-in-function-header-p))
           nil))
    ))
 
@@ -52,6 +53,8 @@ So, a hack to fix it."
            (eq (c-where-wrt-brace-construct) 'in-header)
            (save-excursion
              (forward-char 1)
+             (if (eq (preceding-char) ?\))
+                 (backward-char 1))
              (when (last-char-space-p)
                (c-backward-sws)
                (backward-char 1))
