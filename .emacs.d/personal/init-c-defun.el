@@ -14,7 +14,22 @@
               (c-backward-token-2)
               (c-backward-sws)
               (c-in-function-header-p))
-          nil))
+          nil)
+        (eq
+         (save-excursion
+           (c-backward-sws)
+           (preceding-char)) ?\{)
+        )
+   (and (equal major-mode 'c-mode)
+        (eq
+         (save-excursion
+           (c-backward-sws)
+           (preceding-char)) ?\{)
+        (save-excursion
+          (c-backward-sws)
+          (c-backward-token-2)
+          (c-backward-sws)
+          (c-in-struct-or-enum-p)))
    ))
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
@@ -46,6 +61,31 @@
         t
       nil)))
 
+(defun c-inside-enum-p ()
+  (cond ((not (eq (nth 0 (syntax-ppss)) 1))
+         nil)
+        ))
+
+(defun c-in-struct-or-enum-p ()
+  (save-excursion
+    (unless (eobp)
+      (forward-char 1))
+    (if (last-char-space-p)
+        (backward-char 1))
+    (if (last-char-space-p)
+        (backward-char 1))
+    (when (string= (c-token-at-point) "typedef")
+      (c-forward-token-2)
+      (forward-char 2))
+    (backward-char 1)
+    (when (eq (face-at-point) 'font-lock-type-face)
+      (c-beginning-of-current-token)
+      (c-backward-token-2)
+      (forward-char 1))
+    (if (string-match-p "struct\\|enum" (c-token-at-point))
+        t
+      nil)))
+
 (defun c-in-function-header-p (&optional is-not)
   "(c-where-wrt-brace-construct) is not reporting the 'in-header to be right.
 So, a hack to fix it."
@@ -58,7 +98,8 @@ So, a hack to fix it."
              (when (last-char-space-p)
                (c-backward-sws)
                (backward-char 1))
-             (if (not (> (nth 0 (syntax-ppss)) 0))
+             (if (and (not (> (nth 0 (syntax-ppss)) 0))
+                      (not (c-in-struct-or-enum-p)))
                  (search-forward "("))
              (while (and (not (bobp))
                          (> (nth 0 (syntax-ppss)) 0))
@@ -331,6 +372,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (cond ((save-excursion
               (if (> (point-max) (point)) (forward-char))
               (c-in-function-header-p))
+
            (if (c-in-function-arg-p)
                (align-current))
            (search-forward "{")
@@ -348,6 +390,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (c-end-of-statement)
              (insert "\n")
              (c-do-brace)))
+          ((c-in-struct-or-enum-p)
+           (c-do-brace))
           (t
            (insert "{")
            (under-score-to-space 1)))))
@@ -365,7 +409,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (eq (face-at-point) 'font-lock-type-face))
          (insert "\n")
          (save-excursion
-           (backward-char 3)
+           (c-backward-sws)
+           (c-backward-token-2)
+           (forward-char 1)
            (replace-token-at-point "upcamel")))
         (t
          (insert "\n"))))
