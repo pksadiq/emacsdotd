@@ -65,7 +65,9 @@
         nil
       (save-excursion (while (and (not (bobp))
                                   (> (nth 0 (syntax-ppss (point))) 0))
-                        (backward-char))
+                        (backward-char 1))
+                      (c-backward-token-2)
+                      (forward-char 1)
                       (c-in-function-name-p)))))
 
 ;; (defun c-end-of-defun-arg ()
@@ -137,7 +139,7 @@ was SPC)"
     (setq token (save-excursion
                   (forward-char)
                   (c-token-at-point)))
-    (setq token (str-to-style token "upcamel"))
+    (setq token (str-to-style token style))
     (c-beginning-of-current-token)
     (delete-region (point) (save-excursion
                              (forward-char)
@@ -218,9 +220,17 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun end-statement ()
   (interactive)
-  (if (point-in-comment-p)
-      (insert ";")
-    (my-end-statement)))
+  (cond ((point-in-comment-p)
+         (insert ";"))
+        ((do-common-defun)
+         nil)
+        (t
+         (my-end-statement))))
+
+(defun c-beginning-of-expression ()
+  (while (and (not (bobp))
+              (not (c-at-expression-start-p)))
+    (backward-char 1)))
 
 (defun insert-semi-colon ()
   (interactive)
@@ -284,11 +294,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           (put-brace
            (c-do-brace))
           ((c-in-function-arg-p)
-           (search-forward ")")
-           (unless (eq (following-char) ?\;)
+           (align-current)
+           (unless (eq (save-excursion
+                         (c-end-of-statement)
+                         (preceding-char)) ?\;)
+             (c-end-of-statement)
              (insert "\n")
-             (insert "{")
-             ))
+             (c-do-brace)))
           (t
            (insert "{")
            (under-score-to-space 1)))))
@@ -302,10 +314,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (t
          (insert "\n"))))
 
-(defun dwim-with-context ()
-  (cond ((and (eq (preceding-char) ?\*)
-              (eq (save-excursion (c-beginning-of-statement-1) (point))
-                  (save-excursion (backward-char)(c-backward-token-2) (point)))
+(defun dwim-with-asterisk ()
+  (under-score-to-space 1)
+  (cond ((and (eq (save-excursion
+                    (c-beginning-of-statement-1)
+                    (point))
+                  (save-excursion
+                    (backward-char)
+                    (c-backward-token-2)
+                    (point)))
               (string-match-p "._." (save-excursion
                                       (backward-char)
                                       (c-backward-token-2)
@@ -313,7 +330,43 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                                       (c-token-at-point))))
          (backward-char)
          (c-backward-token-2)
-         (replace-token-at-point "upcamel"))))
+         (replace-token-at-point "upcamel")
+         (forward-char 2))))
+
+(defun do-common-defun ()
+  (if change-not-last
+      nil
+    do-common-defun-defuns))
+
+(defun do-common-defun-defuns ()
+  (save-excursion
+    (backward-char 3)
+    (if (string= (c-token-at-point) "null")
+        (replace-token-at-point "upsnake")))
+  (cond ((string-match-p "^g_application_flags_.*"
+                         (save-excursion
+                           (backward-char 1)
+                           (c-backward-token-2)
+                           (forward-char 1)
+                           (c-token-at-point)))
+         (save-excursion
+           (backward-char 3)
+           (replace-token-at-point "upsnake"))))
+  nil)
+
+(defun dwim-with-comma ()
+  (under-score-to-space 1)
+  (do-common-defun))
+
+(defun dwim-with-paren-close ()
+  (under-score-to-space 1)
+  (do-common-defun)
+)
+
+(defun dwim-with-paren-open ()
+  (under-score-to-space 1)
+  (do-common-defun)
+)
 
 (defun dwim-with-> ()
   (let ((buffer-undo-list t))
@@ -337,6 +390,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-electric-lt-gt 1))
           )))
 
+(defun dwim-with-context ())
+
 (defun dwim-more ()
   (interactive)
   (let ((char-at-point (preceding-char)))
@@ -352,6 +407,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (dwim-with->))
           ((eq char-at-point ?\{)
            (dwim-with-brace))
+          ((eq char-at-point ?\*)
+           (dwim-with-asterisk))
+          ((eq char-at-point ?\,)
+           (dwim-with-comma))
+          ((eq char-at-point ?\))
+           (dwim-with-paren-close))
+          ((eq char-at-point ?\()
+           (dwim-with-paren-open))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
            (under-score-to-space 1)
            (dwim-with-context))

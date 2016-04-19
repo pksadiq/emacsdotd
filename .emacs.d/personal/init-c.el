@@ -16,6 +16,12 @@
 (defvar second-last-point -1)
 (make-variable-buffer-local 'second-last-point)
 
+(defvar change-not-last nil)
+(make-variable-buffer-local 'change-not-last)
+
+(defvar next-is-command nil)
+(make-variable-buffer-local 'next-is-command)
+
 (add-hook 'c-initialization-hook
           (lambda ()
             (add-hook 'post-self-insert-hook 'dwim-more nil t)

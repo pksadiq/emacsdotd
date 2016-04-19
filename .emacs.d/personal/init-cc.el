@@ -5,6 +5,6 @@
        ;; Let ';' move to the end of statement
        (local-set-key ";" 'end-statement)
        ;; Insert semi colon by C-; ; if needed
-       (local-set-key (kbd "C-; ;") 'insert-semi-colon)))
+       (local-set-key (kbd "C-;") 'insert-semi-colon)))
 
 (provide 'init-cc)
