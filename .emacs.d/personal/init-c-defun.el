@@ -86,6 +86,15 @@
                       (string= (c-token-at-point) "enum"))))))
          )))
 
+(defun c-in-if-else-while-case-p ()
+  (save-excursion
+    (c-true-beginning-of-statement)
+    (unless (eobp)
+      (forward-char 1))
+    (if (string-match-p "if\\|else\\|while\\|case" (c-token-at-point))
+        t
+      nil)))
+
 (defun c-in-struct-or-enum-p ()
   (save-excursion
     (unless (eobp)
@@ -502,13 +511,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         ((save-excursion
            (c-backward-sws)
            (c-backward-token-2)
-           (forward-char 1)
+           (unless (eobp)
+             (forward-char 1))
            (eq (face-at-point) 'font-lock-type-face))
          (insert "\n")
          (save-excursion
            (c-backward-sws)
            (c-backward-token-2)
-           (forward-char 1)
+           (unless (eobp)
+             (forward-char 1))
            (replace-token-at-point "upcamel")))
         (t
          (insert "\n"))))
@@ -574,7 +585,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (forward-char 1)
            (replace-token-at-point "upsnake")))
         ((and (eq (save-excursion
-                    (c-beginning-of-statement-1)
+                    (c-true-beginning-of-statement)
                     (point))
                   (save-excursion
                     (backward-char)
@@ -583,7 +594,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
               (not (c-in-function-arg-p))
               )
          (backward-delete-char 1)
-         (insert " = "))))
+         (insert " =")))
+  (if (eq (following-char) ?\ )
+      (forward-char 1)
+    (insert " ")))
 
 
 (defun dwim-with-paren-close ()
