@@ -84,7 +84,7 @@
                  (forward-char 1)
                  (and (c-token-at-point)
                       (string= (c-token-at-point) "enum"))))))
-             )))
+         )))
 
 (defun c-in-struct-or-enum-p ()
   (save-excursion
@@ -512,7 +512,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (if (eq (face-at-point)
                    'font-lock-type-face)
                (replace-token-at-point "upcamel"))))
-         nil))
+        nil))
 
 (defun do-common-defun ()
   (if change-not-last
@@ -563,7 +563,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-paren-close ()
   (under-score-to-space 1)
   (do-common-defun)
-)
+  )
 
 (defun dwim-with-paren-open ()
   (under-score-to-space 1)
