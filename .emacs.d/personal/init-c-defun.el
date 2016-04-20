@@ -148,12 +148,6 @@ So, a hack to fix it."
     (backward-char 1)
     (c-in-function-arg-p)))
 
-;; experimental
-(defun c-jump-to-function-arg-end ()
-  (while (and (not (bobp))
-              (c-in-function-arg-p))
-    (forward-char 1)))
-
 (defun c-in-header-fname-p ()
   (save-excursion
     (backward-char 1)
@@ -179,12 +173,23 @@ So, a hack to fix it."
                       (c-backward-token-2)
                       (forward-char 1)
                       (c-in-function-name-p)))))
-
-;; (defun c-end-of-defun-arg ()
-;;   (let ((brace-count (nth 0 (syntax-ppss)))
-;;         (my-point (point)))
-;;     (while (and (not (eobp)) (nth 0 (syntax-ppss (point))))
-;;           (forward-char)))))
+(defun c-in-array-p ()
+  (let ((depth (nth 0 (syntax-ppss)))
+        (is-array t))
+    (save-excursion
+      (while (and (not (bobp))
+                  (> (nth 0 (syntax-ppss)) 0)
+                  is-array)
+        (while (and (not (bobp))
+                    (= depth (nth 0 (syntax-ppss))))
+          (backward-char 1))
+        (unless (eq (following-char) ?\{)
+          (setq is-array nil))
+        (setq depth (nth 0 (syntax-ppss))))
+      (c-backward-sws)
+      (unless (eq (preceding-char) ?=)
+        (setq is-array nil)))
+    is-array))
 
 (defun c-point-in-token-p (&optional point-before use-space)
   "Check if the (point) is inside a C token
@@ -265,6 +270,15 @@ was SPC)"
                                (point)))
       (insert token))))
 
+(defun c-true-beginning-of-statement ()
+  (c-beginning-of-statement-1)
+  (c-backward-sws)
+  (when (eq (preceding-char)))
+  (while (not (memq (preceding-char) '(?\; ?\{ ?\} ?\0)))
+    (backward-char 1)
+    (c-beginning-of-statement-1)
+    (c-backward-sws))
+  (c-forward-sws))
 
 (defun str-to-snake-case (str)
   "Convert STR like 'snake style', SnakeStyle', 'snake-style'
@@ -400,21 +414,24 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (insert " ")))))
 
 (defun c-do-brace ()
-  (delete-trailing-whitespace
-   (line-beginning-position) (line-end-position))
-  (insert "\n{")
-  (delete-trailing-whitespace
-   (line-beginning-position) (line-end-position))
-  (insert "\n\n}")
-  (delete-trailing-whitespace
-   (line-beginning-position) (line-end-position))
+  (unless mark-active
+    (delete-trailing-whitespace
+     (line-beginning-position) (line-end-position))
+    (insert "\n{")
+    (c-indent-line)
+    (insert "\n\n}")
+    (c-indent-line)
     (unless (c-next-line-empty-p)
       (insert "\n")
       (forward-line -1))
-  (forward-line -1)
-  (c-indent-line))
+    (forward-line -1)
+    (c-indent-line)))
 
 (defun dwim-with-brace ()
+  (unless mark-active
+    (do-dwim-with-brace)))
+
+(defun do-dwim-with-brace ()
   (let ((put-brace nil))
     (delete-backward-char 1)
     (cond ((c-in-struct-or-enum-p)
@@ -430,8 +447,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (search-forward "{")
            (c-forward-sws)
            (if (eq (following-char) ?\})
-               (backward-char 1))
-           )
+               (backward-char 1)))
           ((or (c-in-incomplete-function-arg-p)
                (c-after-incomplete-function-arg-p))
            (when (c-after-incomplete-function-arg-p)
@@ -530,17 +546,18 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (backward-char 1)
            (c-backward-token-2)
            (forward-char 1)
-           (replace-token-at-point "upsnake")))))
-  ;; (cond ((and (eq (save-excursion
-  ;;                   (c-beginning-of-statement-1)
-  ;;                   (point))
-  ;;                 (save-excursion
-  ;;                   (backward-char)
-  ;;                   (c-backward-token-2)
-  ;;                   (point)))
-  ;;             (not (c-in-function-arg-p)))
-  ;;        (backward-delete-char 1)
-  ;;        (insert " = ")))
+           (replace-token-at-point "upsnake")))
+        ((and (eq (save-excursion
+                    (c-beginning-of-statement-1)
+                    (point))
+                  (save-excursion
+                    (backward-char)
+                    (c-backward-token-2)
+                    (point)))
+              (not (c-in-function-arg-p))
+              )
+         (backward-delete-char 1)
+         (insert " = "))))
 
 
 (defun dwim-with-paren-close ()
