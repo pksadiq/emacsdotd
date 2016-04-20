@@ -5,18 +5,18 @@
 # --
 #include "`(replace-regexp-in-string "\\.c" "\.h" (file-name-nondirectory buffer-file-name))`"
 
-typedef struct _${2:$(str-to-style "upcamel" yas-text)}
+typedef struct _${2:$(str-to-style yas-text "upcamel")}
 {
-${3:$(str-to-style "upcamel" (replace-regexp-in-string "TYPE_" "" yas-text))} parent_instance;
-} ${2:$(str-to-style "upcamel" yas-text)};
+${3:$(str-to-style (replace-regexp-in-string "TYPE_" "" yas-text) "upcamel")} parent_instance;
+} ${2:$(str-to-style yas-text "upcamel")};
 
-struct _${2:$(str-to-style "upcamel" yas-text)}Class
+struct _${2:$(str-to-style yas-text "upcamel")}Class
 {
-${3:$(str-to-style "upcamel" (replace-regexp-in-string "TYPE_" "" yas-text))}Class parent_class;
+${3:$(str-to-style (replace-regexp-in-string "TYPE_" "" yas-text) "upcamel")}Class parent_class;
 };
 
 
-G_DEFINE_${1:TYPE$(yas-choose-value '("TYPE" "INTERFACE" "TYPE_WITH_PRIVATE"))} (${2:$(str-to-style "upcamel" yas-text)}, ${2:gtk_application$(setq gnome-package (str-to-style "snake" yas-text))}, ${3:GTK_TYPE_${2:$(get-next yas-text)}$(upcase (str-to-style "snake" (downcase yas-text)))})
+G_DEFINE_${1:TYPE$(yas-choose-value '("TYPE" "INTERFACE" "TYPE_WITH_PRIVATE"))} (${2:$(str-to-style yas-text "upcamel")}, ${2:gtk_application$(setq gnome-package (str-to-style yas-text "snake"))}, ${3:GTK_TYPE_${2:$(get-next yas-text)}$(upcase (str-to-style (downcase yas-text) "snake"))})
 $0
 static void
 $2_finalize (GObject *object)
@@ -25,21 +25,21 @@ $2_finalize (GObject *object)
 }
 
 static void
-$2_class_init (${2:$(str-to-style "upcamel" yas-text)}Class *klass)
+$2_class_init (${2:$(str-to-style yas-text "upcamel")}Class *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  ${4:GApplication$(setq gnome-parent (str-to-style "upcamel" yas-text))}Class *${4:$(downcase (get-next (str-to-style "snake" yas-text)))}_class = ${4:$(get-first (str-to-style "snake" yas-text))}_${4:$(get-next (str-to-style "snake" yas-text))}_CLASS (klass);
+  ${4:GApplication$(setq gnome-parent (str-to-style yas-text "upcamel"))}Class *${4:$(downcase (get-next (str-to-style yas-text "snake")))}_class = ${4:$(get-first (str-to-style yas-text "snake"))}_${4:$(get-next (str-to-style yas-text  "snake"))}_CLASS (klass);
 
   object_class->finalize = $2_finalize;
 }
 
 static void
-$2_init (${2:$(str-to-style "upcamel" yas-text)} *self)
+$2_init (${2:$(str-to-style yas-text "upcamel")} *self)
 {
 
 }
 
-${5:${2:$(str-to-style "upcamel" yas-text)}$(str-to-style "upcamel" yas-text)} *
+${5:${2:$(str-to-style yas-text "upcamel")}$(str-to-style yas-text "upcamel")} *
 $2_new (void)
 {
   return g_object_new (${2:$(get-first yas-text)}_TYPE_${2:$(get-next yas-text)},
