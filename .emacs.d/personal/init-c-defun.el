@@ -131,7 +131,6 @@ So, a hack to fix it."
       t
     nil))
 
-;; experimental
 (defun c-in-incomplete-function-arg-p ()
   (if (c-in-function-arg-p)
       (save-excursion
@@ -140,7 +139,14 @@ So, a hack to fix it."
             nil
           (progn
             (c-forward-sws)
-            (not (eq (following-char) ?\{)))))))
+            (not (eq (following-char) ?\{)))))
+    nil))
+
+(defun c-after-incomplete-function-arg-p ()
+  (save-excursion
+    (c-backward-sws)
+    (backward-char 1)
+    (c-in-function-arg-p)))
 
 ;; experimental
 (defun c-jump-to-function-arg-end ()
@@ -234,6 +240,8 @@ was SPC)"
            (setq token (c-single-char-token-at-point))))
     (if (= (length token) 1)
         (setcar points (1- (point))))
+    (unless token
+      (setq token ""))
     (if return-points?
         points
       token)))
@@ -392,22 +400,31 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (insert " ")))))
 
 (defun c-do-brace ()
-  (insert "{\n\n}")
-  (unless (eq (following-char) ?\n)
-    (insert "\n")
-    (unless (eq (following-char) ?\n)
+  (delete-trailing-whitespace
+   (line-beginning-position) (line-end-position))
+  (insert "\n{")
+  (delete-trailing-whitespace
+   (line-beginning-position) (line-end-position))
+  (insert "\n\n}")
+  (delete-trailing-whitespace
+   (line-beginning-position) (line-end-position))
+    (unless (c-next-line-empty-p)
       (insert "\n")
       (forward-line -1))
-    (forward-line -1))
   (forward-line -1)
   (c-indent-line))
 
 (defun dwim-with-brace ()
   (let ((put-brace nil))
     (delete-backward-char 1)
-    (cond ((save-excursion
-              (if (> (point-max) (point)) (forward-char))
-              (c-in-function-header-p))
+    (cond ((c-in-struct-or-enum-p)
+           (c-do-brace))
+          ((save-excursion
+             (if (and (> (point-max) (point))
+                      (not (eq (following-char) ?\{)))
+                 (forward-char))
+             (c-backward-sws)
+             (c-in-function-header-p))
            (if (c-in-function-arg-p)
                (align-current))
            (search-forward "{")
@@ -415,11 +432,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (if (eq (following-char) ?\})
                (backward-char 1))
            )
-          ((c-in-incomplete-function-arg-p)
+          ((or (c-in-incomplete-function-arg-p)
+               (c-after-incomplete-function-arg-p))
+           (when (c-after-incomplete-function-arg-p)
+             (c-backward-sws)
+             (backward-char 1))
            (align-current)
            (search-forward ")" nil t)
-           (if (eq (following-char) ?\n)
-               (forward-char 1))
            (c-do-brace))
           ((c-in-function-arg-p)
            (align-current)
@@ -427,10 +446,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                          (c-end-of-statement)
                          (preceding-char)) ?\;)
              (c-end-of-statement)
-             (insert "\n")
              (c-do-brace)))
-          ((c-in-struct-or-enum-p)
-           (c-do-brace))
           (t
            (insert "{")
            (under-score-to-space 1)))))
