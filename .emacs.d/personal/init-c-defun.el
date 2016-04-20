@@ -1,6 +1,11 @@
 ;; Packages required for the functions below
 (require 'subr-x)
 
+(defun my-backward-char (&optional n)
+  (unless n (setq n 1))
+  (ignore-errors
+    (backward-char n)))
+
 (defun electric-pair-inhibit-me (char)
   (or
    (eq char (char-after))
@@ -74,14 +79,14 @@
         ((save-excursion
            (when (search-backward "{" nil t)
              (c-backward-sws)
-             (backward-char 1)
+             (my-backward-char 1)
              (if (and (c-token-at-point)
                       (string= (c-token-at-point) "enum"))
                  t
                (progn
                  (c-beginning-of-current-token)
                  (c-backward-token-2)
-                 (forward-char 1)
+                 (my-backward-char -1)
                  (and (c-token-at-point)
                       (string= (c-token-at-point) "enum"))))))
          )))
@@ -89,28 +94,26 @@
 (defun c-in-if-else-while-case-p ()
   (save-excursion
     (c-true-beginning-of-statement)
-    (unless (eobp)
-      (forward-char 1))
+    (my-backward-char -1)
     (if (string-match-p "if\\|else\\|while\\|case" (c-token-at-point))
         t
       nil)))
 
 (defun c-in-struct-or-enum-p ()
   (save-excursion
-    (unless (eobp)
-      (forward-char 1))
+    (my-backward-char -1)
     (if (last-char-space-p)
-        (backward-char 1))
+        (my-backward-char 1))
     (if (last-char-space-p)
-        (backward-char 1))
+        (my-backward-char 1))
     (when (string= (c-token-at-point) "typedef")
       (c-forward-token-2)
-      (forward-char 2))
-    (backward-char 1)
+      (my-backward-char -2))
+    (my-backward-char 1)
     (when (eq (face-at-point) 'font-lock-type-face)
       (c-beginning-of-current-token)
       (c-backward-token-2)
-      (forward-char 1))
+      (my-backward-char -1))
     (if (string-match-p "struct\\|enum" (c-token-at-point))
         t
       nil)))
@@ -121,18 +124,18 @@ So, a hack to fix it."
   (if (and (not (save-excursion (c-beginning-of-macro)))
            (eq (c-where-wrt-brace-construct) 'in-header)
            (save-excursion
-             (forward-char 1)
+             (my-backward-char -1)
              (if (eq (preceding-char) ?\))
-                 (backward-char 1))
+                 (my-backward-char 1))
              (when (last-char-space-p)
                (c-backward-sws)
-               (backward-char 1))
+               (my-backward-char 1))
              (if (and (not (> (nth 0 (syntax-ppss)) 0))
                       (not (c-in-struct-or-enum-p)))
                  (search-forward "(" nil t))
              (while (and (not (bobp))
                          (> (nth 0 (syntax-ppss)) 0))
-               (forward-char 1))
+               (my-backward-char -1))
              (c-forward-sws)
              (if is-not
                  (not (eq (following-char) ?\{))
@@ -154,16 +157,15 @@ So, a hack to fix it."
 (defun c-after-incomplete-function-arg-p ()
   (save-excursion
     (c-backward-sws)
-    (backward-char 1)
+    (my-backward-char 1)
     (c-in-function-arg-p)))
 
 (defun c-in-header-fname-p ()
   (save-excursion
-    (unless (bobp)
-      (backward-char 1))
+    (my-backward-char 1)
     (when (and (eq (face-at-point) 'font-lock-string-face)
                (c-beginning-of-macro))
-      (forward-char 2)
+      (my-backward-char -2)
       (if (string= (c-token-at-point) "include")
           t
         nil))))
@@ -179,9 +181,9 @@ So, a hack to fix it."
         nil
       (save-excursion (while (and (not (bobp))
                                   (> (nth 0 (syntax-ppss (point))) 0))
-                        (backward-char 1))
+                        (my-backward-char 1))
                       (c-backward-token-2)
-                      (forward-char 1)
+                      (my-backward-char -1)
                       (c-in-function-name-p)))))
 (defun c-in-array-p ()
   (let ((depth (nth 0 (syntax-ppss)))
@@ -194,7 +196,7 @@ So, a hack to fix it."
                   is-array)
         (while (and (not (bobp))
                     (= depth (nth 0 (syntax-ppss))))
-          (backward-char 1))
+          (my-backward-char 1))
         (if (eq (following-char) ?\{)
             (if (save-excursion
                   (c-backward-sws)
@@ -271,7 +273,7 @@ was SPC)"
   (let ((token "")
         (token-stripped ""))
     (setq token (save-excursion
-                  (forward-char)
+                  (my-backward-char -1)
                   (c-token-at-point)))
     (setq token-stripped token)
     (if (string-match-p "_t$" token-stripped)
@@ -281,7 +283,7 @@ was SPC)"
       (setq token (str-to-style token style))
       (c-beginning-of-current-token)
       (delete-region (point) (save-excursion
-                               (forward-char)
+                               (my-backward-char -1)
                                (c-end-of-current-token)
                                (point)))
       (insert token))))
@@ -308,9 +310,9 @@ was SPC)"
   (c-beginning-of-statement-1)
   (c-backward-sws)
   (while (c-in-array-p)
-    (backward-char 1))
+    (my-backward-char 1))
   (while (not (memq (preceding-char) '(?\) ?\; ?\{ ?\} ?\0)))
-    (backward-char 1)
+    (my-backward-char 1)
     (c-beginning-of-statement-1)
     (c-backward-sws))
   (c-forward-sws))
@@ -397,7 +399,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         ((c-inside-enum-p)
          (while (and (not (eobp))
                      (c-inside-enum-p))
-           (forward-char 1))
+           (my-backward-char -1))
          (my-end-statement))
         (t
          (my-end-statement))))
@@ -405,7 +407,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun c-beginning-of-expression ()
   (while (and (not (bobp))
               (not (c-at-expression-start-p)))
-    (backward-char 1)))
+    (my-backward-char 1)))
 
 (defun insert-semi-colon ()
   (interactive)
@@ -431,7 +433,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (point-in-string-p))
          (insert " "))
         ((save-excursion
-           (backward-char)
+           (my-backward-char)
            (c-beginning-of-current-token)
            (looking-at-p c-keywords-regexp))
          (insert " "))
@@ -482,12 +484,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (search-forward "{")
            (c-forward-sws)
            (if (eq (following-char) ?\})
-               (backward-char 1)))
+               (unless (bobp)
+                 (my-backward-char 1))))
           ((or (c-in-incomplete-function-arg-p)
                (c-after-incomplete-function-arg-p))
            (when (c-after-incomplete-function-arg-p)
              (c-backward-sws)
-             (backward-char 1))
+             (unless (bobp)
+               (my-backward-char 1)))
            (align-current)
            (search-forward ")" nil t)
            (c-do-brace))
@@ -530,7 +534,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                     (c-beginning-of-expression)
                     (point))
                   (save-excursion
-                    (backward-char)
+                    (my-backward-char)
                     (c-backward-token-2)
                     (point)))
               (string-match-p "._." (save-excursion
@@ -539,13 +543,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                                       (forward-char)
                                       (c-token-at-point))))
          (save-excursion
-           (backward-char)
+           (my-backward-char)
            (c-backward-token-2)
            (replace-token-at-point "upcamel")))
         ((save-excursion
-           (backward-char 1)
+           (unless (bobp)
+             (my-backward-char 1))
            (c-backward-token-2)
-           (forward-char 1)
+           (unless (eobp)
+             (forward-char 1))
            (if (eq (face-at-point)
                    'font-lock-type-face)
                (replace-token-at-point "upcamel"))))
@@ -558,20 +564,20 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun do-common-defun-defuns ()
   (save-excursion
-    (backward-char 3)
+    (my-backward-char 3)
     (if (and (c-token-at-point)
              (string= (c-token-at-point) "null"))
         (replace-token-at-point "upsnake")))
   (cond ((string-match-p "^g_application_flags_.*"
                          (save-excursion
-                           (backward-char 1)
+                           (my-backward-char 1)
                            (c-backward-token-2)
-                           (forward-char 1)
+                           (my-backward-char -1)
                            (if (not (c-token-at-point))
                                ""
                              (c-token-at-point))))
          (save-excursion
-           (backward-char 3)
+           (my-backward-char 3)
            (replace-token-at-point "upsnake"))))
   nil)
 
@@ -580,15 +586,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (do-common-defun)
   (cond ((c-inside-enum-p)
          (save-excursion
-           (backward-char 1)
+           (my-backward-char 1)
            (c-backward-token-2)
-           (forward-char 1)
+           (my-backward-char -1)
            (replace-token-at-point "upsnake")))
         ((and (eq (save-excursion
                     (c-true-beginning-of-statement)
                     (point))
                   (save-excursion
-                    (backward-char)
+                    (my-backward-char)
                     (c-backward-token-2)
                     (point)))
               (not (c-in-function-arg-p))
@@ -609,23 +615,23 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (under-score-to-space 1)
   (do-common-defun)
   (cond ((eq (save-excursion
-               (backward-char 3)
+               (my-backward-char 3)
                (face-at-point))
              'font-lock-variable-name-face)
          (save-excursion
-           (backward-char 1)
+           (my-backward-char 1)
            (c-backward-token-2)
            (c-backward-sws)
            (while (string= (c-token-at-point) "*")
              (backward-char 1))
            (c-backward-token-2)
-           (forward-char 1)
+           (my-backward-char -1)
            (replace-token-at-point "upcamel")))))
 
 (defun dwim-with-dot ()
   (let ((changed nil))
     (save-excursion
-      (backward-char 1)
+      (my-backward-char 1)
       (when (and (eq (preceding-char) ?\.)
                  (not (point-in-comment-p))
                  (not (point-in-string-p)))
@@ -634,7 +640,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (insert "->")
         (setq changed t)))
     (if changed
-        (forward-char 2))))
+        (my-backward-char -2))))
 
 (defun dwim-with-> ()
   (let ((buffer-undo-list t))
@@ -653,7 +659,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
             (setq in-include t))))
     (cond (in-include
            (insert ">")
-           (backward-char 1))
+           (my-backward-char 1))
           (t
            nil)
           )))
