@@ -18,8 +18,9 @@
 (setq-default tab-width 2
       indent-tabs-mode nil)
 
-;; Highlight trailing whitespace
-(setq-default show-trailing-whitespace t)
+;; Disabled, this is CPU hungry.
+;; Highlight trailing whitespace.
+;; (setq-default show-trailing-whitespace t)
 
 ;; Let this file provide a feature named 'init-common'.
 ;; Use `require' function to load to current Emacs session.
