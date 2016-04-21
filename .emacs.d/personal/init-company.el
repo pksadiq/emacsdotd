@@ -9,7 +9,7 @@
 (setq company-minimum-prefix-length 1)
 
 ;; Show completion faster
-(setq company-idle-delay 0)
+(setq company-idle-delay 0.1)
 
 ;; Show enumerated completion
 (setq company-show-numbers t)
