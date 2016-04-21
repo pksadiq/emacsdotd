@@ -99,6 +99,21 @@
         t
       nil)))
 
+(defun c-incomplete-if-else-while-case-p ()
+  (cond ((not (c-in-if-else-while-case-p))
+         nil)
+        (t
+         (save-excursion
+           (c-beginning-of-statement-1)
+           (my-backward-char -1)
+           (if (string= (c-token-at-point) "else")
+               (c-end-of-current-token)
+             (search-forward ")" nil t))
+           (c-forward-sws)
+           (if (eq (following-char) ?\{)
+               nil
+             t)))))
+
 (defun c-in-struct-or-enum-p ()
   (save-excursion
     (my-backward-char -1)
@@ -409,6 +424,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
               (not (c-at-expression-start-p)))
     (my-backward-char 1)))
 
+(defun c-align-current-defun ()
+  (save-excursion
+    (c-beginning-of-defun-1)
+    (c-backward-sws)
+    (my-backward-char 1)
+    (align-current)))
+
 (defun insert-semi-colon ()
   (interactive)
   (insert ";"))
@@ -454,7 +476,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (unless mark-active
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
-    (insert "\n{")
+    (unless (eq (preceding-char) ?\n)
+      (insert "\n"))
+    (insert "{")
     (c-indent-line)
     (insert "\n\n}")
     (c-indent-line)
@@ -471,7 +495,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun do-dwim-with-brace ()
   (let ((put-brace nil))
     (delete-backward-char 1)
-    (cond ((c-in-struct-or-enum-p)
+    (cond ((or (c-in-struct-or-enum-p))
            (c-do-brace))
           ((save-excursion
              (if (and (> (point-max) (point))
