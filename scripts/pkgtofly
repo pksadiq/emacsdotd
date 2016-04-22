@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# 2016 April 22
+# Written by Mohammed Sadik <sadiq@sadiqpk.org>
+# No freedoms assured. Released as Public Domain
+
+# Script to convert pkg-config output suitable for GNU Emacs "flycheck" conf
+# How to use:
+# pkg-config --cflags gtk+-3.0 | ./pkgtofly
+# Add All the packages you require
+
+read FILES
+
+echo "(setq"
+echo "flycheck-gcc-include-path"
+echo "(list"
+
+for file in $FILES
+do
+  file=$(echo $file | grep -- "-I")
+  [ "$file" ] && echo "(expand-file-name \"${file#-I}\")"
+done
+
+echo "))"
