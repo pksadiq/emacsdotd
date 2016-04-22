@@ -8,7 +8,8 @@
         gnome-c-style
         web-mode
         company
-        avy))
+        avy
+        flycheck))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives
