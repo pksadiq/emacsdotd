@@ -69,7 +69,7 @@
 
 (defun c-in-function-name-p ()
   (save-excursion
-    (if (eq (face-at-point) 'font-lock-function-name-face)
+    (if (member 'font-lock-function-name-face (text-properties-at (point)))
         t
       nil)))
 
@@ -125,7 +125,7 @@
       (c-forward-token-2)
       (my-backward-char -2))
     (my-backward-char 1)
-    (when (eq (face-at-point) 'font-lock-type-face)
+    (when (member 'font-lock-type-face (text-properties-at (point)))
       (c-beginning-of-current-token)
       (c-backward-token-2)
       (my-backward-char -1))
@@ -178,7 +178,7 @@ So, a hack to fix it."
 (defun c-in-header-fname-p ()
   (save-excursion
     (my-backward-char 1)
-    (when (and (eq (face-at-point) 'font-lock-string-face)
+    (when (and (member 'font-lock-string-face (text-properties-at (point)))
                (c-beginning-of-macro))
       (my-backward-char -2)
       (if (string= (c-token-at-point) "include")
@@ -541,7 +541,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-backward-token-2)
            (unless (eobp)
              (forward-char 1))
-           (eq (face-at-point) 'font-lock-type-face))
+           (member 'font-lock-type-face (text-properties-at (point))))
          (insert "\n")
          (save-excursion
            (c-backward-sws)
@@ -576,8 +576,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-backward-token-2)
            (unless (eobp)
              (forward-char 1))
-           (if (eq (face-at-point)
-                   'font-lock-type-face)
+           (if (member 'font-lock-type-face (text-properties-at (point)))
                (replace-token-at-point "upcamel"))))
         nil))
 
@@ -638,10 +637,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-paren-open ()
   (under-score-to-space 1)
   (do-common-defun)
-  (cond ((eq (save-excursion
+  (cond ((member 'font-lock-variable-name-face
+          (save-excursion
                (my-backward-char 3)
-               (face-at-point))
-             'font-lock-variable-name-face)
+               (text-properties-at (point))))
          (save-excursion
            (my-backward-char 1)
            (c-backward-token-2)
