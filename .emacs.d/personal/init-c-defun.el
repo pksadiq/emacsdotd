@@ -607,7 +607,21 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-comma ()
   (under-score-to-space 1)
   (do-common-defun)
-  (cond ((c-inside-enum-p)
+  (cond ((save-excursion
+           (backward-char 1)
+           (if (eq (preceding-char) ?\ )
+               (backward-char 1))
+           (eq (char-before) ?\,))
+         (zap-to-char -2 ?\,)
+         (insert " ="))
+        ((save-excursion
+           (backward-char 1)
+           (if (eq (preceding-char) ?\ )
+               (backward-char 1))
+           (eq (char-before) ?\=))
+         (zap-to-char -1 ?\=)
+         (insert "=="))
+        ((c-inside-enum-p)
          (save-excursion
            (my-backward-char 1)
            (c-backward-token-2)
