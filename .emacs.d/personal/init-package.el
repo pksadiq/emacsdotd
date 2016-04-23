@@ -9,7 +9,8 @@
         web-mode
         company
         avy
-        flycheck))
+        flycheck
+        key-chord))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives
