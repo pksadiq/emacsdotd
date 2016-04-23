@@ -14,7 +14,8 @@
 ;; Repositories to be used to search and install packages.
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
-	("melpa-stable" . "https://stable.melpa.org/packages/")))
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("marmalade" . "https://marmalade-repo.org/packages/")))
 
 (package-initialize)
 
