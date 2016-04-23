@@ -26,6 +26,10 @@
 (load-library "init-keys")
 (require 'init-keys)
 
+;; A minor evil mode
+(load-library "less-evil-mode")
+(require 'less-evil-mode)
+
 ;; Configures Emacs UI related elements.
 (load-library "init-ui")
 (require 'init-ui)
