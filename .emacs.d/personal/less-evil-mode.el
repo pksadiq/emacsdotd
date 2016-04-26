@@ -10,7 +10,7 @@
 (defun le/insert-after ()
   (interactive)
   (right-char)
-  (disable-me-here))
+  (le/insert-here))
 
 (defun le/flycheck-next-error ()
   (interactive)
