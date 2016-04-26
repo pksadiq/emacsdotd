@@ -10,7 +10,8 @@
         company
         avy
         flycheck
-        key-chord))
+        key-chord
+        key-seq))
 
 ;; Repositories to be used to search and install packages.
 (setq package-archives
