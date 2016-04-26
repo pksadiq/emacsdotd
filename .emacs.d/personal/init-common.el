@@ -22,8 +22,7 @@
 ;; Highlight trailing whitespace.
 ;; (setq-default show-trailing-whitespace t)
 
-(add-hook 'c-mode-common-hook 'my-read-only-mode)
-(add-hook 'web-mode-hook 'my-read-only-mode)
+(add-hook 'prog-mode-hook 'my-read-only-mode)
 (add-hook 'help-mode-hook 'my-read-only-mode)
 
 
