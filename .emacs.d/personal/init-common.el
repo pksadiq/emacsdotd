@@ -22,6 +22,11 @@
 ;; Highlight trailing whitespace.
 ;; (setq-default show-trailing-whitespace t)
 
+(add-hook 'c-mode-common-hook 'my-read-only-mode)
+(add-hook 'web-mode-hook 'my-read-only-mode)
+(add-hook 'help-mode-hook 'my-read-only-mode)
+
+
 ;; Let this file provide a feature named 'init-common'.
 ;; Use `require' function to load to current Emacs session.
 (provide 'init-common)
