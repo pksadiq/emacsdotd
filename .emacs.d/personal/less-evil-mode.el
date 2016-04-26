@@ -47,6 +47,10 @@
   "A lesser version of evil mode"
   :lighter " le"
   :keymap (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "0") 'delete-window)
+            (define-key map (kbd "1") 'delete-other-windows)
+            (define-key map (kbd "2") 'split-window-below)
+            (define-key map (kbd "3") 'split-window-right)
             (define-key map (kbd "h") 'left-char)
             (define-key map (kbd "j") 'next-line)
             (define-key map (kbd "k") 'previous-line)
