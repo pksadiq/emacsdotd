@@ -25,14 +25,15 @@
 (defun le/undo ()
   (interactive)
   (le/insert-here)
-  (ignore-errors
-    (undo))
+  (with-demoted-errors
+      (undo))
   (read-only-mode 1))
 
 (defun le/kill-line ()
   (interactive)
   (le/insert-here)
-  (kill-line)
+  (with-demoted-errors
+      (kill-line))
   (read-only-mode 1))
 
 
