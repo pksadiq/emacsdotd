@@ -25,7 +25,8 @@
 (defun le/undo ()
   (interactive)
   (le/insert-here)
-  (undo)
+  (ignore-errors
+    (undo))
   (read-only-mode 1))
 
 (defun le/kill-line ()
