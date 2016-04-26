@@ -67,8 +67,9 @@
             (define-key map (kbd "a") 'le/insert-after)
             (define-key map (kbd "s") 'save-buffer)
             (define-key map (kbd "d") 'le/kill-line)
-            (define-key map (kbd "f") 'le/flycheck-next-error)
+            (define-key map (kbd "f") 'ido-find-file)
             (define-key map (kbd "x") 'execute-extended-command)
+            (define-key map (kbd "c") 'le/flycheck-next-error)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
             map))
 
