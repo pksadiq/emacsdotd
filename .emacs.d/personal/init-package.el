@@ -16,12 +16,12 @@
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("marmalade" . "https://marmalade-repo.org/packages/")))
+        ("melpa" . "https://melpa.org/packages/")))
 
 (setq package-archive-priorities
       '(("gnu" . 30)
         ("melpa-stable" . 20)
-        ("marmalade" . 10)))
+        ("melpa" . 10)))
 
 (package-initialize)
 
