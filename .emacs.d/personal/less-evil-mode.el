@@ -28,6 +28,13 @@
   (undo)
   (read-only-mode 1))
 
+(defun le/kill-line ()
+  (interactive)
+  (le/insert-here)
+  (kill-line)
+  (read-only-mode 1))
+
+
 (defun switch-my-buffer ()
   (interactive)
   (if (one-window-p)
@@ -54,7 +61,7 @@
             (define-key map (kbd "q") 'keyboard-quit)
             (define-key map (kbd "a") 'le/insert-after)
             (define-key map (kbd "s") 'save-buffer)
-            (define-key map (kbd "d") 'kill-line)
+            (define-key map (kbd "d") 'le/kill-line)
             (define-key map (kbd "f") 'le/flycheck-next-error)
             (define-key map (kbd "x") 'execute-extended-command)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
