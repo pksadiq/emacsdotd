@@ -3,7 +3,10 @@
 
 (defun my-read-only-mode ()
   (if (> (buffer-size) 0)
-    (read-only-mode 1)))
+      (read-only-mode 1))
+  (if buffer-read-only
+      (less-evil-mode 1)
+    (less-evil-mode -1)))
 
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
