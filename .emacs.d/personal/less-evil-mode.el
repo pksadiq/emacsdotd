@@ -28,6 +28,13 @@
   (undo)
   (read-only-mode 1))
 
+(defun switch-my-buffer ()
+  (interactive)
+  (if (one-window-p)
+      (ido-switch-buffer)
+    (other-window 1)))
+
+
 ;;;###autoload
 (define-minor-mode less-evil-mode
   "A lesser version of evil mode"
@@ -42,7 +49,7 @@
             (define-key map (kbd "/") 'isearch-forward-regexp)
             (define-key map (kbd "u") 'le/undo)
             (define-key map (kbd "i") 'le/insert-here)
-            (define-key map (kbd "o") 'ido-switch-buffer)
+            (define-key map (kbd "o") 'switch-my-buffer)
             (define-key map (kbd "p") 'pop-global-mark)
             (define-key map (kbd "a") 'le/insert-after)
             (define-key map (kbd "d") 'kill-line)
