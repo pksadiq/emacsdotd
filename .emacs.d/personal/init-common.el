@@ -22,6 +22,10 @@
 ;; Highlight trailing whitespace.
 ;; (setq-default show-trailing-whitespace t)
 
+;; hide-show mode
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+(add-hook 'prog-mode-hook 'hs-hide-initial-comment-block t)
+
 (add-hook 'prog-mode-hook 'my-read-only-mode)
 (add-hook 'help-mode-hook 'my-read-only-mode)
 
