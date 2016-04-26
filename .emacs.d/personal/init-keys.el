@@ -13,13 +13,13 @@
 (global-set-key (kbd "M-g M-g") 'avy-goto-line)
 
 (require 'key-chord)
-(key-chord-define-global "; " 'avy-goto-char)
-(key-chord-define-global ";u" 'undo)
-(key-chord-define-global ";a" 'beginning-of-line)
-(key-chord-define-global ";s" 'save-buffer)
-(key-chord-define-global ";d" 'read-only-mode)
-(key-chord-define-global ";f" 'ido-find-file)
-(key-chord-define-global ";g" 'avy-goto-line)
+(key-seq-define-global "; " 'avy-goto-char)
+(key-seq-define-global ";u" 'undo)
+(key-seq-define-global ";a" 'beginning-of-line)
+(key-seq-define-global ";s" 'save-buffer)
+(key-seq-define-global ";d" 'read-only-mode)
+(key-seq-define-global ";f" 'ido-find-file)
+(key-seq-define-global ";g" 'avy-goto-line)
 
 (key-chord-mode 1)
 
