@@ -36,6 +36,11 @@
       (kill-line))
   (read-only-mode 1))
 
+(defun my-quit ()
+  (interactive)
+  (if (eq major-mode 'help-mode)
+      (quit-window)
+    (keyboard-quit)))
 
 (defun switch-my-buffer ()
   (interactive)
@@ -57,6 +62,7 @@
             (define-key map (kbd ";") 'avy-goto-line)
             (define-key map (kbd ".") 'le/insert-after)
             (define-key map (kbd "/") 'isearch-forward-regexp)
+            (define-key map (kbd "q") 'my-quit)
             (define-key map (kbd "e") 'end-of-line)
             (define-key map (kbd "t") 'hs-toggle-hiding)
             (define-key map (kbd "u") 'le/undo)
@@ -67,7 +73,6 @@
             (define-key map (kbd "s") 'save-buffer)
             (define-key map (kbd "d") 'le/kill-line)
             (define-key map (kbd "f") 'ido-find-file)
-            (define-key map (kbd "g") 'keyboard-quit)
             (define-key map (kbd "h") 'left-char)
             (define-key map (kbd "j") 'next-line)
             (define-key map (kbd "k") 'previous-line)
