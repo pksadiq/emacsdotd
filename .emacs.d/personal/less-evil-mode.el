@@ -64,6 +64,7 @@
             (define-key map (kbd "o") 'switch-my-buffer)
             (define-key map (kbd "p") 'pop-global-mark)
             (define-key map (kbd "q") 'keyboard-quit)
+            (define-key map (kbd "t") 'hs-toggle-hiding)
             (define-key map (kbd "a") 'le/insert-after)
             (define-key map (kbd "s") 'save-buffer)
             (define-key map (kbd "d") 'le/kill-line)
