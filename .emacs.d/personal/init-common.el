@@ -28,7 +28,7 @@
 
 (add-hook 'prog-mode-hook 'my-read-only-mode)
 (add-hook 'help-mode-hook 'my-read-only-mode)
-(add-hook 'erc-mode-hook 'my-read-only-mode)
+(add-hook 'erc-join-hook 'my-read-only-mode)
 (add-hook 'gud-mode-hook 'my-read-only-mode)
 
 
