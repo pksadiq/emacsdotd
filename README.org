@@ -1,6 +1,31 @@
 * *emacs.d*
   This is my GNU Emacs configuration.
   This is a _work in progress_.
+
+** What is present?
+   - Highly configured for C programming with gtk+
+   - includes
+     - yasnippet (power snippets)
+     - ido
+     - company (autocompletion)
+     - flycheck (check syntax -- configured for gcc)
+     - web-mode
+     - avy
+     - key-chord
+     - ...
+
+** How can I use this?
+   Just copy =.emacs.d= to your home dir. If you already have a =.emacs=
+   file in your home dir [re]move it. Otherwise this configuration won't work.
+
+   By default, every mode is read only, with vi like bindings.
+   - see =less-evil-mode.el= file to see the bindings.
+   - see =init-keys.el= to see normal keyboard bindings
+
+** Why is this insanely configured?
+
+   This is configured for me. If you don't like this, this is not for you.
+
 * License
 
   Copyright (c) 2016 Mohammed Sadik <sadiq@sadiqpk.org>
