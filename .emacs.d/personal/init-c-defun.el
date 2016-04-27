@@ -684,8 +684,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (let ((buffer-undo-list t))
     (cond ((and (c-in-header-fname-p)
                 (eq (following-char) ?\>))
-           (backward-delete-char -1)
-           ))))
+           (backward-delete-char -1))
+          ((string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point)))))
+           (save-excursion
+             (my-backward-char 1)
+             (insert-space))
+           (insert-space))
+          )))
 
 (defun dwim-with-< ()
   (under-score-to-space 1)
@@ -698,6 +703,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (cond (in-include
            (insert ">")
            (my-backward-char 1))
+          ((string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point)))))
+           (save-excursion
+             (my-backward-char 1)
+             (insert-space))
+           (insert-space))
           (t
            nil)
           )))
