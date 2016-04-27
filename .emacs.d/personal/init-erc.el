@@ -3,6 +3,9 @@
 (eval-after-load "erc"
   '(add-to-list 'erc-modules 'replace))
 
+(eval-after-load "erc"
+  '(add-to-list 'erc-modules 'notifications))
+
 (eval-after-load "erc-replace"
   '(add-hook 'erc-insert-modify-hook 'erc-replace-insert))
 
