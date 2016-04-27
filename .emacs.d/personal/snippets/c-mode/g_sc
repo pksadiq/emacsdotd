@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: g_signal_connect
+# key: g_sc.
+# --
+g_signal_connect (${1:button}, "${2:clicked}", G_CALLBACK (${3:$2_cb}), ${4:NULL});

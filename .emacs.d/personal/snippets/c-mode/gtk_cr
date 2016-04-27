@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gtk_container_remove
+# key: gtk_cr.
+# --
+gtk_container_remove (GTK_CONTAINER (${1:container}), ${2:widget});

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gtk_container_add
+# key: gtk_ca.
+# --
+gtk_container_add (GTK_CONTAINER (${1:container}), ${2:widget});
