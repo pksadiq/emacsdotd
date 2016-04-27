@@ -2,6 +2,11 @@
 
 (require 'flycheck)
 
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+                flycheck-gcc-warnings '("all")))
+
+
 ;; Enable flycheck globally
 (global-flycheck-mode)
 
