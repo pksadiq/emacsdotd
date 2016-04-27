@@ -5,7 +5,9 @@
 
 (defun le/insert-here ()
   (interactive)
-  (read-only-mode -1))
+  (read-only-mode -1)
+  (if (looking-at "[[:space:]]*$")
+      (indent-according-to-mode)))
 
 (defun le/insert-after ()
   (interactive)
