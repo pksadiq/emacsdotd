@@ -1,5 +1,5 @@
 * *emacs.d*
-  This is (supposed to be) my GNU Emacs configuration.
+  This is my GNU Emacs configuration.
   This is a _work in progress_.
 * License
 
