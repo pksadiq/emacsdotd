@@ -680,6 +680,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (my-backward-char -2))))
 
 (defun dwim-with-> ()
+  (under-score-to-space 1)
   (let ((buffer-undo-list t))
     (cond ((and (c-in-header-fname-p)
                 (eq (following-char) ?\>))
