@@ -38,7 +38,7 @@
 
 (defun my-quit ()
   (interactive)
-  (if (eq major-mode 'help-mode)
+  (if (memq major-mode '(help-mode apropos-mode))
       (quit-window)
     (keyboard-quit)))
 
