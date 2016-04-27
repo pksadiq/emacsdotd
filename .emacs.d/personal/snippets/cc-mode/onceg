@@ -11,11 +11,11 @@ ${6:#include <gtk/gtk.h>
 }
 G_BEGIN_DECLS
 
-#define ${2:$(get-first yas-text)}_TYPE_${2:$(get-next yas-text)} (${2:gtk_application$(str-to-style "snake" yas-text)}_get_type())
+#define ${2:$(get-first yas-text)}_TYPE_${2:$(get-next yas-text)} (${2:gtk_application$(str-to-style  yas-text "snake")}_get_type())
 
-G_DECLARE_FINAL_TYPE (${2:$(str-to-style "upcamel" yas-text)}, $2, ${2:$(get-first yas-text)}, ${2:$(get-next yas-text)}, ${3:GtkApplication$(str-to-style "upcamel" yas-text)})
+G_DECLARE_FINAL_TYPE (${2:$(str-to-style yas-text "upcamel")}, $2, ${2:$(get-first yas-text)}, ${2:$(get-next yas-text)}, ${3:GtkApplication$(str-to-style yas-text "upcamel")})
 
-${4:${2:$(str-to-style "upcamel" yas-text)}$(str-to-style "upcamel" yas-text)} *$2_new (${5:void});
+${4:${2:$(str-to-style yas-text "upcamel")}$(str-to-style yas-text "upcamel")} *$2_new (${5:void});
 $0
 
 G_END_DECLS
