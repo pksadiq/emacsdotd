@@ -14,6 +14,9 @@
 ;; Disable bold face for function names
 (set-face-attribute 'font-lock-function-name-face nil :weight 'normal)
 
+;; prettify symbols like 'lambda'
+(global-prettify-symbols-mode 1)
+
 ;; Open Emacs maximized
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
