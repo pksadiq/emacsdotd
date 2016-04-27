@@ -32,6 +32,8 @@
                             "COPYING" "AUTHORS" "INSTALL" "README"
                             "NEWS" "autogen\.sh" "ChangeLog" "libtool"
                             "THANKS" "TODO" "BUGS" "\.git"
-                            "build-aux/" "^m4/$" "^po/$")))
+                            "build-aux/" "^m4/$" "^po/$" "\.out$"
+                            "\.mp4$" "\.jpg$" "\.png$" "\.pdf$"
+                            "\.ps$" "\.webm$" "\.svg$" "^#" "^[^.A-Z]*$")))
 
 (provide 'init-ido)
