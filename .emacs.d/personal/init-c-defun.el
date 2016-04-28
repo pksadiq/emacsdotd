@@ -613,7 +613,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (save-excursion
     (my-backward-char 3)
     (if (and (c-token-at-point)
-             (string= (c-token-at-point) "null"))
+             (member (c-token-at-point) '("null" "True" "False")))
         (replace-token-at-point "upsnake")))
   (cond ((string-match-p "^g_application_flags_.*"
                          (save-excursion
