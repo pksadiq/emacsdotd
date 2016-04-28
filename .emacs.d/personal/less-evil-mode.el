@@ -11,10 +11,13 @@
 
 (defun le/return ()
   (interactive)
-  (read-only-mode -1)
-  (end-of-line)
-  (insert "\n")
-  (indent-according-to-mode))
+  (if (eq major-mode 'compilation-mode)
+      (compile-goto-error)
+    (progn
+      (read-only-mode -1)
+      (end-of-line)
+      (insert "\n")
+      (indent-according-to-mode))))
 
 (defun le/s-return ()
   (interactive)
