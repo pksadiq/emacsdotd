@@ -396,11 +396,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun my-end-statement ()
   (end-of-line)
-  (delete-trailing-whitespace
-   (line-beginning-position) (line-end-position))
   (unless (eq (char-before) ?\;)
+    (delete-trailing-whitespace
+     (line-beginning-position) (line-end-position))
     (c-indent-line)
-    (insert ";")))
+    (insert ";\n")
+    (c-indent-line)))
 
 (defun end-statement ()
   (interactive)
