@@ -402,9 +402,6 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
      (line-beginning-position) (line-end-position))
     (c-indent-line)
     (insert ";")
-    (if (c-next-line-empty-p)
-        (forward-line)
-      (insert "\n"))
     (c-indent-line)))
 
 (defun end-statement ()
