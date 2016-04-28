@@ -505,8 +505,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                  (forward-char))
              (c-backward-sws)
              (c-in-function-header-p))
-           (if (c-in-function-arg-p)
-               (align-current))
+           (when (c-in-function-arg-p)
+             (delete-trailing-whitespace
+              (line-beginning-position) (line-end-position))
+             (align-current))
            (search-forward "{")
            (c-forward-sws)
            (if (eq (following-char) ?\})
