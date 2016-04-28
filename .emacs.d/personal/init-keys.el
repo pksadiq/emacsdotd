@@ -9,6 +9,8 @@
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
 
 (global-set-key (kbd "<f5>") 'my-term)
+(global-set-key (kbd "<f6>") 'my-make-compile)
+(global-set-key (kbd "<f7>") 'my-make-run)
 
 (global-set-key (kbd "M-g M-g") 'avy-goto-line)
 
