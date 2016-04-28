@@ -7,6 +7,9 @@
 ;; Auto close quotes and brackets: ", [, (, {, etc.
 (electric-pair-mode 1)
 
+(if (file-exists-p "/usr/share/doc/devhelp/devhelp.el")
+    (load-file "/usr/share/doc/devhelp/devhelp.el"))
+
 ;; Highlight matching parenthesis
 (show-paren-mode 1)
 
