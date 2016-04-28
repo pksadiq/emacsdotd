@@ -401,7 +401,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
     (c-indent-line)
-    (insert ";\n")
+    (insert ";")
+    (if (c-next-line-empty-p)
+        (forward-line)
+      (insert "\n"))
     (c-indent-line)))
 
 (defun end-statement ()
