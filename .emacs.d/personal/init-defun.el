@@ -1,5 +1,10 @@
 ;; Some personal functions
 
+(defun my-make-compile ()
+  (compile "make"))
+
+(defun my-make-run ()
+  (compile "make run"))
 
 (defun my-read-only-mode ()
   (if (> (buffer-size) 0)
