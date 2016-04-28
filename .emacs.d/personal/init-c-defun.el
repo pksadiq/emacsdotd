@@ -495,6 +495,19 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (forward-line -1)
     (c-indent-line)))
 
+(defun c-align-fn-arg-p ()
+  (let ((beg nil)
+        (end nil))
+    (save-excursion
+      (while (c-in-function-arg-p)
+        (my-backward-char 1))
+      (setq beg (point)))
+    (save-excursion
+      (while (c-in-function-arg-p)
+        (my-backward-char -1))
+      (setq end (point)))
+    (align beg end)))
+
 (defun dwim-with-brace ()
   (unless mark-active
     (do-dwim-with-brace)))
@@ -513,7 +526,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (when (c-in-function-arg-p)
              (delete-trailing-whitespace
               (line-beginning-position) (line-end-position))
-             (align-current))
+             (c-align-fn-arg-p))
            (search-forward "{")
            (c-forward-sws)
            (if (eq (following-char) ?\})
@@ -527,13 +540,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (c-backward-sws)
              (unless (bobp)
                (my-backward-char 1)))
-           (align-current)
+           (c-align-fn-arg-p)
            (search-forward ")" nil t)
            (c-do-brace))
           ((c-in-function-arg-p)
            (delete-trailing-whitespace
             (line-beginning-position) (line-end-position))
-           (align-current)
+           (c-align-fn-arg-p)
            (unless (eq (save-excursion
                          (c-end-of-statement)
                          (preceding-char)) ?\;)
