@@ -2,10 +2,12 @@
 
 (defun my-make-compile ()
   (interactive)
+  (read-only-mode 1)
   (compile "make"))
 
 (defun my-make-run ()
   (interactive)
+  (read-only-mode 1)
   (compile "make run"))
 
 (defun my-read-only-mode ()
