@@ -9,6 +9,25 @@
   (if (looking-at "[[:space:]]*$")
       (indent-according-to-mode)))
 
+(defun le/return ()
+  (interactive)
+  (read-only-mode -1)
+  (end-of-line)
+  (insert "\n")
+  (indent-according-to-mode))
+
+(defun le/s-return ()
+  (interactive)
+  (read-only-mode -1)
+  (insert "\n")
+  (indent-according-to-mode))
+
+(defun le/kill-region ()
+  (interactive)
+  (read-only-mode -1)
+  (kill-region-or-backward-word)
+  (read-only-mode 1))
+
 (defun le/insert-after ()
   (interactive)
   (right-char)
@@ -34,9 +53,16 @@
 (defun le/kill-line ()
   (interactive)
   (le/insert-here)
-  (with-demoted-errors
-      (kill-line))
+  (if (and mark-active
+           (not (eq (mark) (point))))
+      (kill-region-or-backward-word)
+    (with-demoted-errors
+        (kill-line)))
   (read-only-mode 1))
+
+(defun le/mark ()
+  (interactive)
+  (set-mark (point)))
 
 (defun my-quit ()
   (interactive)
@@ -82,6 +108,11 @@
             (define-key map (kbd "x") 'execute-extended-command)
             (define-key map (kbd "c") 'le/flycheck-next-error)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
+            (define-key map (kbd "m") 'le/mark)
+            (define-key map (kbd "C-k") 'le/kill-line)
+            (define-key map (kbd "C-w") 'le/kill-region)
+            (define-key map (kbd "<return>") 'le/return)
+            (define-key map (kbd "<S-return>") 'le/s-return)
             map))
 
 ;;;###autoload
