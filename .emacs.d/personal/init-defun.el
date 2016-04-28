@@ -1,9 +1,11 @@
 ;; Some personal functions
 
 (defun my-make-compile ()
+  (interactive)
   (compile "make"))
 
 (defun my-make-run ()
+  (interactive)
   (compile "make run"))
 
 (defun my-read-only-mode ()
