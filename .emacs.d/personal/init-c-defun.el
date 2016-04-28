@@ -516,6 +516,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                  (my-backward-char 1))))
           ((or (c-in-incomplete-function-arg-p)
                (c-after-incomplete-function-arg-p))
+           (delete-trailing-whitespace
+            (line-beginning-position) (line-end-position))
            (when (c-after-incomplete-function-arg-p)
              (c-backward-sws)
              (unless (bobp)
@@ -524,6 +526,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (search-forward ")" nil t)
            (c-do-brace))
           ((c-in-function-arg-p)
+           (delete-trailing-whitespace
+            (line-beginning-position) (line-end-position))
            (align-current)
            (unless (eq (save-excursion
                          (c-end-of-statement)
