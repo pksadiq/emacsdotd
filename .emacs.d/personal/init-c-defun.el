@@ -130,7 +130,7 @@
       (c-backward-token-2)
       (my-backward-char -1))
     (if (string-match-p "struct\\|enum" (c-token-at-point))
-        t
+        (c-token-at-point)
       nil)))
 
 (defun c-in-function-header-p (&optional is-not)
@@ -481,8 +481,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (unless mark-active
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
-    (unless (eq (preceding-char) ?\n)
-      (insert "\n"))
+    (if (string= (c-in-struct-or-enum-p) "enum")
+        (insert " ")
+      (unless (eq (preceding-char) ?\n)
+        (insert "\n")))
     (insert "{")
     (c-indent-line)
     (insert "\n\n}")
