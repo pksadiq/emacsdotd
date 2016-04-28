@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: g_application_run
+# key: g_ar.
+# --
+g_application_run (G_APPLICATION (${1:app}), ${2:argc}, ${3:argv});

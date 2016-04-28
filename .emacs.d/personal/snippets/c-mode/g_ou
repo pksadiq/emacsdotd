@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: g_object_unref
+# key: g_ou.
+# --
+g_object_unref (${1:object});
