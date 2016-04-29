@@ -2,4 +2,5 @@
 # name: g_signal_connect
 # key: g_sc.
 # --
-g_signal_connect (${1:button}, "${2:clicked$(str-to-style yas-text "lisp")}", G_CALLBACK (${3:${2:$(str-to-style yas-text "snake")}_cb}), ${4:NULL});
+g_signal_connect (${1:button}, "${2:clicked$(str-to-style yas-text
+"lisp")}", G_CALLBACK (${3:$1_${2:$(str-to-style yas-text "snake")}_cb$(setq gnome-sig-defun yas-text)}), ${4:NULL});
