@@ -34,6 +34,6 @@
                             "THANKS" "TODO" "BUGS" "\.git"
                             "build-aux/" "^m4/$" "^po/$" "\.out$"
                             "\.mp4$" "\.jpg$" "\.png$" "\.pdf$"
-                            "\.ps$" "\.webm$" "\.svg$" "^#" "^[^.A-Z]*$")))
+                            "\.ps$" "\.webm$" "\.svg$" "^#")))
 
 (provide 'init-ido)
