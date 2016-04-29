@@ -52,6 +52,13 @@
   (if (bound-and-true-p flycheck-mode)
       (flycheck-previous-error)))
 
+
+(defun le/fold-unfold ()
+  (interactive)
+  (if (eq major-mode 'web-mode)
+      (web-mode-fold-or-unfold)
+    (hs-toggle-hiding)))
+
 (defun le/undo ()
   (interactive)
   (le/insert-here)
@@ -101,7 +108,7 @@
             (define-key map (kbd "/") 'isearch-forward-regexp)
             (define-key map (kbd "q") 'my-quit)
             (define-key map (kbd "e") 'end-of-line)
-            (define-key map (kbd "t") 'hs-toggle-hiding)
+            (define-key map (kbd "t") 'le/fold-unfold)
             (define-key map (kbd "u") 'le/undo)
             (define-key map (kbd "i") 'le/insert-here)
             (define-key map (kbd "o") 'switch-my-buffer)
