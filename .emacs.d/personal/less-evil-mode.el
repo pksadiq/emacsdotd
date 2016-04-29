@@ -75,7 +75,7 @@
 
 (defun my-quit ()
   (interactive)
-  (if (memq major-mode '(help-mode apropos-mode))
+  (if (memq major-mode '(help-mode apropos-mode compilation-mode))
       (quit-window)
     (keyboard-quit)))
 
