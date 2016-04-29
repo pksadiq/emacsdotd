@@ -504,6 +504,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       (while (c-in-function-arg-p)
         (my-backward-char -1))
       (setq end (point)))
+    (indent-region beg end)
     (align beg end)))
 
 (defun dwim-with-brace ()
