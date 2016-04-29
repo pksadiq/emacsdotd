@@ -31,6 +31,12 @@
   (kill-region-or-backward-word)
   (read-only-mode 1))
 
+(defun le/delete-next-char ()
+  (interactive)
+  (read-only-mode -1)
+  (delete-char 1)
+  (read-only-mode 1))
+
 (defun le/insert-after ()
   (interactive)
   (right-char)
@@ -108,7 +114,8 @@
             (define-key map (kbd "j") 'next-line)
             (define-key map (kbd "k") 'previous-line)
             (define-key map (kbd "l") 'right-char)
-            (define-key map (kbd "x") 'execute-extended-command)
+            (define-key map (kbd "z") 'execute-extended-command)
+            (define-key map (kbd "x") 'le/delete-next-char)
             (define-key map (kbd "c") 'le/flycheck-next-error)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
             (define-key map (kbd "m") 'le/mark)
