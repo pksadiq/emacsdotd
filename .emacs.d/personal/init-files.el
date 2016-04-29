@@ -6,4 +6,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.ui\\'" . web-mode))
 
+(require 'web-mode)
+(require 'flycheck)
+(add-hook 'web-mode-hook (lambda ()
+                           ;; check with xml-xmllint for gtk+ .ui files
+                           (if (string-match-p "[.]ui$" (buffer-name))
+                               (flycheck-add-mode 'xml-xmllint 'web-mode))))
+
 (provide 'init-files)
