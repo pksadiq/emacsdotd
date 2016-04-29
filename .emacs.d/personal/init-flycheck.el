@@ -3,9 +3,8 @@
 (require 'flycheck)
 
 (with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc c/c++-clang)
                 flycheck-gcc-warnings '("all")))
-
 
 ;; Enable flycheck globally
 (global-flycheck-mode)
