@@ -2,7 +2,7 @@
 # name: <object>
 # key: ob.
 # --
-<object class="${1:GtkButton$(str-to-style yas-text "upcamel")}" id="$2">
+<object class="${1:GtkButton$(str-to-style yas-text "upcamel")}" id="${2:property$(replace-regexp-in-string " " "_" yas-text)}">
 <property name="visible">${3:True}</property>
 <property name="can-focus">${4:False}</property>$0
 </object>
