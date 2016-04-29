@@ -51,7 +51,9 @@ Otherwise, call `backward-kill-word'."
 
 (defun my-term ()
   (interactive)
-  (ansi-term (getenv "SHELL")))
+  (if (get-buffer "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
+  (ansi-term (getenv "SHELL"))))
 
 (defun kill-buffer-on-exit (process event)
   (when (memq (process-status process) '(exit signal))
