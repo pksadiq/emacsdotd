@@ -28,13 +28,13 @@
 ;; Ignore some files
 (setq
  ido-ignore-files (append ido-ignore-files
-                          '("\.m4" "\.in" "\.am" "^Makefile" "^config"
+                          '("[.]m4" "[.]in" "[.]am" "^Makefile" "^config"
                             "COPYING" "AUTHORS" "INSTALL" "README"
-                            "NEWS" "autogen\.sh" "ChangeLog" "libtool"
-                            "THANKS" "TODO" "BUGS" "\.git" "GTAGS"
+                            "NEWS" "autogen[.]sh" "ChangeLog" "libtool"
+                            "THANKS" "TODO" "BUGS" "[.]git" "GTAGS"
                             "GRTAGS" "GPATH"
-                            "build-aux/" "^m4/$" "^po/$" "\.out$"
-                            "\.mp4$" "\.jpg$" "\.png$" "\.pdf$"
-                            "\.ps$" "\.webm$" "\.svg$" "^#")))
+                            "build-aux/" "^m4/$" "^po/$" "[.]out$"
+                            "[.]mp4$" "[.]jpg$" "[.]png$" "[.]pdf$"
+                            "[.]ps$" "[.]webm$" "[.]svg$" "^#")))
 
 (provide 'init-ido)
