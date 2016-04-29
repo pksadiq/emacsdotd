@@ -13,6 +13,9 @@
 (defvar gnome-parent nil)
 (make-variable-buffer-local 'gnome-parent)
 
+(defvar gnome-sig-defun nil)
+(make-variable-buffer-local 'gnome-sig-defun)
+
 (defvar second-last-point -1)
 (make-variable-buffer-local 'second-last-point)
 
