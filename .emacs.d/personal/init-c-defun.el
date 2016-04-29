@@ -668,8 +668,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (insert " =")))
     (if (eq (following-char) ?\ )
         (forward-char 1)
-      (or (eq (preceding-char) ?\=)
-          (insert " ")))))
+          (insert " "))))
 
 
 (defun dwim-with-paren-close ()
