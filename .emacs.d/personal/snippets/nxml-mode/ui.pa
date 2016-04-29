@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <packing>
+# key: pa.
+# binding: direct-keybinding
+# --
+<packing>
+<property name="${1:property$(replace-regexp-in-string " " "-" yas-text)}">$2</property>$0
+</packing>
