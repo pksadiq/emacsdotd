@@ -7,4 +7,4 @@ ${3:`(or gnome-sig-defun "my_function")`} (${4:GApplication *app},
       gpointer user_data)
 {
   $0
-}
+} `(unless (c-next-line-empty-p) "\n")`
