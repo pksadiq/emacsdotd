@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <object>
+# key: ob.
+# --
+<object class="${1:GtkButton$(str-to-style yas-text "upcamel")}" id="$2">
+<property name="visible">${3:True}</property>
+<property name="can-focus">${4:False}</property>$0
+</object>

@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <property>
+# key: pr.
+# --
+<property name="${1:property$(replace-regexp-in-string " " "-" yas-text)}">${2:value}</property>$0
