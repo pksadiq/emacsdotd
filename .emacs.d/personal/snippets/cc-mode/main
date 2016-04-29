@@ -3,10 +3,8 @@
 # key: m.
 # --
 int
-main(${1:int  argc,
+main (${1:int    argc,
 char **argv})
 {
     $0
-
-    return 0;
 }
