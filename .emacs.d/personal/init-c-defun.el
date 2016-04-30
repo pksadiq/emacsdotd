@@ -433,6 +433,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (my-backward-char 1)
     (align-current)))
 
+(defun insert-comma ()
+  (interactive)
+  (insert ","))
+
 (defun insert-semi-colon ()
   (interactive)
   (insert ";"))
@@ -631,9 +635,18 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun dwim-with-comma ()
   (let ((last-char nil))
-    (under-score-to-space 1)
-    (do-common-defun)
-    (cond ((save-excursion
+    (unless (point-in-string-p)
+      (under-score-to-space 1)
+      (do-common-defun))
+    (cond ((point-in-string-p)
+           (delete-char -1)
+           (while (and (point-in-string-p)
+                       (not (eobp)))
+             (my-backward-char -1))
+           (if (eq (following-char) ?\,)
+               (my-backward-char -1)
+             (insert ",")))
+          ((save-excursion
              (backward-char 1)
              (if (eq (preceding-char) ?\ )
                  (backward-char 1))
@@ -665,7 +678,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                 (not (c-in-function-arg-p))
                 )
            (backward-delete-char 1)
-           (insert " =")))
+           (insert " ="))
+          )
     (if (eq (following-char) ?\ )
         (forward-char 1)
           (insert " "))))
