@@ -713,7 +713,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (cond ((and (c-in-header-fname-p)
                 (eq (following-char) ?\>))
            (backward-delete-char -1))
-          ((string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point)))))
+          ((and (not (c-in-header-fname-p))
+                (string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point))))))
            (save-excursion
              (my-backward-char 1)
              (insert-space)))
