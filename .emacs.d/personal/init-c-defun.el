@@ -482,7 +482,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (unless mark-active
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
-    (if (string= (c-in-struct-or-enum-p) "enum")
+    (if (or (string= (c-in-struct-or-enum-p) "enum")
+            (string= (c-token-at-point) "="))
         (insert " ")
       (if (and (not (eq (preceding-char) ?\n))
                (c-next-line-empty-p))
@@ -516,9 +517,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (do-dwim-with-brace)))
 
 (defun do-dwim-with-brace ()
-  (let ((put-brace nil))
+  (let ((put-brace nil)
+        (in-array (c-in-array-p)))
     (delete-backward-char 1)
-    (cond ((or (c-in-struct-or-enum-p))
+    (cond ((or (c-in-struct-or-enum-p)
+               (and in-array
+                    (not (c-in-array-p))))
            (c-do-brace))
           ((save-excursion
              (if (and (> (point-max) (point))
