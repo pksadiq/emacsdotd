@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: GTK_ORIENTATION_VERTICAL
+# key: gtk_ov.
+# --
+GTK_ORIENTATION_VERTICAL

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: gtk_grid_attach
+# key: gtk_ga.
+# --
+gtk_grid_attach (GTK_GRID (${1:grid}), ${2:widget}, ${3:from_left}, ${4:from_top}, ${5:width}, ${6:height});

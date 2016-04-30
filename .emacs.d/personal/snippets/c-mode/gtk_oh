@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: GTK_ORIENTATION_HORIZONTAL
+# key: gtk_oh.
+# --
+GTK_ORIENTATION_HORIZONTAL
