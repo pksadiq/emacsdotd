@@ -395,8 +395,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       nil)))
 
 (defun my-end-statement ()
-  (end-of-line)
-  (c-backward-sws)
+  (unless (save-excursion
+        (end-of-line)
+        (point-in-comment-p))
+    (end-of-line)
+    (c-backward-sws))
   (unless (eq (char-before) ?\;)
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
