@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <gresource prefix>...
+# key: gr.
+# --
+<gresource prefix="$1">
+  $0
+</gresource>

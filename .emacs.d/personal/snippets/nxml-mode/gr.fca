@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <gresources> <file>...
+# key: f.ca
+# --
+<file compressed="true" alias="$1">$2</file>
