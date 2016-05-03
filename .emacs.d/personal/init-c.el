@@ -25,7 +25,7 @@
 (defvar next-is-command nil)
 (make-variable-buffer-local 'next-is-command)
 
-(add-hook 'c-initialization-hook
+(add-hook 'c-mode-common-hook
           (lambda ()
             (add-hook 'post-self-insert-hook 'dwim-more nil t)
             (local-set-key (kbd "S-SPC") 'insert-space)
