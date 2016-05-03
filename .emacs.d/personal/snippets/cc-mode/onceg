@@ -4,7 +4,7 @@
 # condition: (progn (gnome-c-style-mode 1) t)
 # --
 #ifndef ${1:`(file-name-nondirectory (file-name-sans-extension
-        (buffer-file-name)))`$(replace-regexp-in-string "[- ]" "_" (upcase yas-text))}_H
+        (buffer-file-name)))`$(str-to-style (downcase yas-text) "upsnake")}_H
 #define $1_H
 
 ${6:#include <gtk/gtk.h>
