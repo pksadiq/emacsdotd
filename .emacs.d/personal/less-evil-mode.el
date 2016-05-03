@@ -139,4 +139,15 @@
                 (less-evil-mode 1)
               (less-evil-mode -1))))
 
+(defun evil-in-erc-mode-hook ()
+  (let ((oldmap (cdr (assoc 'less-evil-mode minor-mode-map-alist)))
+        (newmap (make-sparse-keymap)))
+    (set-keymap-parent newmap oldmap)
+    (define-key newmap (kbd "<return>") nil)
+    (define-key newmap (kbd "i") nil)
+    (make-local-variable 'minor-mode-overriding-map-alist)
+    (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
+
+(add-hook 'erc-mode-hook 'evil-in-erc-mode-hook)
+
 (provide 'less-evil-mode)
