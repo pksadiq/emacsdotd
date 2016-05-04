@@ -5,14 +5,9 @@
 # --
 #include "`(replace-regexp-in-string "\\.c" "\.h" (file-name-nondirectory buffer-file-name))`"
 
-typedef struct _${2:$(str-to-style yas-text "upcamel")}
+struct _${2:$(str-to-style yas-text "upcamel")}
 {
 ${3:$(str-to-style (replace-regexp-in-string "TYPE_" "" yas-text) "upcamel")} parent_instance;
-} ${2:$(str-to-style yas-text "upcamel")};
-
-struct _${2:$(str-to-style yas-text "upcamel")}Class
-{
-${3:$(str-to-style (replace-regexp-in-string "TYPE_" "" yas-text) "upcamel")}Class parent_class;
 };
 
 
