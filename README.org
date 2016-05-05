@@ -5,7 +5,7 @@
 ** What is present?
    - Highly configured for C programming with gtk+
    - includes
-     - yasnippet (power snippets)
+     - yasnippet (powerful snippets)
      - ido
      - company (autocompletion)
      - flycheck (check syntax -- configured for gcc)
