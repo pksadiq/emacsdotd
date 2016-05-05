@@ -73,7 +73,9 @@
            (not (eq (mark) (point))))
       (kill-region-or-backward-word)
     (with-demoted-errors
-        (kill-line)))
+        (progn
+          (kill-line)
+          (indent-according-to-mode))))
   (read-only-mode 1))
 
 (defun le/mark ()
