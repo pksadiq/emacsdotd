@@ -415,8 +415,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun my-end-statement ()
   (unless (save-excursion
-        (end-of-line)
-        (point-in-comment-p))
+            (end-of-line)
+            (point-in-comment-p))
     (end-of-line)
     (c-backward-sws))
   (while (and (c-in-function-arg-p)
@@ -704,7 +704,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           )
     (if (eq (following-char) ?\ )
         (forward-char 1)
-          (insert " "))))
+      (insert " "))))
 
 
 (defun dwim-with-paren-close ()
@@ -725,15 +725,15 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-backward-sws) 
            (delete-char -1)
            (unless (or (eq (preceding-char) ?\ )
-                        (eq (following-char) ?\ ))
+                       (eq (following-char) ?\ ))
              (insert " "))
            (c-backward-token-2)
            (my-backward-char -1)
            (replace-token-at-point "upsnake")))
         ((member 'font-lock-variable-name-face
-          (save-excursion
-               (my-backward-char 3)
-               (text-properties-at (point))))
+                 (save-excursion
+                   (my-backward-char 3)
+                   (text-properties-at (point))))
          (save-excursion
            (my-backward-char 1)
            (c-backward-token-2)
