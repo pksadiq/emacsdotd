@@ -429,13 +429,6 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
               (not (c-at-expression-start-p)))
     (my-backward-char 1)))
 
-(defun c-align-current-defun ()
-  (save-excursion
-    (c-beginning-of-defun-1)
-    (c-backward-sws)
-    (my-backward-char 1)
-    (align-current)))
-
 (defun insert-comma ()
   (interactive)
   (insert ","))
