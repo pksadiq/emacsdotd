@@ -400,6 +400,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (point-in-comment-p))
     (end-of-line)
     (c-backward-sws))
+  (while (and (c-in-function-arg-p)
+              (not (eobp)))
+    (my-backward-char -1))
   (unless (eq (char-before) ?\;)
     (delete-trailing-whitespace
      (line-beginning-position) (line-end-position))
