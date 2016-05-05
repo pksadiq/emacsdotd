@@ -364,7 +364,9 @@ STR can be of the form CamelCase, snake_case, space text, or lisp-case
 STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (let* ((str (str-to-snake-style str))
          (out str))
-    (cond ((string= style "upcamel")
+    (cond ((string-match-p "[a-z]*_t$" str)
+           (setq out str))
+          ((string= style "upcamel")
            (setq str (upcase-initials str))
            (setq out (replace-regexp-in-string "\\(.\\)_\\(.\\)" "\\1\\2" str)))
           ((string= style "lisp")
