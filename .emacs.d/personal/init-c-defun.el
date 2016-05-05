@@ -414,7 +414,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         ((do-common-defun)
          nil)
         ((c-in-function-arg-p)
-         (align-current)
+         (c-align-fn-arg-p)
          (my-end-statement))
         ((c-inside-enum-p)
          (while (and (not (eobp))
