@@ -5,6 +5,7 @@
 ;; Multiline comment prefix
 (setq c-block-comment-prefix "*")
 
+;; TODO: use regexp match
 (setq c-macro-names-with-semicolon
       '("G_BEGIN_DECLS" "G_END_DECLS" "G_DECLARE_FINAL_TYPE"
         "G_DECLARE_DERIVABLE_TYPE" "G_DECLARE_INTERFACE" "G_DEFINE_TYPE"
