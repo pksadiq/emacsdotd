@@ -34,9 +34,26 @@
           (c-backward-token-2)
           (c-backward-sws)
           (c-in-struct-or-enum-p)))
+   (and (equal major-mode 'c-mode)
+        (eq (preceding-char) ?\')
+        (not (point-in-string-p)))
+   (and (equal major-mode 'c-mode)
+        (point-in-string-p)
+        (c-may-not-be-char))
    ))
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
+
+(defun c-may-not-be-char ()
+  (if (and (point-in-string-p)
+           (save-excursion
+             (while (and (not (bobp))
+                         (point-in-string-p))
+               (my-backward-char 1))
+             (and (eq (following-char) ?\')
+                  (string-match-p "[a-zA-Z0-9_]" (char-to-string (preceding-char))))))
+      t
+    nil))
 
 (defun c-next-line-empty-p ()
   (let ((my-point (point)))
@@ -698,7 +715,22 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-paren-open ()
   (under-score-to-space 1)
   (do-common-defun)
-  (cond ((member 'font-lock-variable-name-face
+  (cond ((save-excursion
+           (my-backward-char 1)
+           (c-backward-sws)
+           (and (eq (preceding-char) ?\')
+                (c-may-not-be-char)))
+         (save-excursion
+           (my-backward-char 1)
+           (c-backward-sws) 
+           (delete-char -1)
+           (unless (or (eq (preceding-char) ?\ )
+                        (eq (following-char) ?\ ))
+             (insert " "))
+           (c-backward-token-2)
+           (my-backward-char -1)
+           (replace-token-at-point "upsnake")))
+        ((member 'font-lock-variable-name-face
           (save-excursion
                (my-backward-char 3)
                (text-properties-at (point))))
