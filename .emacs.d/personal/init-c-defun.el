@@ -314,11 +314,12 @@ was SPC)"
               (string-match-p "snake\\|lisp" style))
       (setq token (str-to-style token style))
       (c-beginning-of-current-token)
-      (delete-region (point) (save-excursion
-                               (my-backward-char -1)
-                               (c-end-of-current-token)
-                               (point)))
-      (insert token))))
+      (unless (string= token "")
+        (delete-region (point) (save-excursion
+                                 (my-backward-char -1)
+                                 (c-end-of-current-token)
+                                 (point)))
+        (insert token)))))
 
 ;; experimental
 (defun c-in-for-loop-p ()
