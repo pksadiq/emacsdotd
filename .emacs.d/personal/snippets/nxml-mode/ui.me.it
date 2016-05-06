@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <item> in <menu>
+# key: me.it
+# --
+<item>
+<attribute name="label" translatable="${1:yes}">$2</attribute>
+<attribute name="action">$3</attribute>$0
+</item>

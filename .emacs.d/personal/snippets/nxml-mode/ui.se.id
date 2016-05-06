@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <section id="">
+# key: se.id
+# --
+<section id="${1:my-id$(replace-regexp-in-string " " "-" yas-text)}">
+$0
+</section>

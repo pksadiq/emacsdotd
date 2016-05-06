@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <section>
+# key: se.
+# --
+<section>
+$0
+</section>
