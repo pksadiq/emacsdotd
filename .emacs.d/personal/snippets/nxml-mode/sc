@@ -2,6 +2,6 @@
 # name: <schema ...>...
 # key: sc.
 # --
-<schema id="$1" path="/${1:$(replace-regexp-in-string "[.]" "/" yas-text)}">
+<schema id="$1" path="/${1:$(replace-regexp-in-string "[.]" "/" yas-text)}/">
 $0
 </schema>
