@@ -752,8 +752,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       (when (and (eq (preceding-char) ?\.)
                  (not (point-in-comment-p))
                  (not (point-in-string-p)))
-        (delete-backward-char 1)
-        (delete-forward-char 1)
+        (delete-char -1)
+        (delete-char 1)
         (insert "->")
         (setq changed t)))
     (if changed
