@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <choice value=...>...
+# key: cho.
+# --
+<choice value="${1:$$(replace-regexp-in-string " " "-" yas-text)}"/>$0
