@@ -13,7 +13,7 @@
       '(("fuck" . " f..k")))
 
 ;; Hide distracting info from `erc' IRC client
-(setq erc-hide-list '("JOIN" "PART" "QUIT"))
+(setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
 
 (defvar nick-n 0)
 (make-variable-buffer-local 'nick-n)
