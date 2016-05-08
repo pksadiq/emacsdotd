@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <object> GtkLabel
+# key: ob.la
+# --
+<object class="GtkLabel" id="${1:label$(replace-regexp-in-string " " "_" yas-text)}">
+<property name="label" translatable="yes">${2:_Label$(replace-regexp-in-string "^ " "_" yas-text)}</property>
+<property name="use-underline">True</property>
+<property name="visible">${3:True}</property>${0:$$(read-only-mode)}
+</object>
