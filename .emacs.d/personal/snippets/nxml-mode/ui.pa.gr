@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <packing> (grid)
+# key: pa.gr
+# binding: direct-keybinding
+# --
+<packing>
+<property name="left-attach">$1</property>
+<property name="top-attach">$2</property>${0:$$(read-only-mode)}
+</packing>
