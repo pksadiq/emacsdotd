@@ -15,6 +15,9 @@
 ;; Hide distracting info from `erc' IRC client
 (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT"))
 
+;; Consider nicks concealed for 10 hours to be lurkers 
+(setq erc-lurker-threshold-time (* 10 60 60))
+
 (defvar nick-n 0)
 (make-variable-buffer-local 'nick-n)
 
