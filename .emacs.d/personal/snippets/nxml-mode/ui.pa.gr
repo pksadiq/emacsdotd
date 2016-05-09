@@ -4,6 +4,6 @@
 # binding: direct-keybinding
 # --
 <packing>
-<property name="left-attach">$1</property>
-<property name="top-attach">$2</property>${0:$$(read-only-mode)}
+<property name="left-attach">${1:0}</property>
+<property name="top-attach">${2:0}</property>${0:$$(read-only-mode)}
 </packing>
