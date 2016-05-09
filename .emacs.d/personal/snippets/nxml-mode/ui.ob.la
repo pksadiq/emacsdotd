@@ -4,7 +4,6 @@
 # --
 <object class="GtkLabel" id="${1:label$(replace-regexp-in-string " " "_" yas-text)}">
 <property name="label" translatable="yes">${2:_Label$(replace-regexp-in-string "^ " "_" yas-text)}</property>
-<property name="use-underline">true</property>
 <property name="halign">${3:end}</property>
 <property name="visible">${4:true}</property>${0:$$(read-only-mode)}
 </object>

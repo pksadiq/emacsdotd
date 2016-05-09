@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <property> "use-underline"
+# key: pr.un
+# --
+<property name="use-underline">true</property>
+<property name="mnemonic-widget">$1</property>${0:$$(read-only-mode)}
