@@ -2,7 +2,7 @@
 # name: <object> GtkComboBoxText
 # key: ob.cbt
 # --
-<object class="GtkComboboxText" id="${1:button$(replace-regexp-in-string " " "_" yas-text)}">
+<object class="GtkComboboxText" id="${1:combobox$(replace-regexp-in-string " " "_" yas-text)}">
 <property name="visible">${2:true}</property>
 <items>
 <item translatable="yes" id="${3:none$(replace-regexp-in-string " " "-" yas-text)}">${4:None}</item>
