@@ -4,6 +4,6 @@
 # --
 <object class="GtkGrid" id="${1:grid$(replace-regexp-in-string " " "_" yas-text)}">
 <property name="visible">${2:true}</property>
-<property name="row-spacing">$3</property>
-<property name="column-spacing">$4</property>${0:$$(read-only-mode)}
+<property name="row-spacing">${3:12}</property>
+<property name="column-spacing">${4:6}</property>${0:$$(read-only-mode)}
 </object>
