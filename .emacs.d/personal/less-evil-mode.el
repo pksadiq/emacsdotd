@@ -147,6 +147,10 @@
     (set-keymap-parent newmap oldmap)
     (define-key newmap (kbd "<return>") nil)
     (define-key newmap (kbd "i") nil)
+    (define-key newmap (kbd "x") nil)
+    (define-key newmap (kbd "d") nil)
+    (define-key newmap (kbd "u") nil)
+    (define-key newmap (kbd ".") nil)
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
 
