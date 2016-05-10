@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <object> GtkImage
+# key: ob.im
+# --
+<object class="GtkImage" id="${1:image$(replace-regexp-in-string " " "_" yas-text)}">
+<property name="icon-name">${2:$$(replace-regexp-in-string " " "-" yas-text)}</property>
+<property name="visible">${3:true}</property>${0:$$(read-only-mode)}
+</object>
