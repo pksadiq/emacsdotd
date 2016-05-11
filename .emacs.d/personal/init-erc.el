@@ -15,6 +15,9 @@
 ;; Hide distracting info from `erc' IRC client
 (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT" "NICK"))
 
+;; Interpret MIRC colors
+(setq erc-interpret-mirc-color t)
+
 ;; Consider nicks concealed for 10 hours to be lurkers 
 (setq erc-lurker-threshold-time (* 10 60 60))
 
