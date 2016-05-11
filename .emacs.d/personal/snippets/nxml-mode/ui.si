@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <signal... />
+# key: si.
+# --
+<signal name="${1:signal-name$(replace-regexp-in-string "[.]" "::" (replace-regexp-in-string " " "-" yas-text))}" handler="${2:signal_handler_cb$(replace-regexp-in-string " " "_" yas-text)}"/>${0:$$(read-only-mode)}
