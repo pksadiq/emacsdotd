@@ -1,0 +1,6 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <property> width, height
+# key: pr.wh
+# --
+<property name="${1:default-width$(replace-regexp-in-string " " "-" yas-text)}">$2</property>
+<property name="${1:$(replace-regexp-in-string "width" "height")}">$3</property>${0:$$(read-only-mode)}
