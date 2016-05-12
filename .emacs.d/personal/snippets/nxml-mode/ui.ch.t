@@ -8,4 +8,5 @@
                          (setq last-line-empty nil)))
   nil)`<child type="title${1:bar}">
 $0
-</child>`(if last-line-empty "\n")`
+</child>`(if (and last-line-empty
+                  (not (c-next-line-empty-p))) "\n")`
