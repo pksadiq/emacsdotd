@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: <packing> pack-type
+# key: pa.pt
+# binding: direct-keybinding
+# --
+<packing>
+<property name="pack-type">${1:end}</property>${0:$$(read-only-mode)}
+</packing>

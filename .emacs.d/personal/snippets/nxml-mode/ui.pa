@@ -4,5 +4,5 @@
 # binding: direct-keybinding
 # --
 <packing>
-<property name="${1:property$(replace-regexp-in-string " " "-" yas-text)}">$2</property>$0
+<property name="${1:property$(replace-regexp-in-string " " "-" yas-text)}">$2</property>${0:$$(read-only-mode)}
 </packing>
