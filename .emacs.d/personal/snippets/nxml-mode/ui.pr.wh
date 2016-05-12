@@ -3,4 +3,4 @@
 # key: pr.wh
 # --
 <property name="${1:default-width$(replace-regexp-in-string " " "-" yas-text)}">$2</property>
-<property name="${1:$(replace-regexp-in-string "width" "height")}">$3</property>${0:$$(read-only-mode)}
+<property name="${1:$(replace-regexp-in-string "width" "height" yas-text)}">${3:$2}</property>${0:$$(read-only-mode)}
