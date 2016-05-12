@@ -1,11 +1,11 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: <child>
-# key: ch.
+# name: <child> type
+# key: ch.i
 # --
 `(save-excursion (if (>= (forward-line -2) 0)
                       (if (c-next-line-empty-p)
                            (setq last-line-empty t)
                          (setq last-line-empty nil)))
-  nil)`<child>
+  nil)`<child internal-child="${1:vbox}">
 $0
 </child>`(if last-line-empty "\n")`
