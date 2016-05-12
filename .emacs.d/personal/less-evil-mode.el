@@ -19,6 +19,11 @@
       (insert "\n")
       (indent-according-to-mode))))
 
+(defun le/navigate ()
+  (interactive)
+  (if (eq major-mode 'web-mode)
+      (web-mode-navigate)))
+
 (defun le/s-return ()
   (interactive)
   (read-only-mode -1)
@@ -131,6 +136,7 @@
             (define-key map (kbd "x") 'le/delete-next-char)
             (define-key map (kbd "c") 'le/flycheck-next-error)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
+            (define-key map (kbd "n") 'le/navigate)
             (define-key map (kbd "m") 'le/mark)
             (define-key map (kbd "C-k") 'le/kill-line)
             (define-key map (kbd "C-w") 'le/kill-region)
