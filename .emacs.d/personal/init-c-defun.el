@@ -765,7 +765,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           ((save-excursion
              (my-backward-char 1)
              (c-backward-sws)
-             (eq (preceding-char) ?\,))
+             (memq (preceding-char) '(?\, ?\()))
            (delete-char -1)
            (insert "&"))
           ((save-excursion
