@@ -12,6 +12,10 @@
 ;; Load settings from custom-file
 (load custom-file)
 
+;; Save and restore point location for each visited file
+;; GNU Emacs 25.1+ required
+(save-place-mode 1)
+
 ;; Let's type y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
