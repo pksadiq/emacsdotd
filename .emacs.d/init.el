@@ -56,7 +56,7 @@
 ;; Configures `web-mode' 
 (require 'init-web)
 
-;; Configures `ansi-term' IRC client
+;; Configures `ansi-term' Terminal Emulator
 (require 'init-term)
 
 ;; Configure specific files to be opened with specific modes.
