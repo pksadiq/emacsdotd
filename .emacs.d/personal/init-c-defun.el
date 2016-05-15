@@ -453,6 +453,10 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
               (not (c-at-expression-start-p)))
     (my-backward-char 1)))
 
+(defun insert-period ()
+  (interactive)
+  (insert "."))
+
 (defun insert-comma ()
   (interactive)
   (insert ","))

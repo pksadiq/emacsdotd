@@ -35,6 +35,7 @@
             (add-hook 'post-self-insert-hook 'dwim-more nil t)
             (local-set-key (kbd "S-SPC") 'insert-space)
             (local-set-key (kbd "C-,") 'insert-comma)
-            (local-set-key (kbd "C-{") 'insert-brace)))
+            (local-set-key (kbd "C-{") 'insert-brace)
+            (local-set-key (kbd "C-.") 'insert-period)))
 
 (provide 'init-c)
