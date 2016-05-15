@@ -6,8 +6,8 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc c/c++-clang)
                 flycheck-gcc-warnings '("all")))
 
-;; Enable flycheck globally
-(global-flycheck-mode)
+;; Enable flycheck in prog-modes only
+(add-hook 'prog-mode-hook 'flycheck-mode)
 
 ;; Include path for gtk3+
 (setq
