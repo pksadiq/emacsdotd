@@ -445,6 +445,13 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                      (c-inside-enum-p))
            (my-backward-char -1))
          (my-end-statement))
+        ((and (point-in-string-p)
+              (c-may-not-be-char))
+         (save-excursion
+           (delete-char -1)
+           (my-backward-char 2)
+           (replace-token-at-point "upsnake"))
+         (my-end-statement))
         (t
          (my-end-statement))))
 
@@ -666,7 +673,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (unless (point-in-string-p)
       (under-score-to-space 1)
       (do-common-defun))
-    (cond ((point-in-string-p)
+    (cond ((and (point-in-string-p)
+                (c-may-not-be-char))
+           (save-excursion
+             (my-backward-char 1)
+             (delete-char -1)
+             (my-backward-char 2)
+             (replace-token-at-point "upsnake")))
+          ((point-in-string-p)
            (delete-char -1)
            (while (and (point-in-string-p)
                        (not (eobp)))
