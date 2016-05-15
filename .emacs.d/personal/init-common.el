@@ -1,6 +1,17 @@
 ;; Configurations that are common to more than one Emacs mode.
 ;; Or configurations that doesn't fit anywhere else.
 
+;; Set Emacs custom files for saving settings.
+;; Let GNU Emacs don't mess up init files
+(setq custom-file "~/.emacs.d/personal/init-emacs.el")
+
+;; Create custom file if it doesn't exist
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
+
+;; Load settings from custom-file
+(load custom-file)
+
 ;; Let's type y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
 
