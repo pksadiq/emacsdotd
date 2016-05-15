@@ -428,8 +428,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
      (line-beginning-position) (line-end-position))
     (c-indent-line)
     (insert ";")
-    (c-indent-line)
-    (my-read-only-mode)))
+    (c-indent-line))
+  (my-read-only-mode))
 
 (defun end-statement ()
   (interactive)
