@@ -752,17 +752,28 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun dwim-with-dot ()
   (let ((changed nil))
-    (save-excursion
-      (my-backward-char 1)
-      (when (and (eq (preceding-char) ?\.)
-                 (not (point-in-comment-p))
-                 (not (point-in-string-p)))
-        (delete-char -1)
-        (delete-char 1)
-        (insert "->")
-        (setq changed t)))
-    (if changed
-        (my-backward-char -2))))
+    (cond ((save-excursion
+             (my-backward-char 1)
+             (and (eq (preceding-char) ?\.)
+                  (not (point-in-comment-p))
+                  (not (point-in-string-p))
+                  (progn (my-backward-char 1)
+                         (not (eq (preceding-char) ?\.)))))
+           (delete-char -2)
+           (insert "->")
+           (setq changed t))
+          ((save-excursion
+             (my-backward-char 1)
+             (c-backward-sws)
+             (eq (preceding-char) ?\,))
+           (delete-char -1)
+           (insert "&"))
+          ((save-excursion
+             (my-backward-char)
+             (eq (preceding-char) ?\&))
+           (delete-char -2)
+           (insert "..")))
+    ))
 
 (defun dwim-with-> ()
   (under-score-to-space 1)
