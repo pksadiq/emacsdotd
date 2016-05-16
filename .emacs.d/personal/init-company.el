@@ -5,6 +5,9 @@
 ;; Enable globally
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; Be case sensitive for completion
+(setq company-dabbrev-downcase nil)
+
 ;; Begin completion after 1 char
 (setq company-minimum-prefix-length 1)
 
