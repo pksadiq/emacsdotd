@@ -48,6 +48,12 @@
   (delete-char -1)
   (read-only-mode 1))
 
+(defun le/save-buffer ()
+  (interactive)
+  (read-only-mode -1)
+  (save-buffer)
+  (read-only-mode 1))
+
 (defun le/insert-after ()
   (interactive)
   (right-char)
@@ -130,7 +136,7 @@
             (define-key map (kbd "o") 'switch-my-buffer)
             (define-key map (kbd "p") 'avy-pop-mark)
             (define-key map (kbd "a") 'beginning-of-line)
-            (define-key map (kbd "s") 'save-buffer)
+            (define-key map (kbd "s") 'le/save-buffer)
             (define-key map (kbd "d") 'le/kill-line)
             (define-key map (kbd "f") 'ido-find-file)
             (define-key map (kbd "g") 'beginning-of-buffer)
