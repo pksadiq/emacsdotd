@@ -123,6 +123,7 @@
             (define-key map (kbd "q") 'my-quit)
             (define-key map (kbd "w") 'avy-goto-char)
             (define-key map (kbd "e") 'end-of-line)
+            (define-key map (kbd "r") 'flycheck-buffer)
             (define-key map (kbd "t") 'le/fold-unfold)
             (define-key map (kbd "u") 'le/undo)
             (define-key map (kbd "i") 'le/insert-here)
