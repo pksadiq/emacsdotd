@@ -45,12 +45,13 @@
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'hs-hide-initial-comment-block t)
 
-(add-hook 'prog-mode-hook 'my-read-only-mode)
-(add-hook 'help-mode-hook 'my-read-only-mode)
-(add-hook 'apropos-mode-hook 'my-read-only-mode)
-(add-hook 'erc-join-hook 'my-read-only-mode)
-(add-hook 'gud-mode-hook 'my-read-only-mode)
-(add-hook 'compilation-mode-hook 'my-read-only-mode)
+(when (fboundp 'my-read-only-mode)
+  (add-hook 'prog-mode-hook 'my-read-only-mode)
+  (add-hook 'help-mode-hook 'my-read-only-mode)
+  (add-hook 'apropos-mode-hook 'my-read-only-mode)
+  (add-hook 'erc-join-hook 'my-read-only-mode)
+  (add-hook 'gud-mode-hook 'my-read-only-mode)
+  (add-hook 'compilation-mode-hook 'my-read-only-mode))
 
 
 ;; Let this file provide a feature named 'init-common'.
