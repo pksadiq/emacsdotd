@@ -689,6 +689,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                (my-backward-char -1)
              (insert ",")))
           ((and (eq (preceding-char) ?\,)
+                (save-excursion
+                  (my-backward-char 1)
+                  (eq (preceding-char) ?\.))
                 (eq (following-char) ?\)))
            (delete-char -2)
            (my-backward-char -1)
