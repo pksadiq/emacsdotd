@@ -155,7 +155,7 @@
             (define-key map (kbd "C-k") 'le/kill-line)
             (define-key map (kbd "C-w") 'le/kill-region)
             (define-key map (kbd "<backspace>") 'le/delete-previous-char)
-            (define-key map (kbd "<return>") 'le/return)
+            (define-key map (kbd "RET") 'le/return)
             (define-key map (kbd "<S-return>") 'le/s-return)
             map))
 
@@ -170,7 +170,7 @@
   (let ((oldmap (cdr (assoc 'less-evil-mode minor-mode-map-alist)))
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
-    (define-key newmap (kbd "<return>") nil)
+    (define-key newmap (kbd "RET") nil)
     (define-key newmap (kbd "i") nil)
     (define-key newmap (kbd "x") nil)
     (define-key newmap (kbd "s") nil)
