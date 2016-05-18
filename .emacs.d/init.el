@@ -1,6 +1,9 @@
 ;; `init.el': Helper script to load other files
 ;; This script just loads other files. Nothing else. KISS?
 
+;; Required without fail :). Else, GNU Emacs automatically adds this.
+(package-initialize)
+
 ;; Assign one more path to be searched for elisp files.
 (add-to-list 'load-path "~/.emacs.d/personal/")
 

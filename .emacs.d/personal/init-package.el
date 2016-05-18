@@ -24,8 +24,6 @@
         ("melpa-stable" . 20)
         ("melpa" . 10)))
 
-(package-initialize)
-
 ;; Install packages that are not installed
 (let ((refreshed nil))
   (dolist (pkg package-list)
