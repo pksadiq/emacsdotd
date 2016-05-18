@@ -14,7 +14,8 @@
 
 ;; Save and restore point location for each visited file
 ;; GNU Emacs 25.1+ required
-(save-place-mode 1)
+(unless (version< emacs-version 25.0)
+  (save-place-mode 1))
 
 ;; Let's type y/n instead of yes/no
 (defalias 'yes-or-no-p 'y-or-n-p)
