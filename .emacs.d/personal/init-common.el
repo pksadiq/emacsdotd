@@ -45,6 +45,7 @@
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'hs-hide-initial-comment-block t)
 
+(require 'init-defun)
 (when (fboundp 'my-read-only-mode)
   (add-hook 'prog-mode-hook 'my-read-only-mode)
   (add-hook 'help-mode-hook 'my-read-only-mode)
