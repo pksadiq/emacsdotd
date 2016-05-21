@@ -16,7 +16,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (${2:$(str-to-style yas-text "upcamel")}, $2, ${2:$(get-first yas-text)}, ${2:$(get-next yas-text)}, ${3:GtkApplication$(str-to-style yas-text "upcamel")})
 
 ${4:${2:$(str-to-style yas-text "upcamel")}$(str-to-style yas-text "upcamel")} *$2_new (${5:void});
-${0:$$(read-only-mode)}
+${0:$$(progn (read-only-mode) (deactivate-mark))}
 
 G_END_DECLS
 
