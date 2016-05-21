@@ -19,7 +19,7 @@ ${2:$(str-to-style (replace-regexp-in-string "TYPE_" "" yas-text) "upcamel")} pa
 
 
 G_DEFINE_${3:TYPE$(yas-choose-value '("TYPE" "INTERFACE" "TYPE_WITH_PRIVATE"))} (${1:$(str-to-style yas-text "upcamel")}, ${1:gtk_application$(setq gnome-package (str-to-style yas-text "snake"))}, ${2:GTK_TYPE_${1:$(get-next yas-text)}$(upcase (str-to-style (downcase yas-text) "snake"))})
-$0
+${0:$$(read-only-mode)}
 static void
 $1_finalize (GObject *object)
 {
