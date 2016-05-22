@@ -171,6 +171,8 @@
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
     (define-key newmap (kbd "RET") nil)
+    (define-key newmap (kbd "<backspace>") nil)
+    (define-key newmap (kbd "C-h") nil)
     (define-key newmap (kbd "i") nil)
     (define-key newmap (kbd "x") nil)
     (define-key newmap (kbd "s") nil)
