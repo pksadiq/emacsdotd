@@ -59,6 +59,9 @@
 ;; Configures `web-mode' 
 (require 'init-web)
 
+;; Configures `org-mode'
+(require 'init-org)
+
 ;; Configures `ansi-term' Terminal Emulator
 (require 'init-term)
 
