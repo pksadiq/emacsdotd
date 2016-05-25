@@ -708,7 +708,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (if (eq (preceding-char) ?\ )
                  (backward-char 1))
              (setq last-char (char-before))
-             (memq last-char '(?\= ?\> ?\< ?\!)))
+             (memq last-char '(?\= ?\> ?\< ?\! ?\/ ?\* ?\%)))
            (zap-to-char -1 last-char)
            (insert-char last-char)
            (insert "="))
