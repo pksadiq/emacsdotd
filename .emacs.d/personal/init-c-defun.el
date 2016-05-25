@@ -820,8 +820,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (if (string= (c-token-at-point) "include")
             (setq in-include t))))
     (cond (in-include
-           (insert ">")
-           (my-backward-char 1))
+           (unless (eq (following-char) ?\>)
+             (insert ">")
+             (my-backward-char 1)))
           ((and (not (point-in-string-p))
                 (string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point))))))
            (save-excursion
