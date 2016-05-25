@@ -808,6 +808,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                 (string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point))))))
            (save-excursion
              (my-backward-char 1)
+             (insert-space))
+           (if (eq (following-char) ?\ )
+               (my-backward-char -1)
              (insert-space)))
           )))
 
@@ -827,6 +830,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                 (string-match-p "[a-zA-Z0-9]" (char-to-string (char-before (1- (point))))))
            (save-excursion
              (my-backward-char 1)
+             (insert-space))
+           (if (eq (following-char) ?\ )
+               (my-backward-char -1)
              (insert-space)))
           (t
            nil)
