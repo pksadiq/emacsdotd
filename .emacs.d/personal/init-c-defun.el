@@ -14,7 +14,7 @@
   (or
    (and my-pair-inserted
         (progn
-          (setq my-pair-insert nil)
+          (setq my-pair-inserted nil)
           t))
    (eq char (char-after))
    (and (eq char (char-before))
