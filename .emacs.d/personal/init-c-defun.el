@@ -21,16 +21,6 @@
         (eq char (char-before (1- (point)))))
    (eq (char-syntax (following-char)) ?w)
    (and (equal major-mode 'c-mode)
-        (eq
-         (save-excursion
-           (c-backward-sws)
-           (preceding-char)) ?\{)
-        (save-excursion
-          (c-backward-sws)
-          (c-backward-token-2)
-          (c-backward-sws)
-          (c-in-struct-or-enum-p)))
-   (and (equal major-mode 'c-mode)
         (eq (preceding-char) ?\')
         (not (point-in-string-p)))
    (and (equal major-mode 'c-mode)
