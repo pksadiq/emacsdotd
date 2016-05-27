@@ -1,6 +1,10 @@
 ;; Packages required for the functions below
 (require 'subr-x)
 
+;; Track non-electric insertion of pairs
+(defvar my-pair-inserted nil)
+(make-variable-buffer-local 'my-pair-inserted)
+
 (defun my-backward-char (&optional n)
   (unless n (setq n 1))
   (ignore-errors
@@ -8,6 +12,10 @@
 
 (defun electric-pair-inhibit-me (char)
   (or
+   (and my-pair-inserted
+        (progn
+          (setq my-pair-insert nil)
+          t))
    (eq char (char-after))
    (and (eq char (char-before))
         (eq char (char-before (1- (point)))))
@@ -523,6 +531,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (insert "{")
     (c-indent-line)
     (insert "\n\n}")
+    (setq my-pair-inserted t)
     (unless (c-next-line-empty-p)
       (insert "\n")
       (forward-line -1))
