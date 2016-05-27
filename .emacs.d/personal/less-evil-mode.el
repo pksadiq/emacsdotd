@@ -48,7 +48,7 @@
   (if (and mark-active
            (not (eq (mark) (point))))
       (delete-region (mark) (point))
-    delete-char -1)
+    (delete-char -1))
   (read-only-mode 1))
 
 (defun le/save-buffer ()
