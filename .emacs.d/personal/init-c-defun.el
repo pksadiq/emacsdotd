@@ -20,18 +20,6 @@
    (and (eq char (char-before))
         (eq char (char-before (1- (point)))))
    (eq (char-syntax (following-char)) ?w)
-   (and (eq (nth 0 (syntax-ppss)) 1)
-        (if (equal major-mode 'c-mode)
-            (save-excursion
-              (c-backward-sws)
-              (c-backward-token-2)
-              (c-backward-sws)
-              (c-in-function-header-p))
-          nil)
-        (eq
-         (save-excursion
-           (c-backward-sws)
-           (preceding-char)) ?\{))
    (and (equal major-mode 'c-mode)
         (eq
          (save-excursion
