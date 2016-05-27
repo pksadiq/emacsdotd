@@ -509,6 +509,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (insert "{")
     (c-indent-line)
     (insert "\n\n}")
+    (c-indent-line)
     (setq my-pair-inserted t)
     (unless (c-next-line-empty-p)
       (insert "\n")
