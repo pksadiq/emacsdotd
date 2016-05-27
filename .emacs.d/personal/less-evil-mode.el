@@ -42,10 +42,13 @@
   (delete-char 1)
   (read-only-mode 1))
 
-(defun le/delete-previous-char ()
+(defun le/delete-previous-char-or-mark ()
   (interactive)
   (read-only-mode -1)
-  (delete-char -1)
+  (if (and mark-active
+           (not (eq (mark) (point))))
+      (delete-region (mark) (point))
+    delete-char -1)
   (read-only-mode 1))
 
 (defun le/save-buffer ()
@@ -142,7 +145,7 @@
             (define-key map (kbd "g") 'beginning-of-buffer)
             (define-key map (kbd "\S-g") 'end-of-buffer)
             (define-key map (kbd "h") 'left-char)
-            (define-key map (kbd "C-h") 'le/delete-previous-char)
+            (define-key map (kbd "C-h") 'le/delete-previous-char-or-mark)
             (define-key map (kbd "j") 'next-line)
             (define-key map (kbd "k") 'previous-line)
             (define-key map (kbd "l") 'right-char)
@@ -154,7 +157,7 @@
             (define-key map (kbd "m") 'le/mark)
             (define-key map (kbd "C-k") 'le/kill-line)
             (define-key map (kbd "C-w") 'le/kill-region)
-            (define-key map (kbd "<backspace>") 'le/delete-previous-char)
+            (define-key map (kbd "<backspace>") 'le/delete-previous-char-or-mark)
             (define-key map (kbd "RET") 'le/return)
             (define-key map (kbd "<S-return>") 'le/s-return)
             map))
