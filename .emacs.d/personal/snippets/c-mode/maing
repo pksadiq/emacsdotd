@@ -7,8 +7,8 @@
 #include "${1:$(downcase (get-first (str-to-style yas-text "snake")))}-application.h${0:$$(progn (unless (file-exists-p (concat (downcase (get-first gnome-package)) "-application.h")) (write-region "" nil (concat (downcase (get-first gnome-package)) "-application.h"))) (my-read-only-mode)  (deactivate-mark))}"
 
 int
-main(int    argc,
-char **argv)
+main(int   argc,
+char *argv[])
 {
   ${1:GtkApplication$(str-to-style yas-text "upcamel")} *app;
   int status;

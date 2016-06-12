@@ -3,8 +3,8 @@
 # key: m.
 # --
 int
-main (${1:int    argc,
-char **argv})
+main (${1:int   argc,
+char *argv[]})
 {
     $0
 }
