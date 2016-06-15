@@ -663,7 +663,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   nil)
 
 (defun dwim-with-comma ()
-  (let ((last-char nil))
+  (let ((last-char nil)
+        (inside-enum nil))
     (unless (point-in-string-p)
       (under-score-to-space 1)
       (do-common-defun))
@@ -713,6 +714,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                (insert " ")))
            (insert "="))
           ((c-inside-enum-p)
+           (setq inside-enum t)
            (save-excursion
              (my-backward-char 1)
              (c-backward-token-2)
@@ -732,7 +734,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           )
     (if (eq (following-char) ?\ )
         (forward-char 1)
-      (insert " "))))
+      (unless inside-enum
+        (insert " ")))))
 
 
 (defun dwim-with-paren-close ()
