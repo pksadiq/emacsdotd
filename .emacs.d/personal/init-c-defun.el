@@ -77,22 +77,27 @@
       nil)))
 
 (defun c-inside-enum-p ()
-  (cond ((not (eq (nth 0 (syntax-ppss)) 1))
-         nil)
-        ((save-excursion
-           (when (search-backward "{" nil t)
-             (c-backward-sws)
-             (my-backward-char 1)
-             (if (and (c-token-at-point)
-                      (string= (c-token-at-point) "enum"))
-                 t
-               (progn
-                 (c-beginning-of-current-token)
-                 (c-backward-token-2)
-                 (my-backward-char -1)
-                 (and (c-token-at-point)
-                      (string= (c-token-at-point) "enum"))))))
-         )))
+  (let ((brace-count (nth 0 (syntax-ppss)))
+        (inside-enum t))
+    (cond ((> brace-count 3)
+           nil)
+          ((save-excursion
+             (when (search-backward "{" nil t)
+               (if (eq brace-count (nth 0 (syntax-ppss)))
+                   nil
+                 (progn
+                   (c-backward-sws)
+                   (my-backward-char 1)
+                   (if (and (c-token-at-point)
+                            (string= (c-token-at-point) "enum"))
+                       t
+                     (progn
+                       (c-beginning-of-current-token)
+                       (c-backward-token-2)
+                       (my-backward-char -1)
+                       (and (c-token-at-point)
+                            (string= (c-token-at-point) "enum")))))))
+           )))))
 
 (defun c-in-if-else-while-case-p ()
   (save-excursion
