@@ -746,22 +746,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun dwim-with-paren-open ()
   (under-score-to-space 1)
   (do-common-defun)
-  (cond ((save-excursion
-           (my-backward-char 1)
-           (c-backward-sws)
-           (and (eq (preceding-char) ?\')
-                (c-may-not-be-char)))
-         (save-excursion
-           (my-backward-char 1)
-           (c-backward-sws) 
-           (delete-char -1)
-           (unless (or (eq (preceding-char) ?\ )
-                       (eq (following-char) ?\ ))
-             (insert " "))
-           (c-backward-token-2)
-           (my-backward-char -1)
-           (replace-token-at-point "upsnake")))
-        ((member 'font-lock-variable-name-face
+  (cond ((member 'font-lock-variable-name-face
                  (save-excursion
                    (my-backward-char 3)
                    (text-properties-at (point))))
@@ -841,6 +826,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            nil)
           )))
 
+(defun dwim-with-quote ()
+  (cond ((and (point-in-string-p)
+              (c-may-not-be-char))
+         (save-excursion
+           (my-backward-char 3)
+           (replace-token-at-point "upsnake"))
+         (delete-char -1))))
+
 (defun dwim-with-context ())
 
 (defun dwim-more ()
@@ -866,6 +859,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (dwim-with-paren-close))
           ((eq char-at-point ?\()
            (dwim-with-paren-open))
+          ((eq char-at-point ?\')
+           (dwim-with-quote))
           ((eq char-at-point ?\.)
            (dwim-with-dot))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
