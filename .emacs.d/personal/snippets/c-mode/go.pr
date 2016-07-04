@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: enum { PROP_0... };
+# key: go.pr
+# --
+enum {
+PROP_0,
+$0
+LAST_PROP
+};`(unless (c-next-line-empty-p) "\n")`
