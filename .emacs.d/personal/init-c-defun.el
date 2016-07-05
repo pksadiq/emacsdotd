@@ -82,7 +82,7 @@
     (cond ((> brace-count 3)
            nil)
           ((save-excursion
-             (when (search-backward "{" nil t)
+             (when (search-backward-regexp "[{;]" nil t)
                (if (eq brace-count (nth 0 (syntax-ppss)))
                    nil
                  (progn
