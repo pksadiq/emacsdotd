@@ -377,6 +377,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (setq out str))
           ((string= style "upcamel")
            (setq str (upcase-initials str))
+           ;; FIXME: testcase that doesn't work: "m_y_str"
            (setq out (replace-regexp-in-string "\\(.\\)_\\(.\\)" "\\1\\2" str)))
           ((string= style "lisp")
            (setq out (replace-regexp-in-string "_" "-" str)))
