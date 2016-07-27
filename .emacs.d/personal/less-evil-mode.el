@@ -114,6 +114,15 @@
       (ido-switch-buffer)
     (other-window 1)))
 
+(defun le/scroll-down ()
+  (interactive)
+  (push-mark)
+  (scroll-down))
+
+(defun le/scroll-up ()
+  (interactive)
+  (push-mark)
+  (scroll-up))
 
 ;;;###autoload
 (define-minor-mode less-evil-mode
@@ -124,8 +133,8 @@
             (define-key map (kbd "1") 'delete-other-windows)
             (define-key map (kbd "2") 'split-window-below)
             (define-key map (kbd "3") 'split-window-right)
-            (define-key map (kbd "SPC") 'scroll-up)
-            (define-key map (kbd "S-SPC") 'scroll-down)
+            (define-key map (kbd "SPC") 'le/scroll-up)
+            (define-key map (kbd "S-SPC") 'le/scroll-down)
             (define-key map (kbd ";") 'avy-goto-line)
             (define-key map (kbd ".") 'le/insert-after)
             (define-key map (kbd "/") 'isearch-forward-regexp)
