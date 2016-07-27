@@ -116,13 +116,17 @@
 
 (defun le/scroll-down ()
   (interactive)
-  (push-mark)
-  (scroll-down))
+  (let ((my-mark (point)))
+    (scroll-down)
+    (unless (eq my-mark (point))
+      (push-mark my-mark))))
 
 (defun le/scroll-up ()
   (interactive)
-  (push-mark)
-  (scroll-up))
+  (let ((my-mark (point)))
+    (scroll-up)
+    (unless (eq my-mark (point))
+      (push-mark my-mark))))
 
 ;;;###autoload
 (define-minor-mode less-evil-mode
