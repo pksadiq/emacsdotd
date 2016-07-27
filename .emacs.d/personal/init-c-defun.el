@@ -568,6 +568,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
               (line-beginning-position) (line-end-position))
              (c-align-fn-arg-p))
            (search-forward "{")
+           (setq my-pair-inserted t)
            (c-forward-sws)
            (if (eq (following-char) ?\})
                (unless (bobp)
