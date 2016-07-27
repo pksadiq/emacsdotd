@@ -6,11 +6,15 @@
 (make-variable-buffer-local 'my-pair-inserted)
 
 (defun my-backward-char (&optional n)
+  "defun that simply ignores errors.
+
+Made to use with `less-evil-mode'"
   (unless n (setq n 1))
   (ignore-errors
     (backward-char n)))
 
 (defun electric-pair-inhibit-me (char)
+  ;; Cases where `electric-pair-mode' should not insert pairs
   (or
    (and my-pair-inserted
         (progn
@@ -71,7 +75,10 @@
     (re-search-backward regexp nil t)))
 
 (defun c-in-function-name-p ()
+  "get if the `point' is above a function name"
   (save-excursion
+    ;; FIXME: check based on font-lock is not the right way to do this.
+    ;; Do something better
     (if (member 'font-lock-function-name-face (text-properties-at (point)))
         t
       nil)))
@@ -828,16 +835,23 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           )))
 
 (defun dwim-with-quote ()
+  "dwim with \'"
   (cond ((and (point-in-string-p)
               (c-may-not-be-char))
          (save-excursion
+           ;; replace the previous token with upcase
+           ;; FIXME: token is assumed to be built with atleast 3 chars
            (my-backward-char 3)
            (replace-token-at-point "upsnake"))
+         ;; Delete the quote inserted with `self-insert-command'
          (delete-char -1))))
 
 (defun dwim-with-context ())
 
 (defun dwim-more ()
+  "Do What I Mean where ever possible
+
+This function is mostly hooked with `self-insert-command'"
   (interactive)
   (let ((char-at-point (preceding-char)))
     (cond ((eq last-command-event ?\n)
