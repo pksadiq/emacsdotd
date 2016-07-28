@@ -767,7 +767,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (backward-char 1))
            (c-backward-token-2)
            (my-backward-char -1)
-           (replace-token-at-point "upcamel")))))
+           (replace-token-at-point "upcamel")))
+        (t
+         (save-excursion
+           (my-backward-char 1)
+           (unless (eq (preceding-char) ?\ )
+             (insert-char ?\ ))))))
 
 (defun dwim-with-dot ()
   (let ((changed nil))
