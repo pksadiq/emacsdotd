@@ -702,7 +702,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                 (eq (following-char) ?\)))
            (delete-char -2)
            (my-backward-char -1)
-           (insert ","))
+           (if (eq (following-char) ?\,)
+               (my-backward-char -1)
+             (insert ",")))
           ;; on occurrences of ",," or ", ," replace it with " ="
           ((save-excursion
              (backward-char 1)
