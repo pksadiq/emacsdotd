@@ -426,6 +426,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                    last-point))
              4)
           (push-mark last-point))
+      (delete-trailing-whitespace
+       (line-beginning-position) (line-end-position))
       (c-backward-sws))
     (while (and (c-in-function-arg-p)
                 (not (eobp)))
