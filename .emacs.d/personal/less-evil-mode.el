@@ -148,6 +148,12 @@
     (unless (eq my-point (point))
       (push-mark my-point))))
 
+(defun le/beginning-of-buffer ()
+  (interactive)
+  (if (eq (point) 1)
+      (end-of-buffer)
+    (beginning-of-buffer)))
+
 ;;;###autoload
 (define-minor-mode less-evil-mode
   "A lesser version of evil mode"
@@ -175,7 +181,7 @@
             (define-key map (kbd "s") 'le/save-buffer)
             (define-key map (kbd "d") 'le/kill-line)
             (define-key map (kbd "f") 'ido-find-file)
-            (define-key map (kbd "g") 'beginning-of-buffer)
+            (define-key map (kbd "g") 'le/beginning-of-buffer)
             (define-key map (kbd "\S-g") 'end-of-buffer)
             (define-key map (kbd "h") 'left-char)
             (define-key map (kbd "C-h") 'le/delete-previous-char-or-mark)
