@@ -414,21 +414,29 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       nil)))
 
 (defun my-end-statement ()
-  (unless (save-excursion
-            (end-of-line)
-            (point-in-comment-p))
-    (end-of-line)
-    (c-backward-sws))
-  (while (and (c-in-function-arg-p)
-              (not (eobp)))
-    (my-backward-char -1))
-  (unless (eq (char-before) ?\;)
-    (delete-trailing-whitespace
-     (line-beginning-position) (line-end-position))
-    (c-indent-line)
-    (insert ";")
-    (c-indent-line))
-  (my-read-only-mode))
+  (let ((last-point (point)))
+    (unless (save-excursion
+              (end-of-line)
+              (point-in-comment-p))
+      (end-of-line)
+      ;; `push-mark' if the end of line is at least 4 char far than
+      ;; our last `point'
+      (if (> (abs (-
+                   (point)
+                   last-point))
+             4)
+          (push-mark last-point))
+      (c-backward-sws))
+    (while (and (c-in-function-arg-p)
+                (not (eobp)))
+      (my-backward-char -1))
+    (unless (eq (char-before) ?\;)
+      (delete-trailing-whitespace
+       (line-beginning-position) (line-end-position))
+      (c-indent-line)
+      (insert ";")
+      (c-indent-line))
+    (my-read-only-mode)))
 
 (defun end-statement ()
   (interactive)
