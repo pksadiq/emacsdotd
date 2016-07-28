@@ -679,6 +679,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       (do-common-defun))
     (cond ((and (point-in-string-p)
                 (c-may-not-be-char))
+           ;; replace token with upcase like "my_str" to "MY_STR"
            (save-excursion
              (my-backward-char 1)
              (delete-char -1)
@@ -692,6 +693,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (if (eq (following-char) ?\,)
                (my-backward-char -1)
              (insert ",")))
+          ;; if ".," is typed before a closing brace ')', insert ',' after ')'
+          ;; like ".,)" will be replaced with "), "
           ((and (eq (preceding-char) ?\,)
                 (save-excursion
                   (my-backward-char 1)
@@ -700,6 +703,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (delete-char -2)
            (my-backward-char -1)
            (insert ","))
+          ;; on occurrences of ",," or ", ," replace it with " ="
           ((save-excursion
              (backward-char 1)
              (if (eq (preceding-char) ?\ )
@@ -722,6 +726,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                  (my-backward-char -1)
                (insert " ")))
            (insert "="))
+          ;; enum constants are usually in upcase.
+          ;; So upcase the constants in enums on ','
           ((c-inside-enum-p)
            (setq inside-enum t)
            (save-excursion
@@ -729,6 +735,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (c-backward-token-2)
              (my-backward-char -1)
              (replace-token-at-point "upsnake")))
+          ;; if the point is at/after the first token of the statement,
+          ;; an insertion if ',' will be replaced with ' ='
           ((and (eq (save-excursion
                       (c-true-beginning-of-statement)
                       (point))
@@ -743,6 +751,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           )
     (if (eq (following-char) ?\ )
         (forward-char 1)
+      ;; append a space after inserted ',' if not inside enums
       (unless inside-enum
         (insert " ")))))
 
