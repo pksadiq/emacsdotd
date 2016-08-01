@@ -62,6 +62,9 @@
 ;; Configures `org-mode'
 (require 'init-org)
 
+;; Configures `org-mode' web export
+(require 'init-org-web)
+
 ;; Configures `ansi-term' Terminal Emulator
 (require 'init-term)
 
