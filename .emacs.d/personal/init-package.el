@@ -10,6 +10,8 @@
         company
         avy
         flycheck
+        markdown-mode
+        js2-mode
         key-chord
         key-seq))
 
