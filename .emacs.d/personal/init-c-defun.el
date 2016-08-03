@@ -1,17 +1,10 @@
 ;; Packages required for the functions below
 (require 'subr-x)
+(require 'init-prog-defun)
 
 ;; Track non-electric insertion of pairs
 (defvar my-pair-inserted nil)
 (make-variable-buffer-local 'my-pair-inserted)
-
-(defun my-backward-char (&optional n)
-  "defun that simply ignores errors.
-
-Made to use with `less-evil-mode'"
-  (unless n (setq n 1))
-  (ignore-errors
-    (backward-char n)))
 
 (defun electric-pair-inhibit-me (char)
   ;; Cases where `electric-pair-mode' should not insert pairs
