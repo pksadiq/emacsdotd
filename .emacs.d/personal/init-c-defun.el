@@ -54,15 +54,6 @@
                            (point)))))
       )))
 
-(defun point-in-comment-p ()
-  (nth 4 (syntax-ppss)))
-
-(defun point-in-string-p ()
-  (nth 3 (syntax-ppss)))
-
-(defun last-char-space-p ()
-  (member (preceding-char) '(?\  ?\t ?\n)))
-
 (defun c-re-search-backward-p (regexp)
   (save-excursion
     (re-search-backward regexp nil t)))
@@ -462,26 +453,6 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
   (while (and (not (bobp))
               (not (c-at-expression-start-p)))
     (my-backward-char 1)))
-
-(defun insert-period ()
-  (interactive)
-  (insert "."))
-
-(defun insert-comma ()
-  (interactive)
-  (insert ","))
-
-(defun insert-semi-colon ()
-  (interactive)
-  (insert ";"))
-
-(defun insert-brace ()
-  (interactive)
-  (insert "{"))
-
-(defun insert-space ()
-  (interactive)
-  (insert " "))
 
 (defun dwim-with-space ()
   (interactive)
