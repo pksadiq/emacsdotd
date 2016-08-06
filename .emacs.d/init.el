@@ -59,6 +59,9 @@
 ;; Configures `web-mode' 
 (require 'init-web)
 
+;; Configures `js-mode' and `js2-mode'
+(require 'init-js)
+
 ;; Configures `org-mode'
 (require 'init-org)
 
