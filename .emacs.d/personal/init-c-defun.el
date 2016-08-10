@@ -687,7 +687,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                  (backward-char 1))
              (eq (char-before) ?\,))
            (zap-to-char -2 ?\,)
-           (insert " ="))
+           (insert "="))
           ((save-excursion
              (backward-char 1)
              (if (eq (preceding-char) ?\ )
@@ -724,13 +724,8 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                 (not (c-in-function-arg-p))
                 )
            (backward-delete-char 1)
-           (insert " ="))
-          )
-    (if (eq (following-char) ?\ )
-        (forward-char 1)
-      ;; append a space after inserted ',' if not inside enums
-      (unless inside-enum
-        (insert " ")))))
+           (insert "="))
+          )))
 
 
 (defun dwim-with-paren-close ()
