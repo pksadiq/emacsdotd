@@ -1,6 +1,6 @@
 ;; Configuring `js-mode' and `js2-mode'
 
-;; indetation level for `js-mode'
+;; indentation level for `js-mode'
 (setq-default js-indent-level 2)
 
 ;; indentation level for `js2-mode'
