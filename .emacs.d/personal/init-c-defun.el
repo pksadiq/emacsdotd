@@ -838,7 +838,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 
 (defun dwim-with-context ())
 
-(defun dwim-more ()
+(defun dwim-more-c-mode ()
   "Do What I Mean where ever possible
 
 This function is mostly hooked with `self-insert-command'"

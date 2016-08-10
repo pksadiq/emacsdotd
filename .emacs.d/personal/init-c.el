@@ -32,7 +32,7 @@
 
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (add-hook 'post-self-insert-hook 'dwim-more nil t)
+            (add-hook 'post-self-insert-hook 'dwim-more-c-mode nil t)
             (local-set-key (kbd "S-SPC") 'insert-space)
             (local-set-key (kbd "C-,") 'insert-comma)
             (local-set-key (kbd "C-{") 'insert-brace)
