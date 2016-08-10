@@ -9,6 +9,10 @@
 (add-hook 'js2-mode-hook
           (lambda ()
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+            (local-set-key (kbd "S-SPC") 'insert-space)
+            (local-set-key (kbd "C-,") 'insert-comma)
+            (local-set-key (kbd "C-{") 'insert-brace)
+            (local-set-key (kbd "C-.") 'insert-period)
             (electric-spacing-mode 1)))
 
 (provide 'init-js)
