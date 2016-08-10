@@ -397,7 +397,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         t
       nil)))
 
-(defun my-end-statement ()
+(defun c-my-end-statement ()
   (let ((last-point (point)))
     (unless (save-excursion
               (end-of-line)
@@ -425,36 +425,36 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       (c-indent-line))
     (my-read-only-mode)))
 
-(defun end-statement ()
+(defun c-end-statement ()
   (interactive)
   (cond ((point-in-comment-p)
          (insert ";"))
-        ((do-common-defun)
+        ((c-do-common-defun)
          nil)
         ((c-in-function-arg-p)
          (c-align-fn-arg-p)
-         (my-end-statement))
+         (c-my-end-statement))
         ((c-inside-enum-p)
          (while (and (not (eobp))
                      (c-inside-enum-p))
            (my-backward-char -1))
-         (my-end-statement))
+         (c-my-end-statement))
         ((and (point-in-string-p)
               (c-may-not-be-char))
          (save-excursion
            (delete-char -1)
            (my-backward-char 2)
            (replace-token-at-point "upsnake"))
-         (my-end-statement))
+         (c-my-end-statement))
         (t
-         (my-end-statement))))
+         (c-my-end-statement))))
 
 (defun c-beginning-of-expression ()
   (while (and (not (bobp))
               (not (c-at-expression-start-p)))
     (my-backward-char 1)))
 
-(defun dwim-with-space ()
+(defun c-dwim-with-space ()
   (interactive)
   (cond ((eq (preceding-char) ?\0)
          (insert " "))
@@ -520,11 +520,11 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
     (indent-region beg end)
     (align beg end)))
 
-(defun dwim-with-brace ()
+(defun c-dwim-with-brace ()
   (unless mark-active
-    (do-dwim-with-brace)))
+    (c-do-dwim-with-brace)))
 
-(defun do-dwim-with-brace ()
+(defun c-do-dwim-with-brace ()
   (let ((put-brace nil)
         (in-array (c-in-array-p)))
     (delete-backward-char 1)
@@ -572,7 +572,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (insert "{")
            (under-score-to-space 1)))))
 
-(defun dwim-with-return ()
+(defun c-dwim-with-return ()
   (cond ((c-in-header-fname-p)
          (end-of-line)
          (if (not (c-next-line-empty-p))
@@ -594,7 +594,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
         (t
          (insert "\n"))))
 
-(defun dwim-with-asterisk ()
+(defun c-dwim-with-asterisk ()
   (under-score-to-space 1)
   (cond ((and (eq (save-excursion
                     (c-beginning-of-expression)
@@ -622,12 +622,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                (replace-token-at-point "upcamel"))))
         nil))
 
-(defun do-common-defun ()
+(defun c-do-common-defun ()
   (if change-not-last
       nil
-    (do-common-defun-defuns)))
+    (c-do-common-defun-defuns)))
 
-(defun do-common-defun-defuns ()
+(defun c-do-common-defun-defuns ()
   (save-excursion
     (my-backward-char 3)
     (if (and (c-token-at-point)
@@ -646,12 +646,12 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (replace-token-at-point "upsnake"))))
   nil)
 
-(defun dwim-with-comma ()
+(defun c-dwim-with-comma ()
   (let ((last-char nil)
         (inside-enum nil))
     (unless (point-in-string-p)
       (under-score-to-space 1)
-      (do-common-defun))
+      (c-do-common-defun))
     (cond ((and (point-in-string-p)
                 (c-may-not-be-char))
            ;; replace token with upcase like "my_str" to "MY_STR"
@@ -731,14 +731,14 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
           )))
 
 
-(defun dwim-with-paren-close ()
+(defun c-dwim-with-paren-close ()
   (under-score-to-space 1)
-  (do-common-defun)
+  (c-do-common-defun)
   )
 
-(defun dwim-with-paren-open ()
+(defun c-dwim-with-paren-open ()
   (under-score-to-space 1)
-  (do-common-defun)
+  (c-do-common-defun)
   (cond ((member 'font-lock-variable-name-face
                  (save-excursion
                    (my-backward-char 3)
@@ -758,7 +758,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (unless (eq (preceding-char) ?\ )
              (insert-char ?\ ))))))
 
-(defun dwim-with-dot ()
+(defun c-dwim-with-dot ()
   (let ((changed nil))
     (cond ((save-excursion
              (my-backward-char 1)
@@ -783,7 +783,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (insert "..")))
     ))
 
-(defun dwim-with-> ()
+(defun c-dwim-with-> ()
   (under-score-to-space 1)
   (let ((buffer-undo-list t))
     (cond ((and (c-in-header-fname-p)
@@ -800,7 +800,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (insert-space)))
           )))
 
-(defun dwim-with-< ()
+(defun c-dwim-with-< ()
   (under-score-to-space 1)
   (let ((in-include nil))
     (save-excursion
@@ -824,7 +824,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            nil)
           )))
 
-(defun dwim-with-quote ()
+(defun c-dwim-with-quote ()
   "dwim with \'"
   (cond ((and (point-in-string-p)
               (c-may-not-be-char))
@@ -836,7 +836,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
          ;; Delete the quote inserted with `self-insert-command'
          (delete-char -1))))
 
-(defun dwim-with-context ())
+(defun c-dwim-with-context ())
 
 (defun dwim-more-c-mode ()
   "Do What I Mean where ever possible
@@ -847,31 +847,31 @@ This function is mostly hooked with `self-insert-command'"
         (char-before-point (char-before (1- (point)))))
     (cond ((eq last-command-event ?\n)
            (delete-backward-char 1)
-           (dwim-with-return))
+           (c-dwim-with-return))
           ((eq last-command-event ?\<)
-           (dwim-with-<))
+           (c-dwim-with-<))
           ((eq last-command-event ?\>)
-           (dwim-with->))
+           (c-dwim-with->))
           ((eq char-at-point ?\{)
-           (dwim-with-brace))
+           (c-dwim-with-brace))
           ((eq char-at-point ?\*)
-           (dwim-with-asterisk))
+           (c-dwim-with-asterisk))
           ((eq last-command-event ?\,)
-           (dwim-with-comma))
+           (c-dwim-with-comma))
           ((eq char-at-point ?\ )
            (delete-char -1)
-           (dwim-with-space))
+           (c-dwim-with-space))
           ((eq char-at-point ?\))
-           (dwim-with-paren-close))
+           (c-dwim-with-paren-close))
           ((eq char-at-point ?\()
-           (dwim-with-paren-open))
+           (c-dwim-with-paren-open))
           ((eq char-at-point ?\')
-           (dwim-with-quote))
+           (c-dwim-with-quote))
           ((eq char-at-point ?\.)
-           (dwim-with-dot))
+           (c-dwim-with-dot))
           ((string-match-p "[^a-zA-Z0-9_]" (char-to-string (preceding-char)))
            (under-score-to-space 1)
-           (dwim-with-context))
+           (c-dwim-with-context))
           )
     (setq second-last-point last-command-event)))
 
