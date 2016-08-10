@@ -6,6 +6,9 @@
 
 (add-to-list 'auto-mode-alist '("\\.ui\\'" . web-mode))
 
+;; open javascript files with `js2-mode'
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
 (require 'web-mode)
 (require 'flycheck)
 (add-hook 'web-mode-hook (lambda ()
