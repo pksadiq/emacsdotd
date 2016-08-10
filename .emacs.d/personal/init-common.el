@@ -45,6 +45,9 @@
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook 'hs-hide-initial-comment-block t)
 
+;; install all packages before executing `less-evil-mode' hacks
+(require 'init-package)
+
 (require 'init-defun)
 (require 'less-evil-mode)
 (when (fboundp 'my-read-only-mode)
