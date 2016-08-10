@@ -2,6 +2,9 @@
 
 (require 'package)
 
+;; set ui before installing package (if required)
+(require 'init-ui)
+
 ;; The package list to be installed
 (setq package-list
       '(yasnippet
