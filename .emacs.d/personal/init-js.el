@@ -8,6 +8,7 @@
 
 (add-hook 'js2-mode-hook
           (lambda ()
-            (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
+            (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+            (electric-spacing-mode 1)))
 
 (provide 'init-js)
