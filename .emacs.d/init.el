@@ -17,6 +17,9 @@
 ;; Load C prgramming related user defined functions
 (require 'init-c-defun)
 
+;; Load javascript prgramming related user defined functions
+(require 'init-js-defun)
+
 ;; Load user defined functions
 (require 'init-defun)
 

@@ -9,6 +9,8 @@
 (add-hook 'js2-mode-hook
           (lambda ()
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+            (add-hook 'post-self-insert-hook 'dwim-more-js-mode nil t)
+            (local-set-key ";" 'js-end-statement)
             (local-set-key (kbd "S-SPC") 'insert-space)
             (local-set-key (kbd "C-,") 'insert-comma)
             (local-set-key (kbd "C-{") 'insert-brace)
