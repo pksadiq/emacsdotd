@@ -5,8 +5,8 @@
 (setq inhibit-startup-message t)
 
 ;; Fonts should already be installed before you can use it.
-(set-default-font "Inconsolata-15")
-(setq default-frame-alist '((font . "Inconsolata-15")))
+(set-default-font "Inconsolata-13")
+(setq default-frame-alist '((font . "Inconsolata-13")))
 
 ;; Set Dark theme
 (load-theme 'manoj-dark 1)
