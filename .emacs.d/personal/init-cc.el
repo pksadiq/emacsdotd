@@ -3,7 +3,7 @@
 (add-hook 'c-mode-common-hook
     '(lambda ()
        ;; Let ';' move to the end of statement
-       (local-set-key ";" 'end-statement)
+       (local-set-key ";" 'c-end-statement)
        ;; Insert semi colon by C-; ; if needed
        (local-set-key (kbd "C-;") 'insert-semi-colon)))
 
