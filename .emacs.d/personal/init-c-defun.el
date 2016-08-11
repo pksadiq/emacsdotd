@@ -22,12 +22,12 @@
         (not (point-in-string-p)))
    (and (equal major-mode 'c-mode)
         (point-in-string-p)
-        (c-may-not-be-char))
+        (may-not-be-char))
    ))
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
 
-(defun c-may-not-be-char ()
+(defun may-not-be-char ()
   (if (and (point-in-string-p)
            (save-excursion
              (while (and (not (bobp))
@@ -440,7 +440,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (my-backward-char -1))
          (c-my-end-statement))
         ((and (point-in-string-p)
-              (c-may-not-be-char))
+              (may-not-be-char))
          (save-excursion
            (delete-char -1)
            (my-backward-char 2)
@@ -653,7 +653,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
       (under-score-to-space 1)
       (c-do-common-defun))
     (cond ((and (point-in-string-p)
-                (c-may-not-be-char))
+                (may-not-be-char))
            ;; replace token with upcase like "my_str" to "MY_STR"
            (save-excursion
              (my-backward-char 1)
@@ -827,7 +827,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
 (defun c-dwim-with-quote ()
   "dwim with \'"
   (cond ((and (point-in-string-p)
-              (c-may-not-be-char))
+              (may-not-be-char))
          (save-excursion
            ;; replace the previous token with upcase
            ;; FIXME: token is assumed to be built with atleast 3 chars

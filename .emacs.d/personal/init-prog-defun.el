@@ -17,6 +17,17 @@ Made to use with `less-evil-mode'"
 (defun last-char-space-p ()
   (member (preceding-char) '(?\  ?\t ?\n)))
 
+(defun may-not-be-char ()
+  (if (and (point-in-string-p)
+           (save-excursion
+             (while (and (not (bobp))
+                         (point-in-string-p))
+               (my-backward-char 1))
+             (and (eq (following-char) ?\')
+                  (string-match-p "[a-zA-Z0-9_]" (char-to-string (preceding-char))))))
+      t
+    nil))
+
 (defun insert-period ()
   (interactive)
   (insert "."))
