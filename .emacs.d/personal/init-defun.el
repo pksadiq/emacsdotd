@@ -17,6 +17,14 @@
       (less-evil-mode 1)
     (less-evil-mode -1)))
 
+(defun force-save-buffer ()
+  (interactive)
+  (let ((read-only-enabled buffer-read-only))
+    (read-only-mode -1)
+    (save-buffer)
+    (if read-only-enabled
+        (read-only-mode 1))))
+
 (defun set-mode-comment ()
   "Generate mode comment. Eg: in C, /* mode: c; indent-tabs-mode ... */"
   (let ((mode-comment "")

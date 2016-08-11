@@ -7,6 +7,7 @@
 (global-set-key (kbd "<S-return>") (kbd "C-e C-m"))
 
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
+(global-set-key (kbd "C-x C-s") 'force-save-buffer)
 
 (global-set-key (kbd "<f5>") 'my-term)
 (global-set-key (kbd "<f6>") 'my-make-compile)
