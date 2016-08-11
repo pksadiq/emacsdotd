@@ -71,7 +71,7 @@ Made to use with `less-evil-mode'"
              (my-backward-char -1))
            (if (eq (following-char) ?\,)
                (my-backward-char -1)
-             (insert ",")))
+             (electric-spacing-insert "," 'after)))
           ;; if ".," is typed before a closing brace ')', insert ',' after ')'
           ;; like ".,)" will be replaced with "), "
           ((and (save-excursion
