@@ -27,17 +27,6 @@
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
 
-(defun may-not-be-char ()
-  (if (and (point-in-string-p)
-           (save-excursion
-             (while (and (not (bobp))
-                         (point-in-string-p))
-               (my-backward-char 1))
-             (and (eq (following-char) ?\')
-                  (string-match-p "[a-zA-Z0-9_]" (char-to-string (preceding-char))))))
-      t
-    nil))
-
 (defun c-next-line-empty-p ()
   (let ((my-point (point)))
     (save-excursion
