@@ -60,7 +60,8 @@
              (and (member 'font-lock-keyword-face (text-properties-at (point)))
                   (not (eq (c-token-at-point) "function"))))
            (js-insert-block))
-          ((and (js--inside-param-list-p))
+          ((and (js--inside-param-list-p)
+                (not (point-at-first-token-p)))
            (save-excursion
              (if (string-match-p
                   "= ?function" (buffer-substring-no-properties
