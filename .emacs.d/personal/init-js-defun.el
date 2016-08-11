@@ -54,7 +54,11 @@
       (my-backward-char -1)
       (js2-backward-sws)
       (insert " {\n}")
-      (if is-var-defun
+      (if (or is-var-defun
+              (and (eq (following-char) ?\))
+                   (progn
+                     (my-backward-char -1)
+                     t)))
           (insert ";")))))
 
 (defun js-dwim-with-brace ()
