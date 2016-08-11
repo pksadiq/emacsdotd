@@ -4,12 +4,14 @@
 
 ** What is present?
    - Highly configured for C programming with gtk+
+   - Highly configured for javascript programming
    - includes
      - yasnippet (powerful snippets)
      - ido
      - company (autocompletion)
      - flycheck (check syntax -- configured for gcc)
      - web-mode
+     - js2-mode
      - avy
      - key-chord
      - ...
