@@ -17,6 +17,8 @@
         js2-mode
         key-chord
         electric-spacing
+        tern
+        company-tern
         key-seq))
 
 ;; Repositories to be used to search and install packages.

@@ -14,6 +14,9 @@
 ;; Show completion faster
 (setq company-idle-delay 0.3)
 
+;; enable tern for javascript
+(add-to-list 'company-backends 'company-tern)
+
 ;; Show enumerated completion
 (setq company-show-numbers t)
 
