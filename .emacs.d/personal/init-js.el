@@ -10,6 +10,11 @@
 (setq js2-include-node-externs t
       js2-highlight-level 3)
 
+(eval-after-load 'js2-mode
+  ;; we already have flycheck for this
+  (setq-default js2-mode-show-parse-errors nil
+                js2-mode-show-strict-warnings nil))
+
 (add-hook 'js2-mode-hook
           (lambda ()
             (setq mode-name "js2")
