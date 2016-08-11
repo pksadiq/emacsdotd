@@ -17,6 +17,14 @@ Made to use with `less-evil-mode'"
 (defun last-char-space-p ()
   (member (preceding-char) '(?\  ?\t ?\n)))
 
+(defun point-to-end-empty-p ()
+  (save-excursion
+    (string-match-p "^ *$" (buffer-substring-no-properties
+                            (point)
+                            (save-excursion
+                              (end-of-line)
+                              (point))))))
+
 (defun may-not-be-char ()
   (if (and (point-in-string-p)
            (save-excursion

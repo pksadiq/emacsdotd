@@ -99,11 +99,7 @@
             (my-backward-char)
             (point-at-first-token-p))
            (save-excursion
-             (if (string-match-p "^ *$" (buffer-substring-no-properties
-                                         (point)
-                                         (save-excursion
-                                           (end-of-line)
-                                           (point))))
+             (if (point-to-end-empty-p)
                  (insert ";"))))
           )))
 
@@ -112,13 +108,16 @@
             (my-backward-char)
             (js2-backward-sws)
             (eq (preceding-char) ?\=))
-         (if (string-match-p "^ *$" (buffer-substring-no-properties
-                                     (point)
-                                     (save-excursion
-                                       (end-of-line)
-                                       (point))))
+         (if (point-to-end-empty-p)
              (save-excursion
-             (insert ";")))
+               (insert ";"))))
+        ((save-excursion
+           (my-backward-char)
+           (js2-backward-sws)
+           (eq (preceding-char) ?\:))
+         (if (point-to-end-empty-p)
+             (save-excursion
+               (insert ",")))
          )))
 
 (defun dwim-more-js-mode ()
