@@ -37,24 +37,30 @@
         (t
          (js-my-end-statement))))
 
+(defun js-insert-block (&optional is-var-defun)
+  (save-excursion
+    (my-backward-char)
+    (unless (eq (preceding-char) ?\ )
+      (insert " ")))
+  (when (save-excursion
+          (my-backward-char -1)
+          (js2-forward-sws)
+          (not (eq (following-char) ?\{)))
+    (save-excursion
+      (my-backward-char -1)
+      (js2-backward-sws)
+      (insert " {\n}")
+      (if is-var-defun
+          (insert ";")))))
+
 (defun js-dwim-with-brace ()
   (let ((is-var-defun nil))
     (cond ((save-excursion
              (my-backward-char 2)
              (and (member 'font-lock-keyword-face (text-properties-at (point)))
                   (not (eq (c-token-at-point) "function"))))
-           (save-excursion
-             (my-backward-char)
-             (unless (eq (preceding-char) ?\ )
-               (insert " ")))
-           (save-excursion
-             (my-backward-char -1)
-             (insert " {\n}")))
-          ((js--inside-param-list-p)
-           (save-excursion
-             (my-backward-char)
-             (unless (eq (preceding-char) ?\ )
-               (insert " ")))
+           (js-insert-block))
+          ((and (js--inside-param-list-p))
            (save-excursion
              (if (string-match-p
                   "= ?function" (buffer-substring-no-properties
@@ -64,10 +70,8 @@
                                    (point))))
                  (setq is-var-defun t)))
            (save-excursion
-             (my-backward-char -1)
-             (insert " {\n}")
-             (if is-var-defun
-                 (insert ";"))))
+             (js-insert-block is-var-defun)
+             ))
           )))
 
 (defun dwim-more-js-mode ()
