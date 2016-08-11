@@ -59,8 +59,20 @@
                    (progn
                      (my-backward-char -1)
                      t)))
-          (insert ";"))
+          (unless (eq (following-char) ?\;)
+            (insert ";")))
       (indent-according-to-mode))))
+
+(defun js-inside-defun-arg-p ()
+  (and (js--inside-param-list-p)
+       (save-excursion
+         (my-backward-char 1)
+         (js2-backward-sws)
+         (my-backward-char 1)
+         (or (member 'font-lock-keyword-face (text-properties-at (point)))
+             (member 'font-lock-function-name-face (text-properties-at (point)))
+             (member 'js2-function-param (text-properties-at (point)))))
+       ))
 
 (defun js-dwim-with-brace ()
   (let ((is-var-defun nil))
@@ -69,7 +81,7 @@
              (and (member 'font-lock-keyword-face (text-properties-at (point)))
                   (not (equal (c-token-at-point) "function"))))
            (js-insert-block))
-          ((and (js--inside-param-list-p)
+          ((and (js-inside-defun-arg-p)
                 (not (point-at-first-token-p)))
            (save-excursion
              (if (string-match-p

@@ -24,7 +24,7 @@
         (point-in-string-p)
         (may-not-be-char))
    (and (eq major-mode 'js2-mode)
-        (js--inside-param-list-p))
+        (js-inside-defun-arg-p))
    ))
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
