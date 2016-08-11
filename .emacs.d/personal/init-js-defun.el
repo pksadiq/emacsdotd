@@ -79,7 +79,9 @@
     (cond ((save-excursion
              (my-backward-char 2)
              (and (member 'font-lock-keyword-face (text-properties-at (point)))
-                  (not (equal (c-token-at-point) "function"))))
+                  (not (or (equal (c-token-at-point) "function")
+                           (equal (c-token-at-point) "return")
+                           (equal (c-token-at-point) "var")))))
            (js-insert-block))
           ((and (js-inside-defun-arg-p)
                 (not (point-at-first-token-p)))
