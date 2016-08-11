@@ -705,10 +705,6 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
              (insert-space)))
           )))
 
-(defun c-dwim-with-< ()
-  (under-score-to-space 1)
-  (let ((in-include nil))))
-
 (defun c-dwim-with-quote ()
   "dwim with \'"
   (cond ((and (point-in-string-p)
@@ -735,8 +731,6 @@ This function is mostly hooked with `self-insert-command'"
            (c-dwim-with-return))
           ((eq last-command-event ?\!)
            (dwim-with-!))
-          ((eq last-command-event ?\<)
-           (c-dwim-with-<))
           ((eq last-command-event ?\>)
            (c-dwim-with->))
           ((eq last-command-event ?\.)
