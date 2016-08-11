@@ -57,16 +57,19 @@ Made to use with `less-evil-mode'"
            (insert " ")))))
 
 (defun point-at-first-token-p ()
-  (save-excursion
-    (skip-chars-backward "a-zA-Z._")
-    (cond ((eq major-mode 'c-mode)
-           (c-backward-sws))
-          ((eq major-mode 'js2-mode)
-           (js2-backward-sws)))
-    (if (memq (preceding-char) '(?\; ?\{ ?\}))
-        t
-      nil)
-    ))
+  (let ((last-point (point)))
+    (save-excursion
+      (skip-chars-backward "a-zA-Z._")
+      (if (eq (point) last-point)
+          (my-backward-char 1))
+      (cond ((eq major-mode 'c-mode)
+             (c-backward-sws))
+            ((eq major-mode 'js2-mode)
+             (js2-backward-sws)))
+      (if (memq (preceding-char) '(?\; ?\{ ?\}))
+          t
+        nil)
+      )))
 
 (defun dwim-with-comma ()
   (let ((last-char nil)
