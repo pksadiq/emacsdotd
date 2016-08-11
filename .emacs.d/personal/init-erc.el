@@ -18,7 +18,7 @@
 ;; Interpret MIRC colors
 (setq erc-interpret-mirc-color t)
 
-;; Consider nicks concealed for 10 hours to be lurkers 
+;; Consider nicks concealed for 10 hours to be lurkers
 (setq erc-lurker-threshold-time (* 10 60 60))
 
 (defvar nick-n 0)

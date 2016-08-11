@@ -59,7 +59,7 @@
 ;; Configures `erc' IRC client
 (require 'init-erc)
 
-;; Configures `web-mode' 
+;; Configures `web-mode'
 (require 'init-web)
 
 ;; Configures `js-mode' and `js2-mode'

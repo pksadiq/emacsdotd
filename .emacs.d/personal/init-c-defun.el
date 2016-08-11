@@ -220,7 +220,7 @@ return t if true, else nil.
 
 if POINT-AFTER is non nil, check if the (1- point) is inside token.
 
-if USE-SPACE is t replace '_' with ' ' (only if last keyboard key 
+if USE-SPACE is t replace '_' with ' ' (only if last keyboard key
 was SPC)"
   (interactive)
   (let ((deleted nil)
