@@ -105,6 +105,20 @@
                  (insert ";"))))
           )))
 
+(defun js-dwim-with-{ ()
+  (cond ((save-excursion
+            (my-backward-char)
+            (js2-backward-sws)
+            (eq (preceding-char) ?\=))
+         (if (string-match-p "^ *$" (buffer-substring-no-properties
+                                     (point)
+                                     (save-excursion
+                                       (end-of-line)
+                                       (point))))
+             (save-excursion
+             (insert ";")))
+         )))
+
 (defun dwim-more-js-mode ()
   "Do What I Mean where ever possible
 
@@ -118,6 +132,8 @@ This function is mostly hooked with `self-insert-command'"
            (dwim-with-comma))
           ((eq last-command-event ?\()
            (js-dwim-with-brace))
+          ((eq last-command-event ?\{)
+           (js-dwim-with-{))
           (t
            nil))
     (setq second-last-point last-command-event)))
