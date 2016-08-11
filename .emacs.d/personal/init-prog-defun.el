@@ -48,6 +48,14 @@ Made to use with `less-evil-mode'"
   (interactive)
   (insert " "))
 
+(defun dwim-with-! ()
+  (cond ((and (not (point-in-string-p))
+              (not (point-in-comment-p))
+              (string-match-p "[[:alnum:]]" (char-to-string (char-before (1- (point))))))
+         (save-excursion
+           (my-backward-char)
+           (insert " ")))))
+
 (defun dwim-with-comma ()
   (let ((last-char nil)
         (inside-enum nil))

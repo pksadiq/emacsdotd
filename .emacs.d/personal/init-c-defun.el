@@ -733,6 +733,8 @@ This function is mostly hooked with `self-insert-command'"
     (cond ((eq last-command-event ?\n)
            (delete-backward-char 1)
            (c-dwim-with-return))
+          ((eq last-command-event ?\!)
+           (dwim-with-!))
           ((eq last-command-event ?\<)
            (c-dwim-with-<))
           ((eq last-command-event ?\>)
