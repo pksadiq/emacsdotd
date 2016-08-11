@@ -13,6 +13,7 @@
 (add-hook 'js2-mode-hook
           (lambda ()
             (setq mode-name "js2")
+            (tern-mode 1)
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
             (add-hook 'post-self-insert-hook 'dwim-more-js-mode nil t)
             (local-set-key ";" 'js-end-statement)
