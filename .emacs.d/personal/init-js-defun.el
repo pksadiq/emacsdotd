@@ -120,6 +120,20 @@
                (insert ",")))
          )))
 
+(defun js-dwim-with-. ()
+  (zap-to-char -1 ?\.)
+  (cond ((and (eq (preceding-char) ?\()
+              (eq (following-char) ?\)))
+         (my-backward-char -1)
+         (insert "."))
+        ((and (eq (preceding-char) ?\.)
+              (eq (following-char) ?\)))
+         (delete-char -1)
+         (my-backward-char -1)
+         (insert "."))
+        (t
+         (insert "."))))
+
 (defun dwim-more-js-mode ()
   "Do What I Mean where ever possible
 
@@ -135,6 +149,8 @@ This function is mostly hooked with `self-insert-command'"
            (js-dwim-with-brace))
           ((eq last-command-event ?\{)
            (js-dwim-with-{))
+          ((eq last-command-event ?\.)
+           (js-dwim-with-.))
           (t
            nil))
     (setq second-last-point last-command-event)))
