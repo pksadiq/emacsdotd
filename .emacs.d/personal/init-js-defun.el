@@ -37,6 +37,22 @@
         (t
          (js-my-end-statement))))
 
+(defun js-dwim-with-brace ()
+  (cond ((save-excursion
+           (my-backward-char 2)
+           (and (member 'font-lock-keyword-face (text-properties-at (point)))
+                (not (eq (c-token-at-point) "function"))))
+         (save-excursion
+           (my-backward-char)
+           (unless (eq (preceding-char) ?\ )
+             (insert " ")))
+         (save-excursion
+           (my-backward-char -1)
+           (insert " {\n}")))
+        ((js--inside-param-list-p)
+         nil)
+        ))
+
 (defun dwim-more-js-mode ()
   "Do What I Mean where ever possible
 
@@ -48,6 +64,8 @@ This function is mostly hooked with `self-insert-command'"
            (dwim-with-!))
           ((eq last-command-event ?\,)
            (dwim-with-comma))
+          ((eq last-command-event ?\()
+           (js-dwim-with-brace))
           (t
            nil))
     (setq second-last-point last-command-event)))
