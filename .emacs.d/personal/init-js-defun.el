@@ -25,7 +25,7 @@
       (delete-trailing-whitespace
        (line-beginning-position) (line-end-position))
       (js2-indent-line)
-      (unless (memq (preceding-char) '(?\, ?\| ?\\ ?\& ?\* ?\< ?\> ?\=))
+      (unless (memq (preceding-char) '(?\, ?\| ?\\ ?\& ?\* ?\< ?\> ?\= ?\{))
         (insert ";"))
       (js2-indent-line))
     (my-read-only-mode)))
