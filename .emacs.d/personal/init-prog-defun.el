@@ -56,6 +56,18 @@ Made to use with `less-evil-mode'"
            (my-backward-char)
            (insert " ")))))
 
+(defun point-at-first-token-p ()
+  (save-excursion
+    (skip-chars-backward "a-zA-Z._")
+    (cond ((eq major-mode 'c-mode)
+           (c-backward-sws))
+          ((eq major-mode 'js2-mode)
+           (js2-backward-sws)))
+    (if (memq (preceding-char) '(?\; ?\{ ?\}))
+        t
+      nil)
+    ))
+
 (defun dwim-with-comma ()
   (let ((last-char nil)
         (inside-enum nil))
@@ -72,6 +84,14 @@ Made to use with `less-evil-mode'"
              (delete-char -1)
              (my-backward-char 2)
              (replace-token-at-point "upsnake")))
+          ((and (eq major-mode 'js2-mode)
+                (save-excursion
+                  (if (eq (preceding-char) ?\ )
+                      (my-backward-char 1))
+                  (my-backward-char)
+                (point-at-first-token-p)))
+           (zap-to-char -1 ?\,)
+           (electric-spacing-insert "="))
           ((point-in-string-p)
            (delete-char -1)
            (while (and (point-in-string-p)
