@@ -81,6 +81,16 @@
                                    (point))))
                  (setq is-var-defun t)))
            (js-insert-block is-var-defun t))
+          ((save-excursion
+            (my-backward-char)
+            (point-at-first-token-p))
+           (save-excursion
+             (if (string-match-p "^ *$" (buffer-substring-no-properties
+                                         (point)
+                                         (save-excursion
+                                           (end-of-line)
+                                           (point))))
+                 (insert ";"))))
           )))
 
 (defun dwim-more-js-mode ()
