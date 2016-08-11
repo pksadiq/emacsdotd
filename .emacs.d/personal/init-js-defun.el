@@ -37,11 +37,15 @@
         (t
          (js-my-end-statement))))
 
-(defun js-insert-block (&optional is-var-defun)
+(defun js-insert-block (&optional is-var-defun is-defun)
   (save-excursion
     (my-backward-char)
     (unless (eq (preceding-char) ?\ )
-      (insert " ")))
+      (insert " ")
+      (my-backward-char -1)))
+  (save-excursion
+    (if is-defun
+        (insert ")")))
   (when (save-excursion
           (my-backward-char -1)
           (js2-forward-sws)
@@ -58,7 +62,7 @@
     (cond ((save-excursion
              (my-backward-char 2)
              (and (member 'font-lock-keyword-face (text-properties-at (point)))
-                  (not (eq (c-token-at-point) "function"))))
+                  (not (equal (c-token-at-point) "function"))))
            (js-insert-block))
           ((and (js--inside-param-list-p)
                 (not (point-at-first-token-p)))
@@ -70,9 +74,7 @@
                                    (beginning-of-defun)
                                    (point))))
                  (setq is-var-defun t)))
-           (save-excursion
-             (js-insert-block is-var-defun)
-             ))
+           (js-insert-block is-var-defun t))
           )))
 
 (defun dwim-more-js-mode ()

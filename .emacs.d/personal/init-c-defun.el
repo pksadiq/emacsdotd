@@ -23,6 +23,8 @@
    (and (equal major-mode 'c-mode)
         (point-in-string-p)
         (may-not-be-char))
+   (and (eq major-mode 'js2-mode)
+        (js--inside-param-list-p))
    ))
 
 (setq-default electric-pair-inhibit-predicate 'electric-pair-inhibit-me)
