@@ -38,20 +38,37 @@
          (js-my-end-statement))))
 
 (defun js-dwim-with-brace ()
-  (cond ((save-excursion
-           (my-backward-char 2)
-           (and (member 'font-lock-keyword-face (text-properties-at (point)))
-                (not (eq (c-token-at-point) "function"))))
-         (save-excursion
-           (my-backward-char)
-           (unless (eq (preceding-char) ?\ )
-             (insert " ")))
-         (save-excursion
-           (my-backward-char -1)
-           (insert " {\n}")))
-        ((js--inside-param-list-p)
-         nil)
-        ))
+  (let ((is-var-defun nil))
+    (cond ((save-excursion
+             (my-backward-char 2)
+             (and (member 'font-lock-keyword-face (text-properties-at (point)))
+                  (not (eq (c-token-at-point) "function"))))
+           (save-excursion
+             (my-backward-char)
+             (unless (eq (preceding-char) ?\ )
+               (insert " ")))
+           (save-excursion
+             (my-backward-char -1)
+             (insert " {\n}")))
+          ((js--inside-param-list-p)
+           (save-excursion
+             (my-backward-char)
+             (unless (eq (preceding-char) ?\ )
+               (insert " ")))
+           (save-excursion
+             (if (string-match-p
+                  "= ?function" (buffer-substring-no-properties
+                                 (point)
+                                 (progn
+                                   (beginning-of-defun)
+                                   (point))))
+                 (setq is-var-defun t)))
+           (save-excursion
+             (my-backward-char -1)
+             (insert " {\n}")
+             (if is-var-defun
+                 (insert ";"))))
+          )))
 
 (defun dwim-more-js-mode ()
   "Do What I Mean where ever possible
