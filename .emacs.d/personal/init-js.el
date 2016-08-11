@@ -6,6 +6,10 @@
 ;; indentation level for `js2-mode'
 (setq-default js2-basic-offset 2)
 
+;; include nodejs extern defuns
+(setq js2-include-node-externs t
+      js2-highlight-level 3)
+
 (add-hook 'js2-mode-hook
           (lambda ()
             (add-to-list 'write-file-functions 'delete-trailing-whitespace)
