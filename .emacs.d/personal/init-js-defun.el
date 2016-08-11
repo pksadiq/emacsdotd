@@ -59,7 +59,8 @@
                    (progn
                      (my-backward-char -1)
                      t)))
-          (insert ";")))))
+          (insert ";"))
+      (indent-according-to-mode))))
 
 (defun js-dwim-with-brace ()
   (let ((is-var-defun nil))
@@ -75,7 +76,8 @@
                   "= ?function" (buffer-substring-no-properties
                                  (point)
                                  (progn
-                                   (beginning-of-defun)
+                                   (my-backward-char)
+                                   (re-search-backward "[=,();{}]")
                                    (point))))
                  (setq is-var-defun t)))
            (js-insert-block is-var-defun t))
