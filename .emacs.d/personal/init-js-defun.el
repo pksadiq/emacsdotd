@@ -72,6 +72,15 @@
          (or (member 'font-lock-keyword-face (text-properties-at (point)))
              (member 'font-lock-function-name-face (text-properties-at (point)))
              (member 'js2-function-param (text-properties-at (point)))))
+       (save-excursion
+         (my-backward-char 1)
+         (js2-backward-sws)
+         (my-backward-char 1)
+         (not (or (equal (c-token-at-point) "if")
+                  (equal (c-token-at-point) "return")
+                  (equal (c-token-at-point) "var")
+                  (equal (c-token-at-point) "while")
+                  (equal (c-token-at-point) "new"))))
        ))
 
 (defun js-dwim-with-brace ()
