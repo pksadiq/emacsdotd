@@ -9,7 +9,9 @@
      - yasnippet (powerful snippets)
      - ido
      - company (autocompletion)
+       - install =tern= npm package for javascript
      - flycheck (check syntax -- configured for gcc)
+       - install =jshint= npm package for javascript
      - web-mode
      - js2-mode
      - avy
