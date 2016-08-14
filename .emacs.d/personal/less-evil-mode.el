@@ -11,13 +11,15 @@
 
 (defun le/return ()
   (interactive)
-  (if (eq major-mode 'compilation-mode)
-      (compile-goto-error)
-    (progn
-      (read-only-mode -1)
-      (end-of-line)
-      (insert "\n")
-      (indent-according-to-mode))))
+  (cond ((eq major-mode 'compilation-mode)
+         (compile-goto-error))
+        ((eq major-mode 'speedbar-mode)
+         (speedbar-edit-line))
+        (t
+         (read-only-mode -1)
+         (end-of-line)
+         (insert "\n")
+         (indent-according-to-mode))))
 
 (defun le/navigate ()
   (interactive)
@@ -182,6 +184,7 @@
             (define-key map (kbd "p") 'avy-pop-mark)
             (define-key map (kbd "a") 'le/beginning-of-line)
             (define-key map (kbd "s") 'le/save-buffer)
+            (define-key map (kbd "\S-s") 'sr-speedbar-toggle)
             (define-key map (kbd "d") 'le/kill-line)
             (define-key map (kbd "f") 'ido-find-file)
             (define-key map (kbd "g") 'le/beginning-of-buffer)
