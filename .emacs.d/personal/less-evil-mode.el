@@ -110,9 +110,12 @@
 
 (defun my-quit ()
   (interactive)
-  (if (memq major-mode '(help-mode apropos-mode compilation-mode))
-      (quit-window)
-    (keyboard-quit)))
+  (cond ((memq major-mode '(help-mode apropos-mode compilation-mode))
+         (quit-window))
+        ((eq major-mode 'speedbar-mode)
+         (sr-speedbar-toggle))
+        (t
+         (keyboard-quit))))
 
 (defun switch-my-buffer ()
   (interactive)
@@ -220,6 +223,7 @@
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
     (define-key newmap (kbd "SPC") nil)
+    (define-key newmap (kbd "e") nil)
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
 
