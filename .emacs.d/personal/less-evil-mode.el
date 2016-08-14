@@ -2,6 +2,7 @@
 
 (require 'avy)
 (require 'ido)
+(require 'init-speedbar)
 
 (defun le/insert-here ()
   (interactive)
@@ -214,6 +215,14 @@
                 (less-evil-mode 1)
               (less-evil-mode -1))))
 
+(defun evil-in-speedbar-mode-hook ()
+  (let ((oldmap (cdr (assoc 'less-evil-mode minor-mode-map-alist)))
+        (newmap (make-sparse-keymap)))
+    (set-keymap-parent newmap oldmap)
+    (define-key newmap (kbd "SPC") nil)
+    (make-local-variable 'minor-mode-overriding-map-alist)
+    (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
+
 (defun evil-in-erc-mode-hook ()
   (let ((oldmap (cdr (assoc 'less-evil-mode minor-mode-map-alist)))
         (newmap (make-sparse-keymap)))
@@ -232,5 +241,5 @@
     (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
 
 (add-hook 'erc-mode-hook 'evil-in-erc-mode-hook)
-
+(add-hook 'speedbar-mode-hook 'evil-in-speedbar-mode-hook)
 (provide 'less-evil-mode)
