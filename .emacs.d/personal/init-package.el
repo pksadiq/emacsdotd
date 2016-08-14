@@ -19,6 +19,7 @@
         electric-spacing
         tern
         company-tern
+        ggtags
         key-seq))
 
 ;; Repositories to be used to search and install packages.
