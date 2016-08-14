@@ -224,6 +224,11 @@
     (set-keymap-parent newmap oldmap)
     (define-key newmap (kbd "SPC") nil)
     (define-key newmap (kbd "e") nil)
+    (define-key newmap (kbd "f") nil)
+    (define-key newmap (kbd "i") nil)
+    (define-key newmap (kbd "x") nil)
+    (define-key newmap (kbd "s") nil)
+    (define-key newmap (kbd "d") nil)
     (make-local-variable 'minor-mode-overriding-map-alist)
     (push `(less-evil-mode . ,newmap) minor-mode-overriding-map-alist)))
 
