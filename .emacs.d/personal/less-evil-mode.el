@@ -153,9 +153,21 @@
 (defun le/scroll-up ()
   (interactive)
   (let ((my-point (point)))
-    (scroll-up)
-    (unless (eq my-point (point))
-      (push-mark my-point))))
+    (cond ((eq major-mode 'speedbar-mode)
+           (if (string-match-p " *>" (buffer-substring-no-properties
+                                      (point)
+                                      (save-excursion
+                                        (beginning-of-line)
+                                        (point))))
+               (progn
+                 (speedbar-edit-line)
+                 (other-window 1))
+             (speedbar-toggle-line-expansion)
+             ))
+          (t
+           (scroll-up)
+           (unless (eq my-point (point))
+             (push-mark my-point))))))
 
 (defun le/beginning-of-buffer ()
   (interactive)
@@ -222,7 +234,6 @@
   (let ((oldmap (cdr (assoc 'less-evil-mode minor-mode-map-alist)))
         (newmap (make-sparse-keymap)))
     (set-keymap-parent newmap oldmap)
-    (define-key newmap (kbd "SPC") nil)
     (define-key newmap (kbd "e") nil)
     (define-key newmap (kbd "f") nil)
     (define-key newmap (kbd "i") nil)
