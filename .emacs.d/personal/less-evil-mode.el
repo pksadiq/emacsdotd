@@ -75,9 +75,12 @@
 
 (defun le/fold-unfold ()
   (interactive)
-  (if (eq major-mode 'web-mode)
-      (web-mode-fold-or-unfold)
-    (hs-toggle-hiding)))
+  (cond ((eq major-mode 'web-mode)
+         (web-mode-fold-or-unfold))
+        ((eq major-mode 'org-mode)
+         (org-cycle))
+        (t
+         (hs-toggle-hiding))))
 
 (defun le/undo ()
   (interactive)
