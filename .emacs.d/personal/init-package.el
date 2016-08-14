@@ -19,6 +19,7 @@
         electric-spacing
         tern
         company-tern
+        sr-speedbar
         ggtags
         key-seq))
 

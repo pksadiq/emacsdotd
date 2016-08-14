@@ -76,3 +76,6 @@
 
 ;; Configure specific files to be opened with specific modes.
 (require 'init-files)
+
+;; Configure embedded sidebar speedbar
+(require 'init-speedbar)
