@@ -14,4 +14,4 @@ return;
 
 done();
 });
-});
+});`(unless (c-next-line-empty-p) "\n")`
