@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: it('').. test
+# key: it.
+# --
+it('$1', function (done) {
+agent.post($0)
+.send({})
+.expect(400)
+.end(function (err, res) {
+if (err) {
+done(err);
+return;
+}
+
+done();
+});
+});
