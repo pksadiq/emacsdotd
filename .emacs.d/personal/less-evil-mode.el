@@ -197,6 +197,7 @@
             (define-key map (kbd "u") 'le/undo)
             (define-key map (kbd "i") 'le/insert-here)
             (define-key map (kbd "o") 'switch-my-buffer)
+            (define-key map (kbd "\S-o") 'ido-switch-buffer)
             (define-key map (kbd "p") 'avy-pop-mark)
             (define-key map (kbd "a") 'le/beginning-of-line)
             (define-key map (kbd "s") 'le/save-buffer)
