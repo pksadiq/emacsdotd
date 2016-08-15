@@ -4,7 +4,8 @@
 
 (with-eval-after-load 'flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc c/c++-clang)
-                flycheck-gcc-warnings '("all")))
+                flycheck-gcc-warnings '("all")
+                flycheck-indication-mode nil))
 
 ;; Enable flycheck in prog-modes only
 (add-hook 'prog-mode-hook 'flycheck-mode)
