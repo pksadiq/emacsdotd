@@ -51,12 +51,12 @@
 (require 'init-defun)
 (require 'less-evil-mode)
 (when (fboundp 'my-read-only-mode)
-  (add-hook 'prog-mode-hook 'my-read-only-mode)
-  (add-hook 'help-mode-hook 'my-read-only-mode)
-  (add-hook 'apropos-mode-hook 'my-read-only-mode)
+  (add-hook 'prog-mode 'less-evil-mode)
+  (add-hook 'help-mode-hook 'less-evil-mode)
+  (add-hook 'apropos-mode-hook 'less-evil-mode)
   (add-hook 'erc-join-hook 'my-read-only-mode)
   (add-hook 'gud-mode-hook 'my-read-only-mode)
-  (add-hook 'compilation-mode-hook 'my-read-only-mode))
+  (add-hook 'compilation-mode-hook 'less-evil-mode))
 
 (add-hook 'prog-mode-hook
           (lambda ()
