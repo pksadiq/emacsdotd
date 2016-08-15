@@ -27,14 +27,9 @@
 
 ;; Disable Fringes, the gray bar of about 0.5 cm (default)
 ;; on left and right of Emacs X11
-(when (fboundp 'set-fringe-mode) (set-fringe-mode '(0 . 0)))
-
-;; Enable fringes for buffers with files (for showing diffs)
 (when (fboundp 'set-fringe-mode)
-  (add-hook 'find-file-hook
-            (lambda ()
-              (setq left-fringe-width 4
-                    right-fringe-width 0))))
+  (set-fringe-mode '(4 . 0))
+  (set-face-attribute 'fringe nil :background "black"))
 
 ;; Let this file provide a feature named 'init-ui'.
 ;; Use `require' function to load to current Emacs session.
