@@ -36,6 +36,12 @@
   (if (buffer-narrowed-p)
       (widen)))
 
+(defun le/diff-hl-revert-hunk ()
+  (interactive)
+  (read-only-mode -1)
+  (diff-hl-revert-hunk)
+  (read-only-mode 1))
+
 (defun le/s-return ()
   (interactive)
   (read-only-mode -1)
@@ -230,7 +236,7 @@
             (define-key map (kbd "n") 'le/navigate)
             (define-key map (kbd "\S-n") 'le/widen)
             (define-key map (kbd "m") 'le/mark)
-            (define-key map (kbd "\S-m") 'diff-hl-revert-hunk)
+            (define-key map (kbd "\S-m") 'le/diff-hl-revert-hunk)
             (define-key map (kbd "C-k") 'le/kill-line)
             (define-key map (kbd "C-w") 'le/kill-region)
             (define-key map (kbd "<backspace>") 'le/delete-previous-char-or-mark)
