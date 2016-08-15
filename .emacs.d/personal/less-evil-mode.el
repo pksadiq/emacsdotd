@@ -24,8 +24,17 @@
 
 (defun le/navigate ()
   (interactive)
-  (if (eq major-mode 'web-mode)
-      (web-mode-navigate)))
+  (cond ((and mark-active
+              (not (eq (mark) (point))))
+         (narrow-to-region (mark) (point))
+         (deactivate-mark))
+        ((eq major-mode 'web-mode)
+         (web-mode-navigate))))
+
+(defun le/widen ()
+  (interactive)
+  (if (buffer-narrowed-p)
+      (widen)))
 
 (defun le/s-return ()
   (interactive)
@@ -216,6 +225,7 @@
             (define-key map (kbd "c") 'le/flycheck-next-error)
             (define-key map (kbd "v") 'le/flycheck-prev-error)
             (define-key map (kbd "n") 'le/navigate)
+            (define-key map (kbd "\S-n") 'le/widen)
             (define-key map (kbd "m") 'le/mark)
             (define-key map (kbd "C-k") 'le/kill-line)
             (define-key map (kbd "C-w") 'le/kill-region)
