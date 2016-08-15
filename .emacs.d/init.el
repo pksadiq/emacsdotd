@@ -79,3 +79,6 @@
 
 ;; Configure embedded sidebar speedbar
 (require 'init-speedbar)
+
+;; Configure diff modes
+(require 'init-diff)
