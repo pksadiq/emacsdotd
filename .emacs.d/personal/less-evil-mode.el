@@ -200,6 +200,7 @@
             (define-key map (kbd "/") 'isearch-forward-regexp)
             (define-key map (kbd "q") 'my-quit)
             (define-key map (kbd "w") 'avy-goto-char)
+            (define-key map (kbd "\S-w") 'avy-goto-char-2)
             (define-key map (kbd "e") 'avy-goto-line)
             (define-key map (kbd "r") 'flycheck-buffer)
             (define-key map (kbd "t") 'le/fold-unfold)
