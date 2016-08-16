@@ -7,7 +7,7 @@
 (setq inhibit-startup-message t)
 
 ;; Show Buffer name as title
-(setq frame-title-format "%b - Emacs %&")
+(setq frame-title-format '("" my-project-frame-title "%b - Emacs %&"))
 
 ;; Fonts should already be installed before you can use it.
 (set-default-font "Inconsolata-13")
