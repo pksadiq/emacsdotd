@@ -11,7 +11,8 @@
   (compile "make run"))
 
 (defun my-read-only-mode ()
-  (if (> (buffer-size) 0)
+  (if (and (> (buffer-size) 0)
+           (not (eq major-mode 'emacs-lisp-mode)))
       (read-only-mode 1))
   (if buffer-read-only
       (less-evil-mode 1)
