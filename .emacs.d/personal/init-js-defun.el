@@ -1,6 +1,38 @@
 ;; Packages required for the functions below
 (require 'subr-x)
 (require 'init-prog-defun)
+(require 'js2-mode)
+
+;; This value is hardcored, so just redefine the defun
+(defun js--multi-line-declaration-indentation ()
+  "Helper function for `js--proper-indentation'.
+Return the proper indentation of the current line if it belongs to a declaration
+statement spanning multiple lines; otherwise, return nil."
+  (let (at-opening-bracket)
+    (save-excursion
+      (back-to-indentation)
+      (when (not (looking-at js--declaration-keyword-re))
+        (when (looking-at js--indent-operator-re)
+          (goto-char (match-end 0)))
+        (while (and (not at-opening-bracket)
+                    (not (bobp))
+                    (let ((pos (point)))
+                      (save-excursion
+                        (js--backward-syntactic-ws)
+                        (or (eq (char-before) ?,)
+                            (and (not (eq (char-before) ?\;))
+                                 (prog2
+                                     (skip-syntax-backward ".")
+                                     (looking-at js--indent-operator-re)
+                                   (js--backward-syntactic-ws))
+                                 (not (eq (char-before) ?\;)))
+                            (js--same-line pos)))))
+          (condition-case nil
+              (backward-sexp)
+            (scan-error (setq at-opening-bracket t))))
+        (when (looking-at js--declaration-keyword-re)
+          (goto-char (match-end 0))
+          2)))))
 
 ;; Several features may be a dump of `init-c-defun'.
 ;; Too lazy to do things ordered :)
