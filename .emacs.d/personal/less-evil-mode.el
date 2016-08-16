@@ -176,7 +176,8 @@
                                         (point))))
                (progn
                  (speedbar-edit-line)
-                 (other-window 1))
+                 (other-window 1)
+                 (read-only-mode 1))
              (speedbar-toggle-line-expansion)
              ))
           (t
