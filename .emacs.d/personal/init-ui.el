@@ -4,6 +4,9 @@
 ;; Don't show startup screen
 (setq inhibit-startup-message t)
 
+;; Show Buffer name as title
+(setq frame-title-format "%b - Emacs %&")
+
 ;; Fonts should already be installed before you can use it.
 (set-default-font "Inconsolata-13")
 (setq default-frame-alist '((font . "Inconsolata-13")))
