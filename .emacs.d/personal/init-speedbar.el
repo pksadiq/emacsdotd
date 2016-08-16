@@ -3,7 +3,7 @@
 ;; Don't show images
 (setq
  speedbar-use-images nil
- sr-speedbar-width 23
+ sr-speedbar-width 30
  speedbar-initial-expansion-list-name "quick buffers")
 
 ;; reduce font size so that we require even less space
