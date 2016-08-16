@@ -52,6 +52,7 @@
 (require 'less-evil-mode)
 (when (fboundp 'my-read-only-mode)
   (add-hook 'prog-mode-hook 'my-read-only-mode)
+  (add-hook 'org-mode-hook 'my-read-only-mode)
   (add-hook 'help-mode-hook 'less-evil-mode)
   (add-hook 'apropos-mode-hook 'less-evil-mode)
   (add-hook 'erc-join-hook 'my-read-only-mode)
