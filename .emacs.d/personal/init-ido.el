@@ -9,9 +9,6 @@
 ;; A kind fuzzy matching, though not
 (setq ido-enable-flex-matching t)
 
-;; Don't remind be about history
-(setq ido-enable-last-directory-history nil)
-
 ;; Guess file at point on `ido-find-file'
 (setq ido-use-filename-at-point 'guess)
 
