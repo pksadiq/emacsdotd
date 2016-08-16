@@ -5,6 +5,8 @@
 ** What is present?
    - Highly configured for C programming with gtk+
    - Highly configured for javascript programming
+   - Highly personalised vi like mode (less-evil-mode)
+     - Enabled when read-only enabled (=C-x C-q=)
    - includes
      - yasnippet (powerful snippets)
      - ido
@@ -12,6 +14,7 @@
        - install =tern= npm package for javascript
      - flycheck (check syntax -- configured for gcc)
        - install =jshint= npm package for javascript
+     - highlight diffs (in vcs like git) using diff-hl-mode
      - web-mode
      - js2-mode
      - avy
@@ -21,6 +24,8 @@
 ** How can I use this?
    Just copy =.emacs.d= to your home dir. If you already have a =.emacs=
    file in your home dir [re]move it. Otherwise this configuration won't work.
+   When running for the first time, GNU Emacs shall use internet to download
+   and install missing packages.
 
    By default, every mode is read only, with vi like bindings.
    - see =less-evil-mode.el= file to see the bindings.
