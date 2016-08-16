@@ -14,6 +14,9 @@
 ;; Configure repositories and install required packages
 (require 'init-package)
 
+;; Configure `dir-locals' settings
+(require 'init-dir-locals)
+
 ;; Load C prgramming related user defined functions
 (require 'init-c-defun)
 
