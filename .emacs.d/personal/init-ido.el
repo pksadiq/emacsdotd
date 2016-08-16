@@ -21,7 +21,7 @@
 (setq
  ido-ignore-buffers (append ido-ignore-buffers
                             '( "^\*Mess" "^\*scratch" ".*Completion"
-                               "\*Buffer")))
+                               "\*Buffer" "Compile-Log")))
 
 ;; Ignore uninteresting dirs
 (setq
