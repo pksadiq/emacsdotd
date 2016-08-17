@@ -151,7 +151,7 @@
               (not (eq (mark) (point))))
          (kill-ring-save (point) (mark)))
         (t
-         (avy-goto-char))))
+         (call-interactively 'avy-goto-char))))
 
 (defun le/yank ()
   (interactive)
