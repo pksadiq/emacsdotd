@@ -157,6 +157,8 @@
   (interactive)
   (read-only-mode -1)
   (yank)
+  (if (derived-mode-p 'prog-mode)
+      (indent-region (mark) (point)))
   (read-only-mode 1))
 
 (defun le/end-of-line ()
