@@ -153,6 +153,12 @@
         (t
          (avy-goto-char))))
 
+(defun le/yank ()
+  (interactive)
+  (read-only-mode -1)
+  (yank)
+  (read-only-mode 1))
+
 (defun le/end-of-line ()
   (interactive)
   (let ((last-point (point)))
@@ -221,6 +227,7 @@
             (define-key map (kbd "\S-w") 'avy-goto-char-2)
             (define-key map (kbd "e") 'avy-goto-line)
             (define-key map (kbd "r") 'flycheck-buffer)
+            (define-key map (kbd "y") 'le/yank)
             (define-key map (kbd "t") 'le/fold-unfold)
             (define-key map (kbd "u") 'le/undo)
             (define-key map (kbd "i") 'le/insert-here)
