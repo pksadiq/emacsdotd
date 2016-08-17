@@ -145,6 +145,14 @@
     (unless (eq my-point (point))
       (push-mark my-point))))
 
+(defun le/avy-goto-char ()
+  (interactive)
+  (cond ((and mark-active
+              (not (eq (mark) (point))))
+         (kill-ring-save (point) (mark)))
+        (t
+         (avy-goto-char))))
+
 (defun le/end-of-line ()
   (interactive)
   (let ((last-point (point)))
@@ -209,7 +217,7 @@
             (define-key map (kbd "/") 'isearch-forward-regexp)
             (define-key map (kbd "?") 'shell-command)
             (define-key map (kbd "q") 'my-quit)
-            (define-key map (kbd "w") 'avy-goto-char)
+            (define-key map (kbd "w") 'le/avy-goto-char)
             (define-key map (kbd "\S-w") 'avy-goto-char-2)
             (define-key map (kbd "e") 'avy-goto-line)
             (define-key map (kbd "r") 'flycheck-buffer)
