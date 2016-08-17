@@ -31,8 +31,7 @@ statement spanning multiple lines; otherwise, return nil."
               (backward-sexp)
             (scan-error (setq at-opening-bracket t))))
         (when (looking-at js--declaration-keyword-re)
-          (goto-char (match-end 0))
-          2)))))
+          (+ 2 (current-column)))))))
 
 ;; Several features may be a dump of `init-c-defun'.
 ;; Too lazy to do things ordered :)
