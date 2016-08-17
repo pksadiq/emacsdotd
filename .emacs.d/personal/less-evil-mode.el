@@ -165,20 +165,22 @@
   (interactive)
   (let ((last-point (point)))
     (end-of-line)
-    (if (> (abs (-
+    (if (and (> (abs (-
                  (point)
                  last-point))
-           6)
+                6)
+             (not mark-active))
         (push-mark last-point))))
 
 (defun le/beginning-of-line ()
   (interactive)
   (let ((last-point (point)))
     (beginning-of-line)
-    (if (> (abs (-
+    (if (and (> (abs (-
                  (point)
                  last-point))
-           6)
+                6)
+             (not mark-active))
         (push-mark last-point))))
 
 (defun le/scroll-up ()
