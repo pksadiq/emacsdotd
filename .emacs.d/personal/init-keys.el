@@ -3,8 +3,21 @@
 ;; Let Control-h kill a char back, as in shell.
 (global-set-key (kbd "C-h") 'delete-backward-char)
 
+(defun new-line-may-be ()
+  (interactive)
+  (cond ((and (eq (preceding-char) ?\{)
+              (eq (following-char) ?\}))
+         nil)
+        ((or (minibufferp)
+             (not (derived-mode-p 'prog-mode)))
+         nil)
+        (t
+         (call-interactively 'move-end-of-line)))
+  (call-interactively (key-binding "\C-m")))
+
 ;; Create a newline after current line, and jump to that
-(global-set-key (kbd "<S-return>") (kbd "C-e C-m"))
+(global-set-key (kbd "<return>") 'new-line-may-be)
+(global-set-key (kbd "<S-return>") 'newline)
 
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
 (global-set-key (kbd "C-x C-s") 'force-save-buffer)
