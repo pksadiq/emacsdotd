@@ -19,4 +19,8 @@
     (ispell-kill-ispell t)
     ))
 
+(add-hook 'flyspell-mode-hook
+          (lambda ()
+            (define-key flyspell-mode-map (kbd "C-,") nil)))
+
 (provide 'init-ispell)
