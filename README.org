@@ -2,6 +2,13 @@
   This is my GNU Emacs configuration.
   This is a _work in progress_.
 
+  Everything is configured with the idea of dwim (do what I mean).
+  Many codes are mere hacks. Some are very dirty hacks around
+  =font-lock-mode=. So don't expect this to work consistantly right.
+  You have been warned. =;-)=
+
+  Happy Hacking.
+
 ** What is present?
    - Highly configured for C programming with gtk+
    - Highly configured for javascript programming
@@ -20,6 +27,10 @@
      - avy
      - key-chord
      - ...
+
+*** *important*
+    <return> and <backspace> won't work the usual way.
+    use =C-m= and =C-h= for that respectively.
 
 ** How can I use this?
    Just copy =.emacs.d= to your home dir. If you already have a =.emacs=
