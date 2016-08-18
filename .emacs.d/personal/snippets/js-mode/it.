@@ -3,9 +3,9 @@
 # key: it.
 # --
 it('$1', function (done) {
-agent.post($0)
+agent.${2:get}($0)
 .send({})
-.expect(${2:200})
+.expect(${3:200})
 .end(function (err, res) {
 if (err) {
 done(err);
