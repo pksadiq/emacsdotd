@@ -67,7 +67,7 @@
   (if (and mark-active
            (not (eq (mark) (point))))
       (delete-region (mark) (point))
-    (delete-char -1))
+    (paredit-backward-delete))
   (read-only-mode 1))
 
 (defun le/save-buffer ()
