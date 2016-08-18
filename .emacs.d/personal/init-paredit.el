@@ -9,7 +9,7 @@
               (define-key paredit-mode-map ";" nil)
               (define-key paredit-mode-map "'" nil)
               (define-key paredit-mode-map "(" nil)
-              (define-key paredit-mode-map ")" nil)
+              (define-key paredit-mode-map "[" nil)
               (define-key paredit-mode-map ">" nil)
               (define-key paredit-mode-map "<" nil)
               (define-key paredit-mode-map "DEL" nil)
