@@ -17,6 +17,9 @@
 ;; Configure `dir-locals' settings
 (require 'init-dir-locals)
 
+;; Configure spelling correction
+(require 'init-ispell)
+
 ;; Load C prgramming related user defined functions
 (require 'init-c-defun)
 
@@ -44,7 +47,7 @@
 ;; Configure avy-mode
 (require 'init-avy)
 
-;; Configures `company-mode' 
+;; Configures `company-mode'
 (require 'init-company)
 
 ;; Configures cc-mode

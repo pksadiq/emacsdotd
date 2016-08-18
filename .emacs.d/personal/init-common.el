@@ -61,7 +61,8 @@
 
 (add-hook 'prog-mode-hook
           (lambda ()
-            (setq show-trailing-whitespace t)))
+            (setq show-trailing-whitespace t)
+            (flyspell-prog-mode)))
 
 ;; Let this file provide a feature named 'init-common'.
 ;; Use `require' function to load to current Emacs session.
