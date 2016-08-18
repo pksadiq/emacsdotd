@@ -272,6 +272,7 @@
             (define-key map (kbd "v") 'le/flycheck-next-error)
             (define-key map (kbd "\S-v") 'le/flycheck-prev-error)
             (define-key map (kbd "c") 'vc-next-action)
+            (define-key map (kbd "\S-c") 'my-git-add)
             (define-key map (kbd "n") 'le/navigate)
             (define-key map (kbd "\S-n") 'le/widen)
             (define-key map (kbd "m") 'le/mark)
