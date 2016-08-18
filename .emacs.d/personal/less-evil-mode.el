@@ -3,6 +3,7 @@
 (require 'avy)
 (require 'ido)
 (require 'init-speedbar)
+(require 'paredit)
 
 (defun le/insert-here ()
   (interactive)

@@ -20,6 +20,9 @@
 ;; Configure spelling correction
 (require 'init-ispell)
 
+;; Configure paredit
+(require 'init-paredit)
+
 ;; Load C prgramming related user defined functions
 (require 'init-c-defun)
 
