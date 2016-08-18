@@ -16,8 +16,11 @@
   (call-interactively (key-binding "\C-m")))
 
 ;; Create a newline after current line, and jump to that
-(global-set-key (kbd "<return>") 'new-line-may-be)
-(global-set-key (kbd "<S-return>") 'newline)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (local-set-key (kbd "<return>") 'new-line-may-be)
+            (local-set-key (kbd "<S-return>") 'newline)
+            ))
 
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
 (global-set-key (kbd "C-x C-s") 'force-save-buffer)
