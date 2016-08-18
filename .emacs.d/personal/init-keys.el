@@ -37,7 +37,7 @@
 (key-seq-define-global ";u" 'undo)
 (key-seq-define-global ";a" 'beginning-of-line)
 (key-seq-define-global ";s" 'save-buffer)
-(key-seq-define-global ";;" 'read-only-mode)
+(key-seq-define-global ";e" 'read-only-mode)
 (key-seq-define-global ";f" 'ido-find-file)
 (key-seq-define-global ";g" 'avy-goto-line)
 
