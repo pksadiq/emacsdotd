@@ -21,6 +21,7 @@
         company-tern
         sr-speedbar
         ggtags
+        paredit
         key-seq))
 
 ;; Repositories to be used to search and install packages.
