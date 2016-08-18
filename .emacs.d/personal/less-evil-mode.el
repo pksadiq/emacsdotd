@@ -119,6 +119,21 @@
           (indent-according-to-mode))))
   (read-only-mode 1))
 
+;; TODO: merge this with `le/kill-line'
+(defun le/par-kill-line ()
+  (interactive)
+  (le/insert-here)
+  (if (and mark-active
+           (not (eq (mark) (point))))
+      (kill-region-or-backward-word)
+    (with-demoted-errors
+        (progn
+          (if (bound-and-true-p paredit-mode)
+              (paredit-kill)
+            (kill-line))
+          (indent-according-to-mode))))
+  (read-only-mode 1))
+
 (defun le/mark ()
   (interactive)
   (set-mark (point)))
@@ -241,7 +256,8 @@
             (define-key map (kbd "a") 'le/beginning-of-line)
             (define-key map (kbd "s") 'le/save-buffer)
             (define-key map (kbd "\S-s") 'sr-speedbar-toggle)
-            (define-key map (kbd "d") 'le/kill-line)
+            (define-key map (kbd "d") 'le/par-kill-line)
+            (define-key map (kbd "\S-d") 'le/kill-line)
             (define-key map (kbd "f") 'ido-find-file)
             (define-key map (kbd "g") 'le/beginning-of-buffer)
             (define-key map (kbd "\S-g") 'end-of-buffer)
