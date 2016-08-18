@@ -58,6 +58,15 @@ Otherwise, call `backward-kill-word'."
        'kill-region
      'backward-kill-word)))
 
+(defun my-zap-to-char (arg char)
+  "zap-to-char version for non-interactive use,
+won't modify kill ring"
+  (delete-region
+   (point)
+   (progn
+     (search-forward (char-to-string char) nil nil arg)
+     (point))))
+
 (defun my-term ()
   (interactive)
   (cond ((eq major-mode 'term-mode)

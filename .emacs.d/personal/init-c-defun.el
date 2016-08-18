@@ -674,7 +674,7 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                   (not (point-in-string-p))
                   (progn (my-backward-char 1)
                          (not (eq (preceding-char) ?\.)))))
-           (zap-to-char -2 ?\.)
+           (my-zap-to-char -2 ?\.)
            (insert "->")
            (setq changed t))
           ((save-excursion

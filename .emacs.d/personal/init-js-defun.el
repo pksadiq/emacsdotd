@@ -161,7 +161,7 @@ statement spanning multiple lines; otherwise, return nil."
          )))
 
 (defun js-dwim-with-. ()
-  (zap-to-char -1 ?\.)
+  (my-zap-to-char -1 ?\.)
   (cond ((and (eq (preceding-char) ?\()
               (eq (following-char) ?\)))
          (my-backward-char -1)
