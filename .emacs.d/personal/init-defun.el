@@ -67,6 +67,12 @@ won't modify kill ring"
      (search-forward (char-to-string char) nil nil arg)
      (point))))
 
+(defun my-git-add ()
+  (interactive)
+  (call-process "git" nil nil nil "add" (buffer-file-name))
+  ;; FIXME: There isn't any easy way to ensure if file is really added
+  (message "File Added"))
+
 (defun my-term ()
   (interactive)
   (cond ((eq major-mode 'term-mode)
