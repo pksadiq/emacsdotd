@@ -103,7 +103,7 @@
 
 (defun le/undo ()
   (interactive)
-  (le/insert-here)
+  (read-only-mode -1)
   (with-demoted-errors
       (undo))
   (read-only-mode 1))
