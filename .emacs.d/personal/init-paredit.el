@@ -17,8 +17,15 @@
     (define-key paredit-mode-map "<backspace>" nil)
     ))
 
-(eval-after-load 'c-mode (my-paredit-less-key))
-(eval-after-load 'js2-mode (my-paredit-less-key))
-(eval-after-load 'web-mode (my-paredit-less-key))
+(add-hook 'cc-mode 'my-paredit-less-key)
+(add-hook 'js2-mode 'my-paredit-less-key)
+(add-hook 'web-mode 'my-paredit-less-key)
+
+(eval-after-load 'c-mode
+  (define-key paredit-mode-map ";" nil))
+(eval-after-load 'js2-mode
+  (define-key paredit-mode-map ";" nil))
+(eval-after-load 'web-mode
+  (define-key paredit-mode-map ";" nil))
 
 (provide 'init-paredit)
