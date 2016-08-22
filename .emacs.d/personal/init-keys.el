@@ -9,7 +9,12 @@
               (eq (following-char) ?\}))
          nil)
         ((or (minibufferp)
-             (not (derived-mode-p 'prog-mode)))
+             (not (derived-mode-p 'prog-mode))
+             (eq major-mode 'emacs-lisp-mode))
+         nil)
+        ((and (save-excursion
+                (c-backward-sws)
+                (memq (preceding-char) '(?\, ?\& ?\|))))
          nil)
         (t
          (call-interactively 'move-end-of-line)))
