@@ -605,7 +605,9 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
            (c-backward-sws)
            (my-backward-char)
            (c-backward-token-2)
-           (replace-token-at-point "upcamel")))
+           (replace-token-at-point "upcamel"))
+         (if (eq (preceding-char) ?\ )
+             (delete-char -1)))
         ((save-excursion
            (unless (bobp)
              (my-backward-char 1))
