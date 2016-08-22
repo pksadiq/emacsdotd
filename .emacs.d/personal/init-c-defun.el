@@ -591,15 +591,18 @@ STYLE can be 'upcamel', 'lisp', 'upsnake'. any other STYLE defaults to 'snake'"
                     (c-beginning-of-expression)
                     (point))
                   (save-excursion
+                    (c-backward-sws)
                     (my-backward-char)
                     (c-backward-token-2)
                     (point)))
               (string-match-p "._." (save-excursion
+                                      (c-backward-sws)
                                       (backward-char)
                                       (c-backward-token-2)
                                       (forward-char)
                                       (c-token-at-point))))
          (save-excursion
+           (c-backward-sws)
            (my-backward-char)
            (c-backward-token-2)
            (replace-token-at-point "upcamel")))
@@ -739,7 +742,7 @@ This function is mostly hooked with `self-insert-command'"
            (c-dwim-with-dot))
           ((eq char-at-point ?\{)
            (c-dwim-with-brace))
-          ((eq char-at-point ?\*)
+          ((eq last-command-event ?\*)
            (c-dwim-with-asterisk))
           ((eq last-command-event ?\,)
            (dwim-with-comma))
