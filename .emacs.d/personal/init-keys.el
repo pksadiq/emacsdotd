@@ -13,7 +13,8 @@
              (eq major-mode 'emacs-lisp-mode))
          nil)
         ((and (save-excursion
-                (c-backward-sws)
+                (if (eq (preceding-char) ?\ )
+                    (backward-char 1))
                 (memq (preceding-char) '(?\, ?\& ?\|))))
          nil)
         (t
