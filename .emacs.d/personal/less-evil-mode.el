@@ -238,6 +238,7 @@
             (define-key map (kbd "S-SPC") 'le/scroll-down)
             (define-key map (kbd ";") 'le/end-of-line)
             (define-key map (kbd "<") 'diff-hl-previous-hunk)
+            (define-key map (kbd ",") 'ggtags-prev-mark)
             (define-key map (kbd ".") 'le/insert-after)
             (define-key map (kbd ">") 'diff-hl-next-hunk)
             (define-key map (kbd "/") 'isearch-forward-regexp)
