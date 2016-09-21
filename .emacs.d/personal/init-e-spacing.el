@@ -6,6 +6,6 @@
 
 ;; override electric-spacing-. defun
 (defun electric-spacing-. ()
-  nil)
+  (insert "."))
 
 (provide 'init-e-spacing)
