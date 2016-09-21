@@ -23,6 +23,9 @@
 ;; Configure paredit
 (require 'init-paredit)
 
+;; Configure `electric-spacing'
+(require 'init-e-spacing)
+
 ;; Load C prgramming related user defined functions
 (require 'init-c-defun)
 
