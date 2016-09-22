@@ -225,12 +225,18 @@
       (end-of-buffer)
     (beginning-of-buffer)))
 
+(defun le/delete-window ()
+  (interactive)
+  (if (one-window-p)
+      (kill-buffer)
+    (call-interactively 'delete-window)))
+
 ;;;###autoload
 (define-minor-mode less-evil-mode
   "A lesser version of evil mode"
   :lighter " le"
   :keymap (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "0") 'delete-window)
+            (define-key map (kbd "0") 'le/delete-window)
             (define-key map (kbd "1") 'delete-other-windows)
             (define-key map (kbd "2") 'split-window-below)
             (define-key map (kbd "3") 'split-window-right)
