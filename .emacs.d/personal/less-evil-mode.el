@@ -8,7 +8,8 @@
 (defun le/insert-here ()
   (interactive)
   (read-only-mode -1)
-  (if (looking-at "[[:space:]]*$")
+  (if (and (looking-at "[[:space:]]*$")
+           (not mark-active))
       (indent-according-to-mode)))
 
 (defun le/return ()
