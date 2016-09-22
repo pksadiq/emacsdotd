@@ -181,13 +181,19 @@
 (defun le/end-of-line ()
   (interactive)
   (let ((last-point (point)))
-    (end-of-line)
-    (if (and (> (abs (-
-                 (point)
-                 last-point))
-                6)
-             (not mark-active))
-        (push-mark last-point))))
+    (if mark-active
+        (progn
+          (le/insert-here)
+          (call-interactively 'comment-dwim)
+          (read-only-mode 1))
+      (progn
+        (end-of-line)
+        (if (and (> (abs (-
+                          (point)
+                          last-point))
+                    6)
+                 (not mark-active))
+            (push-mark last-point))))))
 
 (defun le/beginning-of-line ()
   (interactive)
