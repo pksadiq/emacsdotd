@@ -23,6 +23,8 @@
 
 (eval-after-load 'c-mode
   (define-key paredit-mode-map ";" nil))
+(eval-after-load 'c-mode
+  (define-key paredit-mode-map "[" nil))
 (eval-after-load 'js2-mode
   (define-key paredit-mode-map ";" nil))
 (eval-after-load 'web-mode
