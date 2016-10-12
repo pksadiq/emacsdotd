@@ -15,6 +15,12 @@
 ;; Hide distracting info from `erc' IRC client
 (setq erc-lurker-hide-list '("JOIN" "PART" "QUIT" "NICK"))
 
+;; See https://tools.ietf.org/html/rfc2812.html#section-5
+;; Hide Topic, user list, etc when joining a channel
+(setq  erc-hide-list '("324"
+                       "332"
+                       "353"))
+
 ;; Interpret MIRC colors
 (setq erc-interpret-mirc-color t)
 
