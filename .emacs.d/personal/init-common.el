@@ -25,6 +25,8 @@
 
 (if (file-exists-p "/usr/share/doc/devhelp/devhelp.el")
     (load-file "/usr/share/doc/devhelp/devhelp.el"))
+(if (file-exists-p "/etc/emacs/site-start.d/50devhelp.el")
+    (load-file "/etc/emacs/site-start.d/50devhelp.el"))
 
 ;; Highlight matching parenthesis
 (show-paren-mode 1)
